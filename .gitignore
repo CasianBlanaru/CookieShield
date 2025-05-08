@@ -97,6 +97,8 @@ coverage/
 ._*
 .Spotlight-V100
 .Trashes
+.hintrc
+.eslintcache
 
 # Dependencies
 cookie-consent/node_modules/
