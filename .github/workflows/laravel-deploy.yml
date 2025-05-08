@@ -1,0 +1,52 @@
+name: Deploy to Laravel Cloud
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  laravel-deploy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./cookie-consent-server-laravel
+
+    steps:
+    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      with:
+        php-version: '8.0'
+    - uses: actions/checkout@v4
+    
+    - name: Setup environment file
+      run: |
+        echo "APP_NAME=\"CookieShield\"" > .env
+        echo "APP_ENV=production" >> .env
+        echo "APP_KEY=base64:PRjGY8zg0vHD+OZWGzc6PvlqLgbnp2feT5HM1VP6BME=" >> .env
+        echo "APP_DEBUG=false" >> .env
+        echo "APP_URL=\"https://cookieshield-main-u8w9j3.laravel.cloud\"" >> .env
+        echo "LOG_CHANNEL=laravel-cloud-socket" >> .env
+        echo "LOG_STDERR_FORMATTER=Monolog\\Formatter\\JsonFormatter" >> .env
+        echo "DB_CONNECTION=pgsql" >> .env
+        echo "DB_HOST=ep-white-truth-a2f6rg91.aws-eu-central-1.pg.laravel.cloud" >> .env
+        echo "DB_PORT=5432" >> .env
+        echo "DB_DATABASE=main" >> .env
+        echo "DB_USERNAME=laravel" >> .env
+        echo "DB_PASSWORD=npg_OZt5Impe2gjG" >> .env
+        echo "SESSION_DRIVER=cookie" >> .env
+        echo "CACHE_STORE=database" >> .env
+        echo "SCHEDULE_CACHE_DRIVER=database" >> .env
+        echo "VITE_APP_NAME=\"\${APP_NAME}\"" >> .env
+    
+    - name: Install Dependencies
+      run: composer install --no-dev --prefer-dist --no-interaction
+      
+    - name: Deploy to Laravel Cloud
+      env:
+        LARAVEL_CLOUD_TOKEN: ${{ secrets.LARAVEL_CLOUD_TOKEN }}
+      # Hier würde ein tatsächlicher Deployment-Befehl stehen
+      # Da Sie die genaue Methode für das Deployment auf Laravel Cloud nicht angegeben haben,
+      # müssen Sie diesen Schritt anpassen
+      run: |
+        echo "Deploying to Laravel Cloud..."
+        # Beispiel: laravel-deploy --token $LARAVEL_CLOUD_TOKEN
+        # Ersetzen Sie diesen Kommentar mit dem tatsächlichen Deployment-Befehl 
