@@ -1,11 +1,14 @@
 # Laravel
 /vendor/
 /node_modules/
+node_modules/
+*/node_modules/
+**/node_modules/
 npm-debug.log
 yarn-error.log
-composer.lock
 .env
 .env.backup
+.env.production
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
@@ -18,7 +21,6 @@ yarn-error.log
 
 # Dependencies
 /node_modules
-cookie-consent/node_modules/
 /.pnp
 .pnp.js
 
@@ -50,4 +52,9 @@ yarn-error.log*
 /temp/
 
 # Zip files
-*.zip 
+*.zip
+
+# Additional files
+/public/hot
+/public/storage
+/storage/*.key 
