@@ -9,11 +9,16 @@
     "build": "mkdir -p dist && cp -r src index.html config-production.js favicon.ico dist/ && npm run build:css",
     "build:css": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify || echo 'Tailwind build failed, continuing'"
   },
-  "keywords": ["cookie-consent", "gdpr", "javascript", "tailwind"],
+  "keywords": [
+    "cookie-consent",
+    "gdpr",
+    "javascript",
+    "tailwind"
+  ],
   "author": "xAI",
   "license": "MIT",
   "devDependencies": {
-    "tailwindcss": "^4.0.0-alpha.20",
+    "tailwindcss": "4.1.5",
     "serve": "^14.2.1"
   }
 }
