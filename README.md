@@ -1,39 +1,39 @@
-# CookieShield - Umfassendes Cookie-Consent-System
+# CookieShield - Comprehensive Cookie Consent System
 
-CookieShield ist eine modulare, GDPR-konforme Cookie-Consent-Management-Lösung, die einen Client und zwei Backend-Implementierungen umfasst.
+CookieShield is a modular, GDPR-compliant cookie consent management solution that includes a client and two backend implementations.
 
-## Komponenten
+## Components
 
 ### 1. Frontend (cookie-consent)
-- Modulare Architektur mit ES6-Modulen
-- Responsive Cookie-Banner mit Tailwind CSS
-- Unterstützung für Kategorie- und Service-basierte Zustimmung
-- Integrationen mit Google Consent Mode, Microsoft Clarity und Bulk-Consent
-- Mehrsprachenunterstützung
-- Event-Dispatching für Zustimmungsänderungen
+- Modular architecture with ES6 modules
+- Responsive cookie banner styled with Tailwind CSS
+- Support for category and service-based consent
+- Integrations with Google Consent Mode, Microsoft Clarity, and bulk consent
+- Multi-language support
+- Event dispatching for consent changes
 
-### 2. Node.js-Backend (cookie-consent-server)
-- Express.js-Server mit MongoDB-Integration
-- API-Endpunkte für Konfiguration und Consent-Verwaltung
-- Fallback-Mechanismen für fehlende API-Verbindungen
+### 2. Node.js Backend (cookie-consent-server)
+- Express.js server with MongoDB integration
+- API endpoints for configuration and consent management
+- Fallback mechanisms for missing API connections
 
-### 3. Laravel-Backend (cookie-consent-server-laravel)
-- Vollständiges Migrations-System für die Datenbankstruktur
-- Modelle für Config und Consent
-- REST-API-Endpunkte mit Validierung
-- Seed-Daten für die erste Konfiguration
-- Admin-Schnittstelle für die Verwaltung
+### 3. Laravel Backend (cookie-consent-server-laravel)
+- Complete migration system for database structure
+- Models for Config and Consent
+- REST API endpoints with validation
+- Seed data for initial configuration
+- Admin interface for management
 
-## Erste Schritte
+## Getting Started
 
-### Frontend starten
+### Starting the Frontend
 ```bash
 cd cookie-consent
 npm install
 npm start
 ```
 
-### Laravel-Backend starten
+### Starting the Laravel Backend
 ```bash
 cd cookie-consent-server-laravel
 composer install
@@ -46,9 +46,9 @@ php artisan serve
 
 ## Features
 
-- **GDPR-Konformität**: Vollständige Kontrolle über Cookie-Kategorien
-- **Modulare Architektur**: Erweiterbare Komponenten für verschiedene Anwendungsfälle
-- **Mehrsprachenunterstützung**: Integrierte Übersetzungen für verschiedene Sprachen
-- **Responsives Design**: Optimiert für mobile und Desktop-Ansichten
-- **Integrationen**: Google Consent Mode, Microsoft Clarity und mehr
-- **Backend-Optionen**: Flexibilität durch Wahl zwischen Node.js oder Laravel 
+- **GDPR Compliance**: Complete control over cookie categories
+- **Modular Architecture**: Extensible components for various use cases
+- **Multi-language Support**: Built-in translations for different languages
+- **Responsive Design**: Optimized for mobile and desktop views
+- **Integrations**: Google Consent Mode, Microsoft Clarity, and more
+- **Backend Options**: Flexibility through choice between Node.js or Laravel 
