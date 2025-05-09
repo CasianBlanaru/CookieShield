@@ -26,7 +26,7 @@
 body {
   background: linear-gradient(135deg, #f0f4ff 0%, #f5f0ff 100%);
   color: var(--text);
-  font-family: var(--font-geist-sans);
+  font-family: var(--font-inter);
   min-height: 100vh;
 }
 
