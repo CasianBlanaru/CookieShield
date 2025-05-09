@@ -1,5 +1,9 @@
 /** @type {import('next').NextConfig} */
-import NextPWA from 'next-pwa';
+
+// Verwendung eines dynamischen Import-Wrappers für bessere Kompatibilität
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const NextPWA = require('next-pwa');
 
 const withPWA = NextPWA({
   dest: 'public',
