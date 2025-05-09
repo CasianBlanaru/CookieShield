@@ -371,14 +371,14 @@ export default function BannerPreview({ settings }) {
       <div 
         className="relative w-full h-full"
       >
-        {/* Screen interior with pseudo-website - taller for column view */}
-        <div className="rounded-xl overflow-hidden bg-white border border-gray-100 h-full flex flex-col">
-          {/* Website content - leerer Hintergrund */}
+        {/* Screen interior with website simulation */}
+        <div className="overflow-hidden bg-white border border-gray-100 border-t-gray-100 bo h-full flex flex-col">
+          {/* Website background - clean, minimalist */}
           <div className="flex-grow bg-gradient-to-br from-gray-50 to-white p-6 flex items-center justify-center">
-            {/* Leerer Hintergrund ohne dekorative Elemente */}
+            {/* Empty background without decorative elements */}
           </div>
           
-          {/* Cookie banner - fixed centered instead of draggable */}
+          {/* Cookie banner - centered fixed position */}
           <div 
             ref={bannerRef}
             className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
@@ -389,13 +389,13 @@ export default function BannerPreview({ settings }) {
             {!showDetailedView ? (
               /* Compact Banner View */
               <div
-                className={`w-[450px] p-0 rounded-lg overflow-hidden ${animationClass}`}
+                className={`w-[450px] h-[450px] p-0 rounded-lg overflow-hidden ${animationClass}`}
                 style={{
                   ...bannerStyle,
                   boxShadow: '0 20px 35px -12px rgba(0, 0, 0, 0.25), 0 15px 20px -10px rgba(0, 0, 0, 0.15)'
                 }}
               >
-                {/* Browser-ähnlicher Header */}
+                {/* Browser-styled header */}
                 <div className="h-10 bg-gray-900 border-b border-gray-800 flex items-center px-4">
                   <div className="flex space-x-2">
                     <div className="w-3 h-3 rounded-full bg-red-400" />
@@ -407,8 +407,8 @@ export default function BannerPreview({ settings }) {
                   </div>
                 </div>
                 
-                <div className="p-4">
-                  {/* Header mit Sprache und Privacy-Links */}
+                <div className="p-4 h-[calc(450px-40px)] overflow-y-auto">
+                  {/* Header with language selector and privacy links */}
                   <div className="flex justify-between mb-4">
                     <div className="flex items-center relative" ref={languageDropdownRef}>
                       <div className="flex items-center">
@@ -419,7 +419,7 @@ export default function BannerPreview({ settings }) {
                           aria-haspopup="true"
                           aria-expanded={showLanguageDropdown}
                         >
-                          <span className="text-[#e97040] mr-1 text-sm" style={linkStyle}>
+                          <span className="mr-1 text-sm" style={linkStyle}>
                             <span className="mr-1">{languageFlags[currentLanguage]}</span>
                             {availableLanguages[currentLanguage]}
                           </span>
@@ -436,7 +436,7 @@ export default function BannerPreview({ settings }) {
                             <button
                               key={code}
                               type="button"
-                              className={`w-full text-left px-3 py-1.5 text-sm hover:bg-gray-100 ${currentLanguage === code ? 'font-medium text-[#e97040]' : 'text-gray-700'}`}
+                              className={`w-full text-left px-3 py-1.5 text-sm hover:bg-gray-100 ${currentLanguage === code ? 'font-medium' : 'text-gray-700'}`}
                               onClick={() => handleLanguageChange(code)}
                             >
                               <span className="mr-2">{languageFlags[code]}</span>
@@ -497,7 +497,7 @@ export default function BannerPreview({ settings }) {
                         }}
                         onClick={() => toggleCookieCategory('performance')}
                         aria-pressed={cookieCategories.performance}
-                        aria-label={getTranslatedText('activatePerformanceCookies', 'Performance-Cookies aktivieren oder deaktivieren')}
+                        aria-label={getTranslatedText('activatePerformanceCookies', 'Performance-Cookies activate or deactivate')}
                       >
                         <div 
                           className="w-4 h-4 rounded-full shadow-md transition-all duration-300 ease-in-out"
@@ -522,7 +522,7 @@ export default function BannerPreview({ settings }) {
                         }}
                         onClick={() => toggleCookieCategory('functional')}
                         aria-pressed={cookieCategories.functional}
-                        aria-label={getTranslatedText('activateFunctionalCookies', 'Funktionale Cookies aktivieren oder deaktivieren')}
+                        aria-label={getTranslatedText('activateFunctionalCookies', 'Funktionale Cookies activate or deactivate')}
                       >
                         <div 
                           className="w-4 h-4 rounded-full shadow-md transition-all duration-300 ease-in-out"
@@ -547,7 +547,7 @@ export default function BannerPreview({ settings }) {
                         }}
                         onClick={() => toggleCookieCategory('advertising')}
                         aria-pressed={cookieCategories.advertising}
-                        aria-label={getTranslatedText('activateAdvertisingCookies', 'Werbe-Cookies aktivieren oder deaktivieren')}
+                        aria-label={getTranslatedText('activateAdvertisingCookies', 'Advertising-Cookies activate or deactivate')}
                       >
                         <div 
                           className="w-4 h-4 rounded-full shadow-md transition-all duration-300 ease-in-out"
@@ -558,12 +558,12 @@ export default function BannerPreview({ settings }) {
                           }}
                         />
                       </button>
-                      <span className="font-medium text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('advertising', 'Werbung')}</span>
+                      <span className="font-medium text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('advertising', 'Advertising')}</span>
                     </div>
                   </div>
                   
                   {/* Footer with buttons */}
-                  <div className="grid grid-cols-12 gap-2">
+                  <div className="grid grid-cols-12 gap-2 mt-auto pt-2">
                     <div className="col-span-12 mb-2">
                       <button 
                         type="button" 
@@ -610,13 +610,13 @@ export default function BannerPreview({ settings }) {
             ) : (
               /* Detailed Settings View */
               <div
-                className={`w-[450px] p-0 rounded-lg overflow-hidden ${animationClass}`}
+                className={`w-[450px] h-[450px] p-0 rounded-lg overflow-hidden ${animationClass}`}
                 style={{
                   ...bannerStyle,
                   boxShadow: '0 20px 35px -12px rgba(0, 0, 0, 0.25), 0 15px 20px -10px rgba(0, 0, 0, 0.15)'
                 }}
               >
-                {/* Browser-ähnlicher Header */}
+                {/* Browser-styled header */}
                 <div className="h-10 bg-gray-900 border-b border-gray-800 flex items-center px-4">
                   <div className="flex space-x-2">
                     <div className="w-3 h-3 rounded-full bg-red-400" />
@@ -624,11 +624,11 @@ export default function BannerPreview({ settings }) {
                     <div className="w-3 h-3 rounded-full bg-green-400" />
                   </div>
                   <div className="mx-auto bg-gradient-to-r from-purple-600 to-indigo-600 border border-indigo-700/50 rounded-full h-7 w-2/3 flex items-center justify-center text-xs font-medium text-white/90 shadow-sm">
-                    <span className="truncate px-3">cookieshield.example.com</span>
+                    <span className="truncate px-3">Banner Preview</span>
                   </div>
                 </div>
                 
-                <div className="p-4">
+                <div className="p-4 h-[calc(450px-40px)] flex flex-col">
                   {/* Header with language and close button */}
                   <div className="flex justify-between mb-3">
                     <div className="flex items-center relative" ref={languageDropdownRef}>
@@ -640,7 +640,7 @@ export default function BannerPreview({ settings }) {
                           aria-haspopup="true"
                           aria-expanded={showLanguageDropdown}
                         >
-                          <span className="text-[#e97040] mr-1 text-sm" style={linkStyle}>
+                          <span className="mr-1 text-sm" style={linkStyle}>
                             <span className="mr-1">{languageFlags[currentLanguage]}</span>
                             {availableLanguages[currentLanguage]}
                           </span>
@@ -657,7 +657,7 @@ export default function BannerPreview({ settings }) {
                             <button
                               key={code}
                               type="button"
-                              className={`w-full text-left px-3 py-1.5 text-sm hover:bg-gray-100 ${currentLanguage === code ? 'font-medium text-[#e97040]' : 'text-gray-700'}`}
+                              className={`w-full text-left px-3 py-1.5 text-sm hover:bg-gray-100 ${currentLanguage === code ? 'font-medium' : 'text-gray-700'}`}
                               onClick={() => handleLanguageChange(code)}
                             >
                               <span className="mr-2">{languageFlags[code]}</span>
@@ -678,7 +678,7 @@ export default function BannerPreview({ settings }) {
                   </div>
                   
                   {/* Tabs Navigation */}
-                  <div className="flex border-b border-gray-200 mb-4">
+                  <div className="flex border-b border-gray-200 mb-3">
                     <button 
                       type="button" 
                       className={`px-3 py-1.5 text-sm font-medium ${activeTab === 'settings' ? 'border-b-2' : ''}`} 
@@ -702,8 +702,8 @@ export default function BannerPreview({ settings }) {
                       onClick={() => handleTabChange('policy')}
                     >
                       {getTranslatedText('cookiePolicy', 'Cookie-Richtlinie')}
-          </button>
-          <button
+                    </button>
+                    <button
                       type="button" 
                       className={`px-3 py-1.5 text-sm font-medium ${activeTab === 'mydata' ? 'border-b-2' : 'text-gray-500'}`}
                       style={activeTab === 'mydata' ? activeStyle : {}}
@@ -714,7 +714,7 @@ export default function BannerPreview({ settings }) {
                   </div>
                   
                   {/* Content area */}
-                  <div className="mb-4 overflow-y-auto max-h-[175px] pr-2 text-sm">
+                  <div className="overflow-y-auto flex-grow text-sm pr-2 mb-3">
                     {activeTab === 'settings' && (
                       <>
                         <p className="mb-4" style={{ color: settings.bannerTextColor || '#333333' }}>
@@ -804,7 +804,7 @@ export default function BannerPreview({ settings }) {
                             type="button"
                           >
                             <div>
-                              <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('advertising', 'Werbung')}</h3>
+                              <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('advertising', 'Advertising')}</h3>
                               <p className="text-xs mt-1" style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>
                                 {getTranslatedText('advertisingDescription', 'Diese Cookies werden von unseren Werbepartnern auf unserer Website gesetzt.')}
                               </p>
@@ -884,7 +884,7 @@ export default function BannerPreview({ settings }) {
                   </div>
                   
                   {/* Footer with buttons */}
-                  <div className="flex justify-between">
+                  <div className="flex justify-between mt-auto pt-2">
                     <div>
                       <button 
                         type="button" 
@@ -903,7 +903,7 @@ export default function BannerPreview({ settings }) {
                       <button 
                         type="button" 
                         className="py-1.5 px-3 text-sm font-medium rounded-md"
-            style={{
+                        style={{
                           border: '1px solid #e2e8f0',
                           color: settings.bannerTextColor || '#333333',
                           borderRadius: `${settings.buttonBorderRadius || 4}px`,
@@ -911,18 +911,18 @@ export default function BannerPreview({ settings }) {
                         }}
                       >
                         {getTranslatedText('saveSettings', 'Einstellungen speichern')}
-          </button>
-          <button
+                      </button>
+                      <button
                         type="button" 
                         className="py-1.5 px-3 text-sm font-medium rounded-md"
-            style={{
+                        style={{
                           backgroundColor: settings.buttonBgColor || '#4F46E5',
                           color: settings.buttonTextColor || 'white',
                           borderRadius: `${settings.buttonBorderRadius || 4}px`
-            }}
-          >
+                        }}
+                      >
                         {getTranslatedText('acceptAll', 'Alle akzeptieren')}
-          </button>
+                      </button>
                     </div>
                   </div>
                 </div>

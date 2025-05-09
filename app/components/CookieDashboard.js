@@ -14,7 +14,7 @@ const defaultSettings = {
   saveLabel: 'Save Settings',
   consentLifetime: 31536000, // 1 year in seconds
   categories: ['necessary', 'performance', 'functional', 'advertising'],
-  bannerPosition: 'bottom',
+  bannerPosition: 'left',
   bannerBgColor: '#ffffff',
   bannerTextColor: '#333333',
   buttonBgColor: '#3b82f6',
@@ -399,7 +399,7 @@ export default function CookieDashboard() {
         </div>
       )}
 
-      {/* Zwei-Spalten-Layout */}
+      {/* Two-column layout for settings and preview */}
       <div className="container">
         <div className="card mb-6 relative backdrop-blur-sm">
           <div className="card-header">
@@ -454,9 +454,9 @@ export default function CookieDashboard() {
             </div>
           )}
 
-          {/* Zwei-Spalten-Layout für Einstellungen und Vorschau */}
+          {/* Two-column layout for settings and preview */}
           <div className="flex flex-col md:flex-row">
-            {/* Linke Spalte: Einstellungen */}
+            {/* Left column: Settings */}
             <div className="w-full md:w-1/2 md:border-r border-gray-100 relative">
               <div className="bg-gradient-to-br from-purple-50/50 to-indigo-50/50 p-4 md:p-6 shadow-xl shadow-indigo-100/30 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br bg-indigo-50 from-indigo-100/20 to-purple-100/20 blur-3xl -translate-y-16 translate-x-16 rounded-full" />
@@ -493,7 +493,7 @@ export default function CookieDashboard() {
                 </div>
 
                 <div className="space-y-6 px-4 py-3">
-        {/* Text-Einstellungen */}
+                  {/* Text Settings */}
                   {activeTab === 'text' && (
                     <section className="form-section">
                       <h2 className="text-xl font-semibold mb-5 text-primary">Text Settings</h2>
@@ -501,58 +501,58 @@ export default function CookieDashboard() {
                         <div className="space-y-6">
                           <div className="space-y-3">
                             <label htmlFor="bannerMessage" className="block text-sm font-medium text-gray-700">Banner Message</label>
-              <textarea
+                            <textarea
                               id="bannerMessage"
-                name="bannerMessage"
-                value={settings.bannerMessage}
-                onChange={handleChange}
+                              name="bannerMessage"
+                              value={settings.bannerMessage}
+                              onChange={handleChange}
                               className="futuristic-input mt-1 block w-full"
-                rows="4"
-              />
-            </div>
+                              rows="4"
+                            />
+                          </div>
                           <div className="space-y-3">
                             <label htmlFor="acceptAllLabel" className="block text-sm font-medium text-gray-700">Accept All Button</label>
-              <input
+                            <input
                               id="acceptAllLabel"
-                type="text"
-                name="acceptAllLabel"
-                value={settings.acceptAllLabel}
-                onChange={handleChange}
+                              type="text"
+                              name="acceptAllLabel"
+                              value={settings.acceptAllLabel}
+                              onChange={handleChange}
                               className="futuristic-input mt-1 block w-full"
-              />
-            </div>
+                            />
+                          </div>
                         </div>
                         <div className="space-y-6">
                           <div className="space-y-3">
                             <label htmlFor="denyAllLabel" className="block text-sm font-medium text-gray-700">Deny All Button</label>
-              <input
+                            <input
                               id="denyAllLabel"
-                type="text"
-                name="denyAllLabel"
-                value={settings.denyAllLabel}
-                onChange={handleChange}
+                              type="text"
+                              name="denyAllLabel"
+                              value={settings.denyAllLabel}
+                              onChange={handleChange}
                               className="futuristic-input mt-1 block w-full"
-              />
-            </div>
+                            />
+                          </div>
                           <div className="space-y-3">
                             <label htmlFor="settingsLabel" className="block text-sm font-medium text-gray-700">Settings Button</label>
-              <input
+                            <input
                               id="settingsLabel"
-                type="text"
-                name="settingsLabel"
-                value={settings.settingsLabel}
-                onChange={handleChange}
+                              type="text"
+                              name="settingsLabel"
+                              value={settings.settingsLabel}
+                              onChange={handleChange}
                               className="futuristic-input mt-1 block w-full"
-              />
-            </div>
+                            />
+                          </div>
                           <div className="space-y-3">
                             <label htmlFor="saveLabel" className="block text-sm font-medium text-gray-700">Save Button</label>
-              <input
+                            <input
                               id="saveLabel"
-                type="text"
-                name="saveLabel"
-                value={settings.saveLabel}
-                onChange={handleChange}
+                              type="text"
+                              name="saveLabel"
+                              value={settings.saveLabel}
+                              onChange={handleChange}
                               className="futuristic-input mt-1 block w-full"
                             />
                           </div>
@@ -612,12 +612,12 @@ export default function CookieDashboard() {
                               className="futuristic-input mt-1 block w-full"
                             />
                           </div>
-            </div>
-          </div>
-        </section>
+                        </div>
+                      </div>
+                    </section>
                   )}
 
-                  {/* Sprach-Einstellungen */}
+                  {/* Language Settings */}
                   {activeTab === 'language' && (
                     <section className="form-section">
                       <h2 className="text-xl font-semibold mb-5 text-primary">Language Settings</h2>
@@ -697,7 +697,7 @@ export default function CookieDashboard() {
                     </section>
                   )}
 
-        {/* Cookie-Einstellungen */}
+                  {/* Cookie Settings */}
                   {activeTab === 'cookie' && (
                     <section className="form-section">
                       <h2 className="text-xl font-semibold mb-5 text-primary">Cookie Settings</h2>
@@ -705,72 +705,72 @@ export default function CookieDashboard() {
                         <div className="space-y-6">
                           <div className="space-y-3">
                             <label htmlFor="consentLifetime" className="block text-sm font-medium text-gray-700">Consent Lifetime (seconds)</label>
-              <input
+                            <input
                               id="consentLifetime"
-                type="number"
-                name="consentLifetime"
-                value={settings.consentLifetime}
-                onChange={handleChange}
+                              type="number"
+                              name="consentLifetime"
+                              value={settings.consentLifetime}
+                              onChange={handleChange}
                               className="futuristic-input mt-1 block w-full"
-              />
+                            />
                             <p className="text-xs text-gray-500 mt-2">
                               {Math.floor(settings.consentLifetime / 86400)} days, {Math.floor((settings.consentLifetime % 86400) / 3600)} hours
                             </p>
                           </div>
-            </div>
+                        </div>
                         
                         <div className="space-y-6">
                           <fieldset>
                             <legend className="block text-sm font-medium text-gray-700 mb-3">Categories</legend>
                             <div className="bg-white bg-opacity-80 backdrop-blur-sm p-5 rounded-lg shadow-sm">
-                {['necessary', 'performance', 'functional', 'advertising'].map(category => (
+                              {['necessary', 'performance', 'functional', 'advertising'].map(category => (
                                 <div key={category} className="flex items-center py-3 border-b border-gray-100 last:border-0">
-                    <input
-                      type="checkbox"
-                      id={category}
-                      checked={settings.categories.includes(category)}
-                      onChange={() => handleCategoryChange(category)}
+                                  <input
+                                    type="checkbox"
+                                    id={category}
+                                    checked={settings.categories.includes(category)}
+                                    onChange={() => handleCategoryChange(category)}
                                     className="h-5 w-5 text-primary border-gray-300 rounded focus:ring-primary mr-3"
-                      disabled={category === 'necessary'}
-                    />
+                                    disabled={category === 'necessary'}
+                                  />
                                   <label htmlFor={category} className="text-sm text-gray-700 flex-grow">
-                      {category.charAt(0).toUpperCase() + category.slice(1)}
-                    </label>
+                                    {category.charAt(0).toUpperCase() + category.slice(1)}
+                                  </label>
                                   {category === 'necessary' && (
                                     <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">Required</span>
                                   )}
-                  </div>
-                ))}
-              </div>
+                                </div>
+                              ))}
+                            </div>
                           </fieldset>
-            </div>
-          </div>
-        </section>
+                        </div>
+                      </div>
+                    </section>
                   )}
 
-        {/* Design-Einstellungen */}
+                  {/* Design Settings */}
                   {activeTab === 'design' && (
                     <section className="form-section">
                       <h2 className="text-xl font-semibold mb-6 text-primary">Design Settings</h2>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-6">
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            <div>
-                              <label htmlFor="bannerPosition" className="block text-sm font-medium text-gray-700 mb-2">Banner Position</label>
-              <select
+                            <div className="flex flex-col">
+                              <label htmlFor="bannerPosition" className="block text-sm font-medium text-gray-700 mb-3 h-6">Banner Position</label>
+                              <select
                                 id="bannerPosition"
-                name="bannerPosition"
-                value={settings.bannerPosition}
-                onChange={handleChange}
+                                name="bannerPosition"
+                                value={settings.bannerPosition}
+                                onChange={handleChange}
                                 className="futuristic-input block w-full"
-              >
-                <option value="bottom">Bottom</option>
-                <option value="top">Top</option>
-              </select>
-            </div>
+                              >
+                                <option value="left">Left</option>
+                                <option value="right">Right</option>
+                              </select>
+                            </div>
                             
-                            <div>
-                              <label htmlFor="bannerStyle" className="block text-sm font-medium text-gray-700 mb-2">Banner Style</label>
+                            <div className="flex flex-col">
+                              <label htmlFor="bannerStyle" className="block text-sm font-medium text-gray-700 mb-3 h-6">Banner Style</label>
                               <select
                                 id="bannerStyle"
                                 name="bannerStyle"
@@ -785,8 +785,8 @@ export default function CookieDashboard() {
                           </div>
                           
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                            <div>
-                              <label htmlFor="fontFamily" className="block text-sm font-medium text-gray-700 mb-2">Font Family</label>
+                            <div className="flex flex-col">
+                              <label htmlFor="fontFamily" className="block text-sm font-medium text-gray-700 mb-3 h-6">Font Family</label>
                               <select
                                 id="fontFamily"
                                 name="fontFamily"
@@ -803,8 +803,8 @@ export default function CookieDashboard() {
                               </select>
                             </div>
                             
-            <div>
-                              <label htmlFor="bannerAnimation" className="block text-sm font-medium text-gray-700 mb-2">Animation</label>
+                            <div className="flex flex-col">
+                              <label htmlFor="bannerAnimation" className="block text-sm font-medium text-gray-700 mb-3 h-6">Animation</label>
                               <select
                                 id="bannerAnimation"
                                 name="bannerAnimation"
@@ -820,7 +820,7 @@ export default function CookieDashboard() {
                             </div>
                           </div>
                           
-                          {/* Border Radius mit Vorschau */}
+                          {/* Border Radius with Preview */}
                           <div className="mt-4">
                             <label htmlFor="buttonBorderRadius" className="block text-sm font-medium text-gray-700 mb-3">
                               Button Border Radius
@@ -857,20 +857,20 @@ export default function CookieDashboard() {
                               Banner Colors
                             </h3>
                             <fieldset className="p-5 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100 shadow-sm">
-                              <div className="grid grid-cols-2 gap-4">
+                              <div className="grid grid-cols-2 gap-y-6 gap-x-8">
                                 <div className="flex flex-col items-center">
-                                  <label htmlFor="bannerBgColor" className="block text-xs text-gray-600 mb-2">Background</label>
+                                  <label htmlFor="bannerBgColor" className="block text-xs text-gray-600 mb-3 h-6">Background</label>
                                   <div className="color-preview-container relative">
-                                    <label htmlFor="bannerBgColor" className="w-14 h-14 rounded-full shadow-sm mb-2 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    <label htmlFor="bannerBgColor" className="w-14 h-14 rounded-full shadow-sm mb-3 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
                                       style={{backgroundColor: settings.bannerBgColor}}>
                                       <span className="sr-only">Choose color</span>
                                     </label>
-              <input
+                                    <input
                                       id="bannerBgColor"
-                type="color"
-                name="bannerBgColor"
-                value={settings.bannerBgColor}
-                onChange={handleChange}
+                                      type="color"
+                                      name="bannerBgColor"
+                                      value={settings.bannerBgColor}
+                                      onChange={handleChange}
                                       className="sr-only"
                                     />
                                     <input 
@@ -878,23 +878,23 @@ export default function CookieDashboard() {
                                       value={settings.bannerBgColor}
                                       onChange={(e) => handleChange({target: {name: 'bannerBgColor', value: e.target.value}})}
                                       className="futuristic-input text-sm text-center w-24"
-              />
-            </div>
+                                    />
+                                  </div>
                                 </div>
                                 
                                 <div className="flex flex-col items-center">
-                                  <label htmlFor="bannerTextColor" className="block text-xs text-gray-600 mb-2">Text</label>
+                                  <label htmlFor="bannerTextColor" className="block text-xs text-gray-600 mb-3 h-6">Text</label>
                                   <div className="color-preview-container relative">
-                                    <label htmlFor="bannerTextColor" className="w-14 h-14 rounded-full shadow-sm mb-2 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    <label htmlFor="bannerTextColor" className="w-14 h-14 rounded-full shadow-sm mb-3 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
                                       style={{backgroundColor: settings.bannerTextColor}}>
                                       <span className="sr-only">Choose color</span>
                                     </label>
-              <input
+                                    <input
                                       id="bannerTextColor"
-                type="color"
-                name="bannerTextColor"
-                value={settings.bannerTextColor}
-                onChange={handleChange}
+                                      type="color"
+                                      name="bannerTextColor"
+                                      value={settings.bannerTextColor}
+                                      onChange={handleChange}
                                       className="sr-only"
                                     />
                                     <input 
@@ -907,9 +907,9 @@ export default function CookieDashboard() {
                                 </div>
                                 
                                 <div className="flex flex-col items-center">
-                                  <label htmlFor="linkColor" className="block text-xs text-gray-600 mb-2">Link Color</label>
+                                  <label htmlFor="linkColor" className="block text-xs text-gray-600 mb-3 h-6">Link Color</label>
                                   <div className="color-preview-container relative">
-                                    <label htmlFor="linkColor" className="w-14 h-14 rounded-full shadow-sm mb-2 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    <label htmlFor="linkColor" className="w-14 h-14 rounded-full shadow-sm mb-3 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
                                       style={{backgroundColor: settings.linkColor}}>
                                       <span className="sr-only">Choose color</span>
                                     </label>
@@ -931,9 +931,9 @@ export default function CookieDashboard() {
                                 </div>
                                 
                                 <div className="flex flex-col items-center">
-                                  <label htmlFor="activeColor" className="block text-xs text-gray-600 mb-2">Active Elements</label>
+                                  <label htmlFor="activeColor" className="block text-xs text-gray-600 mb-3 h-6">Active Elements</label>
                                   <div className="color-preview-container relative">
-                                    <label htmlFor="activeColor" className="w-14 h-14 rounded-full shadow-sm mb-2 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    <label htmlFor="activeColor" className="w-14 h-14 rounded-full shadow-sm mb-3 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
                                       style={{backgroundColor: settings.activeColor}}>
                                       <span className="sr-only">Choose color</span>
                                     </label>
@@ -950,8 +950,8 @@ export default function CookieDashboard() {
                                       value={settings.activeColor}
                                       onChange={(e) => handleChange({target: {name: 'activeColor', value: e.target.value}})}
                                       className="futuristic-input text-sm text-center w-24"
-              />
-            </div>
+                                    />
+                                  </div>
                                 </div>
                               </div>
                             </fieldset>
@@ -964,20 +964,20 @@ export default function CookieDashboard() {
                               Button Colors
                             </h3>
                             <fieldset className="p-5 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100 shadow-sm">
-                              <div className="grid grid-cols-2 gap-4">
+                              <div className="grid grid-cols-2 gap-y-6 gap-x-8">
                                 <div className="flex flex-col items-center">
-                                  <label htmlFor="buttonBgColor" className="block text-xs text-gray-600 mb-2">Background</label>
+                                  <label htmlFor="buttonBgColor" className="block text-xs text-gray-600 mb-3 h-6">Background</label>
                                   <div className="color-preview-container relative">
-                                    <label htmlFor="buttonBgColor" className="w-14 h-14 rounded-full shadow-sm mb-2 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    <label htmlFor="buttonBgColor" className="w-14 h-14 rounded-full shadow-sm mb-3 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
                                       style={{backgroundColor: settings.buttonBgColor}}>
                                       <span className="sr-only">Choose color</span>
                                     </label>
-              <input
+                                    <input
                                       id="buttonBgColor"
-                type="color"
-                name="buttonBgColor"
-                value={settings.buttonBgColor}
-                onChange={handleChange}
+                                      type="color"
+                                      name="buttonBgColor"
+                                      value={settings.buttonBgColor}
+                                      onChange={handleChange}
                                       className="sr-only"
                                     />
                                     <input 
@@ -985,23 +985,23 @@ export default function CookieDashboard() {
                                       value={settings.buttonBgColor}
                                       onChange={(e) => handleChange({target: {name: 'buttonBgColor', value: e.target.value}})}
                                       className="futuristic-input text-sm text-center w-24"
-              />
-            </div>
+                                    />
+                                  </div>
                                 </div>
                                 
                                 <div className="flex flex-col items-center">
-                                  <label htmlFor="buttonTextColor" className="block text-xs text-gray-600 mb-2">Text</label>
+                                  <label htmlFor="buttonTextColor" className="block text-xs text-gray-600 mb-3 h-6">Text</label>
                                   <div className="color-preview-container relative">
-                                    <label htmlFor="buttonTextColor" className="w-14 h-14 rounded-full shadow-sm mb-2 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    <label htmlFor="buttonTextColor" className="w-14 h-14 rounded-full shadow-sm mb-3 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
                                       style={{backgroundColor: settings.buttonTextColor}}>
                                       <span className="sr-only">Choose color</span>
                                     </label>
-              <input
+                                    <input
                                       id="buttonTextColor"
-                type="color"
-                name="buttonTextColor"
-                value={settings.buttonTextColor}
-                onChange={handleChange}
+                                      type="color"
+                                      name="buttonTextColor"
+                                      value={settings.buttonTextColor}
+                                      onChange={handleChange}
                                       className="sr-only"
                                     />
                                     <input 
@@ -1015,16 +1015,16 @@ export default function CookieDashboard() {
                               </div>
                             </fieldset>
                           </div>
-            </div>
-          </div>
-        </section>
+                        </div>
+                      </div>
+                    </section>
                   )}
 
-        {/* Speichern-Button */}
+                  {/* Save Button */}
                   <div className="flex justify-end mt-5">
-        <button
+                    <button
                       type="button"
-          onClick={handleSave}
+                      onClick={handleSave}
                       disabled={saving}
                       className="futuristic-button px-6 py-2 rounded-md text-white font-medium text-sm transition-all"
                     >
@@ -1042,21 +1042,21 @@ export default function CookieDashboard() {
               </div>
             </div>
 
-            {/* Rechte Spalte: Vorschau */}
+            {/* Right column: Preview */}
             <div className="w-full md:w-1/2 mt-8 md:mt-0 relative">
               <div className="banner-preview-container transition-all duration-500 will-change-transform" 
-                   style={{ zIndex: 10 }}>
+                     style={{ zIndex: 10 }}>
                 <div className="relative bg-gradient-to-br from-white/80 to-indigo-50/50 p-6 shadow-blue-100/40">
                   <div className="absolute -top-20 -right-20 w-60 h-60 bg-gradient-to-br from-indigo-200/20 to-purple-300/20 blur-3xl rounded-full pointer-events-none" />
                   <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-gradient-to-tr from-blue-200/20 to-indigo-200/20 blur-3xl rounded-full pointer-events-none" />
                   
-                  {/* Preview mode options - mittig positioniert */}
+                  {/* View mode toggles - centered */}
                   <div className="mb-6 flex justify-center gap-4 relative z-10">
                     <button 
                       type="button"
                       className="px-5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors shadow-sm"
                       onClick={() => {
-                        // Setze den showDetailedView-Status im BannerPreview auf false
+                        // Set showDetailedView status in BannerPreview to false
                         const event = new CustomEvent('toggleBannerView', { 
                           detail: { showDetailedView: false }
                         });
@@ -1067,14 +1067,14 @@ export default function CookieDashboard() {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-indigo-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                           <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
                         </svg>
-                        Kompakte Ansicht
+                        Compact View
                       </span>
                     </button>
                     <button 
                       type="button"
                       className="px-5 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
                       onClick={() => {
-                        // Setze den showDetailedView-Status im BannerPreview auf true
+                        // Set showDetailedView status in BannerPreview to true
                         const event = new CustomEvent('toggleBannerView', { 
                           detail: { showDetailedView: true }
                         });
@@ -1085,25 +1085,25 @@ export default function CookieDashboard() {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                           <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
                         </svg>
-                        Detailansicht
+                        Detailed View
                       </span>
                     </button>
                   </div>
                   
                   <div className="relative w-full top-2.5">
                     <div className="relative w-full min-h-[600px] flex items-center justify-center">
-                      {/* Cookie-Banner-Komponente */}
-          <BannerPreview settings={settings} />
+                      {/* Cookie-Banner Component */}
+                      <BannerPreview settings={settings} />
                     </div>
                   </div>
                   
-                  {/* Info-Box unter dem Preview */}
+                  {/* Info box below preview */}
                   <div className="mt-6 mb-4 bg-white p-4 rounded-lg border border-gray-100 text-xs text-gray-500 shadow-sm">
                     <p className="flex items-center">
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-indigo-400 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
                         <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
                       </svg>
-                      <span>Die Vorschau zeigt, wie das Cookie-Banner auf der Webseite erscheinen wird. Anpassungen werden in Echtzeit angezeigt.</span>
+                      <span>The preview shows how the cookie banner will appear on the website. Adjustments are displayed in real-time.</span>
                     </p>
                   </div>
                 </div>
@@ -1191,7 +1191,7 @@ export default function CookieDashboard() {
         <div className="mt-16 text-center">
           <p className="text-sm text-gray-500">© {new Date().getFullYear()} CookieShield. All rights reserved.</p>
           <div className="flex justify-center space-x-4 mt-3">
-            <a href="/impressum" className="text-sm text-gray-500 hover:text-primary">Impressum</a>
+            <a href="/impressum" className="text-sm text-gray-500 hover:text-primary">Legal Notice</a>
             <a href="/datenschutz" className="text-sm text-gray-500 hover:text-primary">Data Privacy</a>
             <a href="/agb" className="text-sm text-gray-500 hover:text-primary">Terms of Service</a>
           </div>
