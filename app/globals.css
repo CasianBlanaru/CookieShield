@@ -1,4 +1,6 @@
-@import "tailwindcss";
+/* Tailwind-Direktiven */
+@import "tailwindcss/preflight";
+@tailwind utilities;
 
 :root {
   --primary: #5364fc;
@@ -1012,7 +1014,7 @@ input[type="range"]::-webkit-slider-runnable-track {
 /* Stilisierte Eingabefelder */
 .futuristic-input.text-center {
   text-align: center;
-  font-family: var(--font-geist-mono, monospace);
+  font-family: monospace;
   letter-spacing: 0.05em;
   background-color: white;
   border: 1px solid rgba(229, 231, 235, 1);
