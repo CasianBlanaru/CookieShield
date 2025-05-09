@@ -5,7 +5,15 @@
   "author": "Casian Blanaru <casian@me.com>",
   "company": "PixelCoda",
   "description": "CookieShield Dashboard - A 100% GDPR/DSGVO and BITV compliant cookie consent solution with free customizable design",
-  "keywords": ["cookie", "consent", "gdpr", "dsgvo", "bitv", "free", "customizable"],
+  "keywords": [
+    "cookie",
+    "consent",
+    "gdpr",
+    "dsgvo",
+    "bitv",
+    "free",
+    "customizable"
+  ],
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
@@ -15,7 +23,9 @@
   "dependencies": {
     "@headlessui/react": "^2.2.2",
     "@heroicons/react": "^2.2.0",
+    "ajv": "6.12.6",
     "axios": "^1.9.0",
+    "critters": "0.0.23",
     "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -31,5 +41,8 @@
     "eslint-config-next": "15.3.2",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "resolutions": {
+    "ajv": "^6.12.6"
   }
 }
