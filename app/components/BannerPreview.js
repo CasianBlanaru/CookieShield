@@ -370,7 +370,6 @@ export default function BannerPreview({ settings }) {
       {/* Screen frame - adjusted for column view */}
       <div 
         className="relative w-full h-full"
-  
       >
         {/* Screen interior with pseudo-website - taller for column view */}
         <div className="rounded-xl overflow-hidden bg-white border border-gray-100 h-full flex flex-col">
@@ -393,17 +392,19 @@ export default function BannerPreview({ settings }) {
                 className={`w-[450px] p-0 rounded-lg overflow-hidden ${animationClass}`}
                 style={{
                   ...bannerStyle,
-                  boxShadow: '0 20px 35px -12px rgba(0, 0, 0, 0.2), 0 15px 20px -10px rgba(0, 0, 0, 0.1)'
+                  boxShadow: '0 20px 35px -12px rgba(0, 0, 0, 0.25), 0 15px 20px -10px rgba(0, 0, 0, 0.15)'
                 }}
               >
                 {/* Browser-ähnlicher Header */}
-                <div className="h-10 bg-gray-800 border-b border-gray-700 flex items-center px-4">
+                <div className="h-10 bg-gray-900 border-b border-gray-800 flex items-center px-4">
                   <div className="flex space-x-2">
                     <div className="w-3 h-3 rounded-full bg-red-400" />
                     <div className="w-3 h-3 rounded-full bg-yellow-400" />
                     <div className="w-3 h-3 rounded-full bg-green-400" />
                   </div>
-                  <div className="mx-auto bg-gradient-to-r from-purple-600 to-indigo-600 border-indigo-700 border rounded-full h-7 w-2/3 flex items-center justify-center text-sm font-bold text-white shadow-md">Banner Preview</div>
+                  <div className="mx-auto bg-gradient-to-r from-purple-600 to-indigo-600 border border-indigo-700/50 rounded-full h-7 w-2/3 flex items-center justify-center text-xs font-medium text-white/90 shadow-sm">
+                    <span className="truncate px-3">Banner Preview</span>
+                  </div>
                 </div>
                 
                 <div className="p-4">
@@ -612,17 +613,19 @@ export default function BannerPreview({ settings }) {
                 className={`w-[450px] p-0 rounded-lg overflow-hidden ${animationClass}`}
                 style={{
                   ...bannerStyle,
-                  boxShadow: '0 20px 35px -12px rgba(0, 0, 0, 0.2), 0 15px 20px -10px rgba(0, 0, 0, 0.1)'
+                  boxShadow: '0 20px 35px -12px rgba(0, 0, 0, 0.25), 0 15px 20px -10px rgba(0, 0, 0, 0.15)'
                 }}
               >
                 {/* Browser-ähnlicher Header */}
-                <div className="h-10 bg-gray-800 border-b border-gray-700 flex items-center px-4">
+                <div className="h-10 bg-gray-900 border-b border-gray-800 flex items-center px-4">
                   <div className="flex space-x-2">
                     <div className="w-3 h-3 rounded-full bg-red-400" />
                     <div className="w-3 h-3 rounded-full bg-yellow-400" />
                     <div className="w-3 h-3 rounded-full bg-green-400" />
                   </div>
-                  <div className="mx-auto bg-gradient-to-r from-purple-600 to-indigo-600 border-indigo-700 border rounded-full h-7 w-2/3 flex items-center justify-center text-sm font-bold text-white shadow-md">Banner Preview</div>
+                  <div className="mx-auto bg-gradient-to-r from-purple-600 to-indigo-600 border border-indigo-700/50 rounded-full h-7 w-2/3 flex items-center justify-center text-xs font-medium text-white/90 shadow-sm">
+                    <span className="truncate px-3">cookieshield.example.com</span>
+                  </div>
                 </div>
                 
                 <div className="p-4">
@@ -699,8 +702,8 @@ export default function BannerPreview({ settings }) {
                       onClick={() => handleTabChange('policy')}
                     >
                       {getTranslatedText('cookiePolicy', 'Cookie-Richtlinie')}
-                    </button>
-                    <button 
+          </button>
+          <button
                       type="button" 
                       className={`px-3 py-1.5 text-sm font-medium ${activeTab === 'mydata' ? 'border-b-2' : 'text-gray-500'}`}
                       style={activeTab === 'mydata' ? activeStyle : {}}
@@ -900,7 +903,7 @@ export default function BannerPreview({ settings }) {
                       <button 
                         type="button" 
                         className="py-1.5 px-3 text-sm font-medium rounded-md"
-                        style={{
+            style={{
                           border: '1px solid #e2e8f0',
                           color: settings.bannerTextColor || '#333333',
                           borderRadius: `${settings.buttonBorderRadius || 4}px`,
@@ -908,18 +911,18 @@ export default function BannerPreview({ settings }) {
                         }}
                       >
                         {getTranslatedText('saveSettings', 'Einstellungen speichern')}
-                      </button>
-                      <button 
+          </button>
+          <button
                         type="button" 
                         className="py-1.5 px-3 text-sm font-medium rounded-md"
-                        style={{
+            style={{
                           backgroundColor: settings.buttonBgColor || '#4F46E5',
                           color: settings.buttonTextColor || 'white',
                           borderRadius: `${settings.buttonBorderRadius || 4}px`
-                        }}
-                      >
+            }}
+          >
                         {getTranslatedText('acceptAll', 'Alle akzeptieren')}
-                      </button>
+          </button>
                     </div>
                   </div>
                 </div>
