@@ -524,144 +524,148 @@ export default function CookieDashboard() {
                   {activeTab === 'text' && (
                     <section className="form-section">
                       <h2 className="text-xl font-semibold mb-5 text-primary">Text Settings</h2>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div className="space-y-6">
-                          <div className="space-y-3">
-                            <label htmlFor="bannerMessage" className="block text-sm font-medium text-gray-700">Banner Message</label>
-                            <textarea
-                              id="bannerMessage"
-                              name="bannerMessage"
-                              value={settings.bannerMessage}
-                              onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
-                              rows="4"
-                            />
-                          </div>
-                          <div className="space-y-3">
-                            <label htmlFor="acceptAllLabel" className="block text-sm font-medium text-gray-700">Accept All Button</label>
-                            <input
-                              id="acceptAllLabel"
-                              type="text"
-                              name="acceptAllLabel"
-                              value={settings.acceptAllLabel}
-                              onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
-                            />
-                          </div>
-                          <div className="space-y-3">
-                            <label htmlFor="denyAllLabel" className="block text-sm font-medium text-gray-700">Deny All Button</label>
-                            <input
-                              id="denyAllLabel"
-                              type="text"
-                              name="denyAllLabel"
-                              value={settings.denyAllLabel}
-                              onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
-                            />
-                          </div>
-                          
-                          {/* Cookie Policy Text Fields */}
-                          <div className="space-y-3 mt-6">
-                            <label htmlFor="cookiePolicyText" className="block text-sm font-medium text-gray-700">Cookie-Richtlinie Text</label>
-                            <textarea
-                              id="cookiePolicyText"
-                              name="cookiePolicyText"
-                              value={settings.cookiePolicyText}
-                              onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
-                              rows="3"
-                            />
-                          </div>
-                          
-                          <div className="space-y-3">
-                            <label htmlFor="cookieDescriptionText" className="block text-sm font-medium text-gray-700">Cookie-Beschreibung</label>
-                            <textarea
-                              id="cookieDescriptionText"
-                              name="cookieDescriptionText"
-                              value={settings.cookieDescriptionText}
-                              onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
-                              rows="4"
-                            />
-                          </div>
+                      
+                      {/* Banner Message */}
+                      <div className="mb-6">
+                        <label htmlFor="bannerMessage" className="block text-sm font-medium text-gray-700 mb-2">Banner Message</label>
+                        <textarea
+                          id="bannerMessage"
+                          name="bannerMessage"
+                          value={settings.bannerMessage}
+                          onChange={handleChange}
+                          className="futuristic-input block w-full"
+                          rows="4"
+                        />
+                      </div>
+                      
+                      {/* Action Buttons - Side by Side */}
+                      <div className="grid grid-cols-2 gap-6 mb-6">
+                        <div>
+                          <label htmlFor="acceptAllLabel" className="block text-sm font-medium text-gray-700 mb-2">Accept All Button</label>
+                          <input
+                            id="acceptAllLabel"
+                            type="text"
+                            name="acceptAllLabel"
+                            value={settings.acceptAllLabel}
+                            onChange={handleChange}
+                            className="futuristic-input block w-full"
+                          />
                         </div>
-                        <div className="space-y-6">
-                          <div className="space-y-3">
-                            <label htmlFor="settingsLabel" className="block text-sm font-medium text-gray-700">Settings Button</label>
-                            <input
-                              id="settingsLabel"
-                              type="text"
-                              name="settingsLabel"
-                              value={settings.settingsLabel}
-                              onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
-                            />
-                          </div>
-                          <div className="space-y-3">
-                            <label htmlFor="saveLabel" className="block text-sm font-medium text-gray-700">Save Button</label>
-                            <input
-                              id="saveLabel"
-                              type="text"
-                              name="saveLabel"
-                              value={settings.saveLabel}
-                              onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
-                            />
-                          </div>
+                        <div>
+                          <label htmlFor="denyAllLabel" className="block text-sm font-medium text-gray-700 mb-2">Deny All Button</label>
+                          <input
+                            id="denyAllLabel"
+                            type="text"
+                            name="denyAllLabel"
+                            value={settings.denyAllLabel}
+                            onChange={handleChange}
+                            className="futuristic-input block w-full"
+                          />
                         </div>
+                      </div>
+                      
+                      {/* Other Buttons - Side by Side */}
+                      <div className="grid grid-cols-2 gap-6 mb-6">
+                        <div>
+                          <label htmlFor="settingsLabel" className="block text-sm font-medium text-gray-700 mb-2">Settings Button</label>
+                          <input
+                            id="settingsLabel"
+                            type="text"
+                            name="settingsLabel"
+                            value={settings.settingsLabel}
+                            onChange={handleChange}
+                            className="futuristic-input block w-full"
+                          />
+                        </div>
+                        <div>
+                          <label htmlFor="saveLabel" className="block text-sm font-medium text-gray-700 mb-2">Save Button</label>
+                          <input
+                            id="saveLabel"
+                            type="text"
+                            name="saveLabel"
+                            value={settings.saveLabel}
+                            onChange={handleChange}
+                            className="futuristic-input block w-full"
+                          />
+                        </div>
+                      </div>
+                          
+                      {/* Cookie Policy Texts */}
+                      <div className="mb-6">
+                        <label htmlFor="cookiePolicyText" className="block text-sm font-medium text-gray-700 mb-2">Cookie-Richtlinie Text</label>
+                        <textarea
+                          id="cookiePolicyText"
+                          name="cookiePolicyText"
+                          value={settings.cookiePolicyText}
+                          onChange={handleChange}
+                          className="futuristic-input block w-full"
+                          rows="3"
+                        />
+                      </div>
+                      
+                      <div className="mb-6">
+                        <label htmlFor="cookieDescriptionText" className="block text-sm font-medium text-gray-700 mb-2">Cookie-Beschreibung</label>
+                        <textarea
+                          id="cookieDescriptionText"
+                          name="cookieDescriptionText"
+                          value={settings.cookieDescriptionText}
+                          onChange={handleChange}
+                          className="futuristic-input block w-full"
+                          rows="4"
+                        />
                       </div>
 
                       {/* Tab Labels Section */}
-                      <div className="mt-8">
+                      <div className="mt-10">
                         <div className="flex items-center mb-5">
                           <div className="w-10 h-0.5 bg-gradient-to-r from-blue-500 to-purple-600" />
                           <h3 className="mx-3 text-lg font-semibold text-primary">Tab Labels</h3>
                           <div className="flex-grow h-0.5 bg-gradient-to-r from-purple-600 to-transparent" />
                         </div>
                         
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                          <div className="space-y-3">
-                            <label htmlFor="settingsTabLabel" className="block text-sm font-medium text-gray-700">Settings Tab</label>
+                        <div className="grid grid-cols-2 gap-6">
+                          <div>
+                            <label htmlFor="settingsTabLabel" className="block text-sm font-medium text-gray-700 mb-2">Settings Tab</label>
                             <input
                               id="settingsTabLabel"
                               type="text"
                               name="settingsTabLabel"
                               value={settings.settingsTabLabel}
                               onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
+                              className="futuristic-input block w-full"
                             />
                           </div>
-                          <div className="space-y-3">
-                            <label htmlFor="cookiesTabLabel" className="block text-sm font-medium text-gray-700">Cookies Tab</label>
+                          <div>
+                            <label htmlFor="cookiesTabLabel" className="block text-sm font-medium text-gray-700 mb-2">Cookies Tab</label>
                             <input
                               id="cookiesTabLabel"
                               type="text"
                               name="cookiesTabLabel"
                               value={settings.cookiesTabLabel}
                               onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
+                              className="futuristic-input block w-full"
                             />
                           </div>
-                          <div className="space-y-3">
-                            <label htmlFor="policyTabLabel" className="block text-sm font-medium text-gray-700">Policy Tab</label>
+                          <div>
+                            <label htmlFor="policyTabLabel" className="block text-sm font-medium text-gray-700 mb-2">Policy Tab</label>
                             <input
                               id="policyTabLabel"
                               type="text"
                               name="policyTabLabel"
                               value={settings.policyTabLabel}
                               onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
+                              className="futuristic-input block w-full"
                             />
                           </div>
-                          <div className="space-y-3">
-                            <label htmlFor="myDataTabLabel" className="block text-sm font-medium text-gray-700">My Data Tab</label>
+                          <div>
+                            <label htmlFor="myDataTabLabel" className="block text-sm font-medium text-gray-700 mb-2">My Data Tab</label>
                             <input
                               id="myDataTabLabel"
                               type="text"
                               name="myDataTabLabel"
                               value={settings.myDataTabLabel}
                               onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
+                              className="futuristic-input block w-full"
                             />
                           </div>
                         </div>
