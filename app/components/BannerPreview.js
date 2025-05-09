@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef, useEffect, useCallback, useState } from 'react';
-import Image from 'next/image';
 
 export default function BannerPreview({ settings }) {
   // Banner reference
@@ -410,16 +409,6 @@ export default function BannerPreview({ settings }) {
                 <div className="flex justify-between mb-4">
                   <div className="flex items-center relative" ref={languageDropdownRef}>
                     <div className="flex items-center">
-                      <Image 
-                        src="/round-logo.svg" 
-                        alt="CookieShield Logo"
-                        width={20}
-                        height={20}
-                        className="w-5 h-5 mr-2"
-                        style={{ 
-                          filter: "brightness(0.95) contrast(1.05)"
-                        }} 
-                      />
                       <button
                         type="button"
                         className="flex items-center focus:outline-none"
@@ -482,13 +471,13 @@ export default function BannerPreview({ settings }) {
                 </div>
                 
                 {/* Cookie type toggles */}
-                <div className="grid grid-cols-2 gap-2 mb-4">
+                <div className="grid grid-cols-2 gap-3 mb-4">
                   {/* Necessary - always on */}
                   <div className="flex items-center space-x-2">
-                    <div className="w-11 h-5 relative rounded-full p-1 flex items-center bg-pink-50">
+                    <div className="w-12 h-6 relative rounded-full p-1 flex items-center bg-pink-100">
                       <span 
-                        className="absolute w-3.5 h-3.5 rounded-full shadow-sm transition-all duration-300 bg-pink-300"
-                        style={{ left: 'calc(100% - 16px)' }}
+                        className="absolute w-4 h-4 rounded-full shadow-sm transition-all duration-300 bg-pink-500"
+                        style={{ left: 'calc(100% - 20px)' }}
                       />
                     </div>
                     <span className="font-medium text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('necessary', 'Notwendig')}</span>
@@ -498,17 +487,21 @@ export default function BannerPreview({ settings }) {
                   <div className="flex items-center space-x-2">
                     <button 
                       type="button"
-                      className="w-11 h-5 relative rounded-full p-1 flex items-center"
-                      style={{ backgroundColor: cookieCategories.performance ? 'rgba(219, 234, 254, 1)' : 'rgba(229, 231, 235, 1)' }}
+                      className="w-12 h-6 relative rounded-full p-1 flex items-center transition-colors duration-300 ease-in-out"
+                      style={{ 
+                        backgroundColor: cookieCategories.performance ? 'rgba(224, 242, 254, 0.9)' : 'rgba(229, 231, 235, 0.6)',
+                        boxShadow: cookieCategories.performance ? '0 0 2px rgba(56, 189, 248, 0.3)' : 'none'
+                      }}
                       onClick={() => toggleCookieCategory('performance')}
                       aria-pressed={cookieCategories.performance}
                       aria-label={getTranslatedText('activatePerformanceCookies', 'Performance-Cookies aktivieren oder deaktivieren')}
                     >
-                      <span 
-                        className="absolute w-3.5 h-3.5 rounded-full shadow-sm transition-all duration-300"
+                      <div 
+                        className="w-4 h-4 rounded-full shadow-md transition-all duration-300 ease-in-out"
                         style={{
-                          backgroundColor: cookieCategories.performance ? 'rgba(107, 114, 128, 1)' : 'rgba(156, 163, 175, 1)',
-                          left: cookieCategories.performance ? 'calc(100% - 16px)' : '2px'
+                          backgroundColor: cookieCategories.performance ? 'rgba(14, 165, 233, 1)' : 'rgba(156, 163, 175, 1)',
+                          marginLeft: cookieCategories.performance ? 'auto' : '0',
+                          transform: cookieCategories.performance ? 'scale(1.1)' : 'scale(1)'
                         }}
                       />
                     </button>
@@ -519,17 +512,21 @@ export default function BannerPreview({ settings }) {
                   <div className="flex items-center space-x-2">
                     <button 
                       type="button"
-                      className="w-11 h-5 relative rounded-full p-1 flex items-center"
-                      style={{ backgroundColor: cookieCategories.functional ? 'rgba(219, 234, 254, 1)' : 'rgba(229, 231, 235, 1)' }}
+                      className="w-12 h-6 relative rounded-full p-1 flex items-center transition-colors duration-300 ease-in-out"
+                      style={{ 
+                        backgroundColor: cookieCategories.functional ? 'rgba(219, 234, 254, 0.9)' : 'rgba(229, 231, 235, 0.6)',
+                        boxShadow: cookieCategories.functional ? '0 0 2px rgba(59, 130, 246, 0.3)' : 'none'
+                      }}
                       onClick={() => toggleCookieCategory('functional')}
                       aria-pressed={cookieCategories.functional}
                       aria-label={getTranslatedText('activateFunctionalCookies', 'Funktionale Cookies aktivieren oder deaktivieren')}
                     >
-                      <span 
-                        className="absolute w-3.5 h-3.5 rounded-full shadow-sm transition-all duration-300"
+                      <div 
+                        className="w-4 h-4 rounded-full shadow-md transition-all duration-300 ease-in-out"
                         style={{
-                          backgroundColor: cookieCategories.functional ? 'rgba(107, 114, 128, 1)' : 'rgba(156, 163, 175, 1)',
-                          left: cookieCategories.functional ? 'calc(100% - 16px)' : '2px'
+                          backgroundColor: cookieCategories.functional ? 'rgba(37, 99, 235, 1)' : 'rgba(156, 163, 175, 1)',
+                          marginLeft: cookieCategories.functional ? 'auto' : '0',
+                          transform: cookieCategories.functional ? 'scale(1.1)' : 'scale(1)'
                         }}
                       />
                     </button>
@@ -540,17 +537,21 @@ export default function BannerPreview({ settings }) {
                   <div className="flex items-center space-x-2">
                     <button 
                       type="button"
-                      className="w-11 h-5 relative rounded-full p-1 flex items-center"
-                      style={{ backgroundColor: cookieCategories.advertising ? 'rgba(219, 234, 254, 1)' : 'rgba(229, 231, 235, 1)' }}
+                      className="w-12 h-6 relative rounded-full p-1 flex items-center transition-colors duration-300 ease-in-out"
+                      style={{ 
+                        backgroundColor: cookieCategories.advertising ? 'rgba(254, 226, 226, 0.9)' : 'rgba(229, 231, 235, 0.6)',
+                        boxShadow: cookieCategories.advertising ? '0 0 2px rgba(239, 68, 68, 0.3)' : 'none'
+                      }}
                       onClick={() => toggleCookieCategory('advertising')}
                       aria-pressed={cookieCategories.advertising}
                       aria-label={getTranslatedText('activateAdvertisingCookies', 'Werbe-Cookies aktivieren oder deaktivieren')}
                     >
-                      <span 
-                        className="absolute w-3.5 h-3.5 rounded-full shadow-sm transition-all duration-300"
+                      <div 
+                        className="w-4 h-4 rounded-full shadow-md transition-all duration-300 ease-in-out"
                         style={{
-                          backgroundColor: cookieCategories.advertising ? 'rgba(107, 114, 128, 1)' : 'rgba(156, 163, 175, 1)',
-                          left: cookieCategories.advertising ? 'calc(100% - 16px)' : '2px'
+                          backgroundColor: cookieCategories.advertising ? 'rgba(220, 38, 38, 1)' : 'rgba(156, 163, 175, 1)',
+                          marginLeft: cookieCategories.advertising ? 'auto' : '0',
+                          transform: cookieCategories.advertising ? 'scale(1.1)' : 'scale(1)'
                         }}
                       />
                     </button>
@@ -615,16 +616,6 @@ export default function BannerPreview({ settings }) {
                 <div className="flex justify-between mb-3">
                   <div className="flex items-center relative" ref={languageDropdownRef}>
                     <div className="flex items-center">
-                      <Image 
-                        src="/round-logo.svg" 
-                        alt="CookieShield Logo"
-                        width={20}
-                        height={20}
-                        className="w-5 h-5 mr-2"
-                        style={{ 
-                          filter: "brightness(0.95) contrast(1.05)"
-                        }} 
-                      />
                       <button
                         type="button"
                         className="flex items-center focus:outline-none"
@@ -722,8 +713,8 @@ export default function BannerPreview({ settings }) {
                               {getTranslatedText('necessaryDescription', 'Diese Cookies sind für eine gute Funktionalität unserer Webseite erforderlich und können in unserem System nicht ausgeschaltet werden.')}
                             </p>
                           </div>
-                          <div className="w-11 h-5 bg-blue-100 rounded-full p-1 flex items-center">
-                            <div className="w-3.5 h-3.5 bg-blue-600 rounded-full ml-auto shadow-sm" />
+                          <div className="w-12 h-6 bg-pink-100 rounded-full p-1 flex items-center">
+                            <div className="w-4 h-4 bg-pink-500 rounded-full ml-auto shadow-sm" />
                           </div>
                         </div>
                       </div>
@@ -741,9 +732,18 @@ export default function BannerPreview({ settings }) {
                               {getTranslatedText('performanceDescription', 'Wir verwenden diese Cookies, um statistische Informationen über unsere Webseite bereitzustellen.')}
                             </p>
                           </div>
-                          <div className={`w-11 h-5 ${cookieCategories.performance ? 'bg-blue-100' : 'bg-gray-200'} rounded-full p-1 flex items-center`}>
+                          <div className="w-12 h-6 rounded-full p-1 flex items-center transition-colors duration-300 ease-in-out" 
+                               style={{ 
+                                 backgroundColor: cookieCategories.performance ? 'rgba(224, 242, 254, 0.9)' : 'rgba(229, 231, 235, 0.6)',
+                                 boxShadow: cookieCategories.performance ? '0 0 2px rgba(56, 189, 248, 0.3)' : 'none'
+                               }}>
                             <div 
-                              className={`w-3.5 h-3.5 ${cookieCategories.performance ? 'bg-blue-600 ml-auto' : 'bg-gray-500 ml-0'} rounded-full shadow-sm transition-all duration-300`}
+                              className="w-4 h-4 rounded-full shadow-md transition-all duration-300 ease-in-out"
+                              style={{
+                                backgroundColor: cookieCategories.performance ? 'rgba(14, 165, 233, 1)' : 'rgba(156, 163, 175, 1)',
+                                marginLeft: cookieCategories.performance ? 'auto' : '0',
+                                transform: cookieCategories.performance ? 'scale(1.1)' : 'scale(1)'
+                              }}
                             />
                           </div>
                         </button>
@@ -762,9 +762,18 @@ export default function BannerPreview({ settings }) {
                               {getTranslatedText('functionalDescription', 'Wir verwenden diese Cookies, um die Funktionalität zu verbessern und die Personalisierung zu ermöglichen.')}
                             </p>
                           </div>
-                          <div className={`w-11 h-5 ${cookieCategories.functional ? 'bg-blue-100' : 'bg-gray-200'} rounded-full p-1 flex items-center`}>
+                          <div className="w-12 h-6 rounded-full p-1 flex items-center transition-colors duration-300 ease-in-out"
+                               style={{ 
+                                 backgroundColor: cookieCategories.functional ? 'rgba(219, 234, 254, 0.9)' : 'rgba(229, 231, 235, 0.6)',
+                                 boxShadow: cookieCategories.functional ? '0 0 2px rgba(59, 130, 246, 0.3)' : 'none'
+                               }}>
                             <div 
-                              className={`w-3.5 h-3.5 ${cookieCategories.functional ? 'bg-blue-600 ml-auto' : 'bg-gray-500 ml-0'} rounded-full shadow-sm transition-all duration-300`}
+                              className="w-4 h-4 rounded-full shadow-md transition-all duration-300 ease-in-out"
+                              style={{
+                                backgroundColor: cookieCategories.functional ? 'rgba(37, 99, 235, 1)' : 'rgba(156, 163, 175, 1)',
+                                marginLeft: cookieCategories.functional ? 'auto' : '0',
+                                transform: cookieCategories.functional ? 'scale(1.1)' : 'scale(1)'
+                              }}
                             />
                           </div>
                         </button>
@@ -783,9 +792,18 @@ export default function BannerPreview({ settings }) {
                               {getTranslatedText('advertisingDescription', 'Diese Cookies werden von unseren Werbepartnern auf unserer Website gesetzt.')}
                             </p>
                           </div>
-                          <div className={`w-11 h-5 ${cookieCategories.advertising ? 'bg-blue-100' : 'bg-gray-200'} rounded-full p-1 flex items-center`}>
+                          <div className="w-12 h-6 rounded-full p-1 flex items-center transition-colors duration-300 ease-in-out"
+                               style={{ 
+                                 backgroundColor: cookieCategories.advertising ? 'rgba(254, 226, 226, 0.9)' : 'rgba(229, 231, 235, 0.6)',
+                                 boxShadow: cookieCategories.advertising ? '0 0 2px rgba(239, 68, 68, 0.3)' : 'none'
+                               }}>
                             <div 
-                              className={`w-3.5 h-3.5 ${cookieCategories.advertising ? 'bg-blue-600 ml-auto' : 'bg-gray-500 ml-0'} rounded-full shadow-sm transition-all duration-300`}
+                              className="w-4 h-4 rounded-full shadow-md transition-all duration-300 ease-in-out"
+                              style={{
+                                backgroundColor: cookieCategories.advertising ? 'rgba(220, 38, 38, 1)' : 'rgba(156, 163, 175, 1)',
+                                marginLeft: cookieCategories.advertising ? 'auto' : '0',
+                                transform: cookieCategories.advertising ? 'scale(1.1)' : 'scale(1)'
+                              }}
                             />
                           </div>
                         </button>
