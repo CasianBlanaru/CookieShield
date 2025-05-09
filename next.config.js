@@ -7,9 +7,8 @@ const nextConfig = {
     ignoreDuringBuilds: true,
   },
   transpilePackages: ['ajv'],
-  experimental: {
-    optimizeCss: true,
-  },
+  swcMinify: true,
+  poweredByHeader: false,
 };
 
 module.exports = nextConfig; 
