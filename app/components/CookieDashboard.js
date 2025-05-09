@@ -1025,7 +1025,7 @@ export default function CookieDashboard() {
         </div>
         
         <div className="mt-16 text-center">
-          <p className="text-sm text-gray-500">© 2023 CookieShield. All rights reserved.</p>
+          <p className="text-sm text-gray-500">© {new Date().getFullYear()} CookieShield. All rights reserved.</p>
           <div className="flex justify-center space-x-4 mt-3">
             <a href="/impressum" className="text-sm text-gray-500 hover:text-primary">Impressum</a>
             <a href="/datenschutz" className="text-sm text-gray-500 hover:text-primary">Data Privacy</a>
