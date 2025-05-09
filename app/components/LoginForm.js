@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function LoginForm({ onLogin, error }) {
   const [email, setEmail] = useState('');
@@ -25,15 +26,12 @@ export default function LoginForm({ onLogin, error }) {
         <div className="bg-white p-8 rounded-lg shadow-md">
           <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
-              <img 
-                src="/round-logo.svg" 
+              <Image 
+                src="/logo.svg" 
                 alt="CookieShield Logo" 
-                className="w-16 h-16" 
-                style={{ 
-                  filter: "brightness(0.95) contrast(1.05)",
-                  maxWidth: "64px",
-                  height: "auto"
-                }} 
+                width={64}
+                height={64}
+                className="w-24 h-24"
               />
             </div>
             <h1 className="text-2xl font-bold text-gray-800">Cookie Dashboard</h1>

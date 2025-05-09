@@ -129,7 +129,6 @@ export default function CookieDashboard() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('success');
-  const [isScrolled, setIsScrolled] = useState(false);
 
   // Load settings
   useEffect(() => {
@@ -171,24 +170,6 @@ export default function CookieDashboard() {
       setSettings({ ...defaultSettings, ...localSettings });
       setLoading(false);
     }
-  }, []);
-
-  // Add scroll event handler
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY;
-      if (scrollPosition > 50) { // Lower threshold for earlier activation
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    // Initial check on load
-    handleScroll();
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // Display toast message
@@ -768,32 +749,32 @@ export default function CookieDashboard() {
                 {/* Design-Einstellungen */}
                 {activeTab === 'design' && (
                   <section className="form-section">
-                    <h2 className="text-xl font-semibold mb-4 text-primary">Design Settings</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="space-y-4">
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <label htmlFor="bannerPosition" className="block text-sm font-medium text-gray-700">Banner Position</label>
+                    <h2 className="text-xl font-semibold mb-6 text-primary">Design Settings</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                      <div className="space-y-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                          <div>
+                            <label htmlFor="bannerPosition" className="block text-sm font-medium text-gray-700 mb-2">Banner Position</label>
                             <select
                               id="bannerPosition"
                               name="bannerPosition"
                               value={settings.bannerPosition}
                               onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
+                              className="futuristic-input block w-full"
                             >
                               <option value="bottom">Bottom</option>
                               <option value="top">Top</option>
                             </select>
                           </div>
                           
-                          <div className="space-y-2">
-                            <label htmlFor="bannerStyle" className="block text-sm font-medium text-gray-700">Banner Style</label>
+                          <div>
+                            <label htmlFor="bannerStyle" className="block text-sm font-medium text-gray-700 mb-2">Banner Style</label>
                             <select
                               id="bannerStyle"
                               name="bannerStyle"
                               value={settings.bannerStyle}
                               onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
+                              className="futuristic-input block w-full"
                             >
                               <option value="side">Side Panel</option>
                               <option value="full">Full Width</option>
@@ -801,15 +782,15 @@ export default function CookieDashboard() {
                           </div>
                         </div>
                         
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="space-y-2">
-                            <label htmlFor="fontFamily" className="block text-sm font-medium text-gray-700">Font Family</label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                          <div>
+                            <label htmlFor="fontFamily" className="block text-sm font-medium text-gray-700 mb-2">Font Family</label>
                             <select
                               id="fontFamily"
                               name="fontFamily"
                               value={settings.fontFamily}
                               onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
+                              className="futuristic-input block w-full"
                               style={{ fontFamily: settings.fontFamily }}
                             >
                               <option value="Inter, sans-serif" style={{ fontFamily: 'Inter, sans-serif' }}>Inter</option>
@@ -820,14 +801,14 @@ export default function CookieDashboard() {
                             </select>
                           </div>
                           
-                          <div className="space-y-2">
-                            <label htmlFor="bannerAnimation" className="block text-sm font-medium text-gray-700">Animation</label>
+                          <div>
+                            <label htmlFor="bannerAnimation" className="block text-sm font-medium text-gray-700 mb-2">Animation</label>
                             <select
                               id="bannerAnimation"
                               name="bannerAnimation"
                               value={settings.bannerAnimation}
                               onChange={handleChange}
-                              className="futuristic-input mt-1 block w-full"
+                              className="futuristic-input block w-full"
                             >
                               <option value="none">None</option>
                               <option value="fade">Fade</option>
@@ -837,12 +818,12 @@ export default function CookieDashboard() {
                           </div>
                         </div>
                         
-                        {/* Border Radius und Color Picker */}
-                        <div className="space-y-3 mt-2">
-                          <label htmlFor="buttonBorderRadius" className="block text-sm font-medium text-gray-700">
-                            Button Border Radius ({settings.buttonBorderRadius}px)
+                        {/* Border Radius mit Vorschau */}
+                        <div className="mt-4">
+                          <label htmlFor="buttonBorderRadius" className="block text-sm font-medium text-gray-700 mb-3">
+                            Button Border Radius
                           </label>
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-5">
                             <input
                               id="buttonBorderRadius"
                               type="range"
@@ -851,10 +832,10 @@ export default function CookieDashboard() {
                               max="20"
                               value={settings.buttonBorderRadius}
                               onChange={handleChange}
-                              className="w-3/4"
+                              className="flex-grow"
                             />
                             <div 
-                              className="radius-preview flex-shrink-0 w-20 h-8 flex items-center justify-center text-xs" 
+                              className="flex-shrink-0 w-16 h-16 flex items-center justify-center text-sm font-medium bg-gradient-to-br from-indigo-50 to-white shadow-sm border border-gray-100"
                               style={{ borderRadius: `${settings.buttonBorderRadius}px` }}
                             >
                               {settings.buttonBorderRadius}px
@@ -863,128 +844,172 @@ export default function CookieDashboard() {
                         </div>
                       </div>
                       
-                      <div className="space-y-4">
-                        {/* Kompakter Farb-Picker für Banner */}
-                        <fieldset>
-                          <legend className="block text-sm font-medium text-gray-700 mb-3">Banner Colors</legend>
-                          <div className="grid grid-cols-2 gap-3">
-                            <div className="space-y-2">
-                              <label htmlFor="bannerBgColor" className="block text-xs text-gray-600">Background</label>
-                              <div className="color-picker-wrapper">
-                                <input
-                                  id="bannerBgColor"
-                                  type="color"
-                                  name="bannerBgColor"
-                                  value={settings.bannerBgColor}
-                                  onChange={handleChange}
-                                />
-                                <input 
-                                  type="text"
-                                  value={settings.bannerBgColor}
-                                  onChange={(e) => handleChange({target: {name: 'bannerBgColor', value: e.target.value}})}
-                                  className="futuristic-input text-sm"
-                                />
+                      <div className="space-y-6">
+                        {/* Banner Colors */}
+                        <div className="mb-3">
+                          <h3 className="text-base font-medium text-indigo-600 mb-4 inline-flex items-center">
+                            <span className="w-2 h-2 bg-indigo-400 rounded-full mr-2" />
+                            Banner Colors
+                          </h3>
+                          <fieldset className="p-5 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100 shadow-sm">
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="flex flex-col items-center">
+                                <label htmlFor="bannerBgColor" className="block text-xs text-gray-600 mb-2">Background</label>
+                                <div className="color-preview-container relative">
+                                  <label htmlFor="bannerBgColor" className="w-14 h-14 rounded-full shadow-sm mb-2 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    style={{backgroundColor: settings.bannerBgColor}}>
+                                    <span className="sr-only">Choose color</span>
+                                  </label>
+                                  <input
+                                    id="bannerBgColor"
+                                    type="color"
+                                    name="bannerBgColor"
+                                    value={settings.bannerBgColor}
+                                    onChange={handleChange}
+                                    className="sr-only"
+                                  />
+                                  <input 
+                                    type="text"
+                                    value={settings.bannerBgColor}
+                                    onChange={(e) => handleChange({target: {name: 'bannerBgColor', value: e.target.value}})}
+                                    className="futuristic-input text-sm text-center w-24"
+                                  />
+                                </div>
+                              </div>
+                              
+                              <div className="flex flex-col items-center">
+                                <label htmlFor="bannerTextColor" className="block text-xs text-gray-600 mb-2">Text</label>
+                                <div className="color-preview-container relative">
+                                  <label htmlFor="bannerTextColor" className="w-14 h-14 rounded-full shadow-sm mb-2 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    style={{backgroundColor: settings.bannerTextColor}}>
+                                    <span className="sr-only">Choose color</span>
+                                  </label>
+                                  <input
+                                    id="bannerTextColor"
+                                    type="color"
+                                    name="bannerTextColor"
+                                    value={settings.bannerTextColor}
+                                    onChange={handleChange}
+                                    className="sr-only"
+                                  />
+                                  <input 
+                                    type="text"
+                                    value={settings.bannerTextColor}
+                                    onChange={(e) => handleChange({target: {name: 'bannerTextColor', value: e.target.value}})}
+                                    className="futuristic-input text-sm text-center w-24"
+                                  />
+                                </div>
+                              </div>
+                              
+                              <div className="flex flex-col items-center">
+                                <label htmlFor="linkColor" className="block text-xs text-gray-600 mb-2">Link Color</label>
+                                <div className="color-preview-container relative">
+                                  <label htmlFor="linkColor" className="w-14 h-14 rounded-full shadow-sm mb-2 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    style={{backgroundColor: settings.linkColor}}>
+                                    <span className="sr-only">Choose color</span>
+                                  </label>
+                                  <input
+                                    id="linkColor"
+                                    type="color"
+                                    name="linkColor"
+                                    value={settings.linkColor}
+                                    onChange={handleChange}
+                                    className="sr-only"
+                                  />
+                                  <input 
+                                    type="text"
+                                    value={settings.linkColor}
+                                    onChange={(e) => handleChange({target: {name: 'linkColor', value: e.target.value}})}
+                                    className="futuristic-input text-sm text-center w-24"
+                                  />
+                                </div>
+                              </div>
+                              
+                              <div className="flex flex-col items-center">
+                                <label htmlFor="activeColor" className="block text-xs text-gray-600 mb-2">Active Elements</label>
+                                <div className="color-preview-container relative">
+                                  <label htmlFor="activeColor" className="w-14 h-14 rounded-full shadow-sm mb-2 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    style={{backgroundColor: settings.activeColor}}>
+                                    <span className="sr-only">Choose color</span>
+                                  </label>
+                                  <input
+                                    id="activeColor"
+                                    type="color"
+                                    name="activeColor"
+                                    value={settings.activeColor}
+                                    onChange={handleChange}
+                                    className="sr-only"
+                                  />
+                                  <input 
+                                    type="text"
+                                    value={settings.activeColor}
+                                    onChange={(e) => handleChange({target: {name: 'activeColor', value: e.target.value}})}
+                                    className="futuristic-input text-sm text-center w-24"
+                                  />
+                                </div>
                               </div>
                             </div>
-                            <div className="space-y-2">
-                              <label htmlFor="bannerTextColor" className="block text-xs text-gray-600">Text</label>
-                              <div className="color-picker-wrapper">
-                                <input
-                                  id="bannerTextColor"
-                                  type="color"
-                                  name="bannerTextColor"
-                                  value={settings.bannerTextColor}
-                                  onChange={handleChange}
-                                />
-                                <input 
-                                  type="text"
-                                  value={settings.bannerTextColor}
-                                  onChange={(e) => handleChange({target: {name: 'bannerTextColor', value: e.target.value}})}
-                                  className="futuristic-input text-sm"
-                                />
-                              </div>
-                            </div>
-                            <div className="space-y-2">
-                              <label htmlFor="linkColor" className="block text-xs text-gray-600">Link Color</label>
-                              <div className="color-picker-wrapper">
-                                <input
-                                  id="linkColor"
-                                  type="color"
-                                  name="linkColor"
-                                  value={settings.linkColor}
-                                  onChange={handleChange}
-                                />
-                                <input 
-                                  type="text"
-                                  value={settings.linkColor}
-                                  onChange={(e) => handleChange({target: {name: 'linkColor', value: e.target.value}})}
-                                  className="futuristic-input text-sm"
-                                />
-                              </div>
-                            </div>
-                            <div className="space-y-2">
-                              <label htmlFor="activeColor" className="block text-xs text-gray-600">Active Elements</label>
-                              <div className="color-picker-wrapper">
-                                <input
-                                  id="activeColor"
-                                  type="color"
-                                  name="activeColor"
-                                  value={settings.activeColor}
-                                  onChange={handleChange}
-                                />
-                                <input 
-                                  type="text"
-                                  value={settings.activeColor}
-                                  onChange={(e) => handleChange({target: {name: 'activeColor', value: e.target.value}})}
-                                  className="futuristic-input text-sm"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
+                          </fieldset>
+                        </div>
                         
-                        {/* Kompakter Farb-Picker für Buttons */}
-                        <fieldset>
-                          <legend className="block text-sm font-medium text-gray-700 mb-3">Button Colors</legend>
-                          <div className="grid grid-cols-2 gap-3">
-                            <div className="space-y-2">
-                              <label htmlFor="buttonBgColor" className="block text-xs text-gray-600">Background</label>
-                              <div className="color-picker-wrapper">
-                                <input
-                                  id="buttonBgColor"
-                                  type="color"
-                                  name="buttonBgColor"
-                                  value={settings.buttonBgColor}
-                                  onChange={handleChange}
-                                />
-                                <input 
-                                  type="text"
-                                  value={settings.buttonBgColor}
-                                  onChange={(e) => handleChange({target: {name: 'buttonBgColor', value: e.target.value}})}
-                                  className="futuristic-input text-sm"
-                                />
+                        {/* Button Colors */}
+                        <div className="mb-3">
+                          <h3 className="text-base font-medium text-indigo-600 mb-4 inline-flex items-center">
+                            <span className="w-2 h-2 bg-indigo-400 rounded-full mr-2" />
+                            Button Colors
+                          </h3>
+                          <fieldset className="p-5 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100 shadow-sm">
+                            <div className="grid grid-cols-2 gap-4">
+                              <div className="flex flex-col items-center">
+                                <label htmlFor="buttonBgColor" className="block text-xs text-gray-600 mb-2">Background</label>
+                                <div className="color-preview-container relative">
+                                  <label htmlFor="buttonBgColor" className="w-14 h-14 rounded-full shadow-sm mb-2 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    style={{backgroundColor: settings.buttonBgColor}}>
+                                    <span className="sr-only">Choose color</span>
+                                  </label>
+                                  <input
+                                    id="buttonBgColor"
+                                    type="color"
+                                    name="buttonBgColor"
+                                    value={settings.buttonBgColor}
+                                    onChange={handleChange}
+                                    className="sr-only"
+                                  />
+                                  <input 
+                                    type="text"
+                                    value={settings.buttonBgColor}
+                                    onChange={(e) => handleChange({target: {name: 'buttonBgColor', value: e.target.value}})}
+                                    className="futuristic-input text-sm text-center w-24"
+                                  />
+                                </div>
+                              </div>
+                              
+                              <div className="flex flex-col items-center">
+                                <label htmlFor="buttonTextColor" className="block text-xs text-gray-600 mb-2">Text</label>
+                                <div className="color-preview-container relative">
+                                  <label htmlFor="buttonTextColor" className="w-14 h-14 rounded-full shadow-sm mb-2 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    style={{backgroundColor: settings.buttonTextColor}}>
+                                    <span className="sr-only">Choose color</span>
+                                  </label>
+                                  <input
+                                    id="buttonTextColor"
+                                    type="color"
+                                    name="buttonTextColor"
+                                    value={settings.buttonTextColor}
+                                    onChange={handleChange}
+                                    className="sr-only"
+                                  />
+                                  <input 
+                                    type="text"
+                                    value={settings.buttonTextColor}
+                                    onChange={(e) => handleChange({target: {name: 'buttonTextColor', value: e.target.value}})}
+                                    className="futuristic-input text-sm text-center w-24"
+                                  />
+                                </div>
                               </div>
                             </div>
-                            <div className="space-y-2">
-                              <label htmlFor="buttonTextColor" className="block text-xs text-gray-600">Text</label>
-                              <div className="color-picker-wrapper">
-                                <input
-                                  id="buttonTextColor"
-                                  type="color"
-                                  name="buttonTextColor"
-                                  value={settings.buttonTextColor}
-                                  onChange={handleChange}
-                                />
-                                <input 
-                                  type="text"
-                                  value={settings.buttonTextColor}
-                                  onChange={(e) => handleChange({target: {name: 'buttonTextColor', value: e.target.value}})}
-                                  className="futuristic-input text-sm"
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        </fieldset>
+                          </fieldset>
+                        </div>
                       </div>
                     </div>
                   </section>
@@ -1013,16 +1038,66 @@ export default function CookieDashboard() {
 
             {/* Right column: Preview */}
             <div className="w-full md:w-1/2 md:pl-4 mt-8 md:mt-0">
-              <div className={`banner-preview-container transition-all duration-500 will-change-transform ${isScrolled ? 'sticky' : ''}`} 
+              <div className="banner-preview-container transition-all duration-500 will-change-transform" 
                    style={{
                      position: 'sticky', 
                      top: '2rem',
                      zIndex: 10
                    }}>
-                <h2 className="text-xl font-semibold mb-4 text-primary mt-4">Banner Preview</h2>
-                <div className="relative w-full h-[700px] rounded-xl futuristic-card overflow-hidden p-4 flex items-center justify-center transform transition-all duration-500 hover:scale-[1.01] shadow-lg hover:shadow-xl">
-                  <div className="w-full h-full">
+                {/* Preview mode options - mittig positioniert */}
+                <div className="mb-8 flex justify-center gap-4">
+                  <button 
+                    type="button"
+                    className="px-5 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors shadow-sm"
+                    onClick={() => {
+                      // Setze den showDetailedView-Status im BannerPreview auf false
+                      const event = new CustomEvent('toggleBannerView', { 
+                        detail: { showDetailedView: false }
+                      });
+                      window.dispatchEvent(event);
+                    }}
+                  >
+                    <span className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2 text-indigo-500" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fillRule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clipRule="evenodd" />
+                      </svg>
+                      Kompakte Ansicht
+                    </span>
+                  </button>
+                  <button 
+                    type="button"
+                    className="px-5 py-2 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-sm"
+                    onClick={() => {
+                      // Setze den showDetailedView-Status im BannerPreview auf true
+                      const event = new CustomEvent('toggleBannerView', { 
+                        detail: { showDetailedView: true }
+                      });
+                      window.dispatchEvent(event);
+                    }}
+                  >
+                    <span className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                      </svg>
+                      Detailansicht
+                    </span>
+                  </button>
+                </div>
+                
+                <div className="relative w-full">
+                  <div className="relative w-full min-h-[600px] flex items-center justify-center">
+                    {/* Cookie-Banner-Komponente */}
                     <BannerPreview settings={settings} />
+                  </div>
+                  
+                  {/* Info-Box unter dem Preview */}
+                  <div className="mt-4 bg-white p-3 rounded-lg border border-gray-100 text-xs text-gray-500">
+                    <p className="flex items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-indigo-400 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                      </svg>
+                      Die Vorschau zeigt, wie das Cookie-Banner auf der Webseite erscheinen wird. Anpassungen werden in Echtzeit angezeigt.
+                    </p>
                   </div>
                 </div>
               </div>
