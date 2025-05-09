@@ -1,5 +1,5 @@
-/* Tailwind-Direktiven */
-@import "tailwindcss/preflight";
+@tailwind base;
+@tailwind components;
 @tailwind utilities;
 
 :root {
