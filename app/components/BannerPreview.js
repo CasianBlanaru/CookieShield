@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useCallback, useState } from 'react';
+import Image from 'next/image';
 
 export default function BannerPreview({ settings }) {
   // Banner reference
@@ -19,7 +20,7 @@ export default function BannerPreview({ settings }) {
   const [currentLanguage, setCurrentLanguage] = useState('de'); // Default to German
   const languageDropdownRef = useRef(null);
 
-  // Available languages with labels
+  // Available languages with labels - defined as a constant, not a state variable
   const availableLanguages = {
     en: 'English',
     de: 'Deutsch',
@@ -72,6 +73,7 @@ export default function BannerPreview({ settings }) {
     if (settings.forcedLang && availableLanguages[settings.forcedLang]) {
       setCurrentLanguage(settings.forcedLang);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings.forcedLang]);
 
   // Function to apply selected animation to the banner
@@ -408,14 +410,14 @@ export default function BannerPreview({ settings }) {
                 <div className="flex justify-between mb-4">
                   <div className="flex items-center relative" ref={languageDropdownRef}>
                     <div className="flex items-center">
-                      <img 
+                      <Image 
                         src="/round-logo.svg" 
-                        alt="CookieShield Logo" 
-                        className="w-5 h-5 mr-2" 
+                        alt="CookieShield Logo"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5 mr-2"
                         style={{ 
-                          filter: "brightness(0.95) contrast(1.05)",
-                          maxWidth: "20px",
-                          height: "auto"
+                          filter: "brightness(0.95) contrast(1.05)"
                         }} 
                       />
                       <button
@@ -613,14 +615,14 @@ export default function BannerPreview({ settings }) {
                 <div className="flex justify-between mb-3">
                   <div className="flex items-center relative" ref={languageDropdownRef}>
                     <div className="flex items-center">
-                      <img 
+                      <Image 
                         src="/round-logo.svg" 
-                        alt="CookieShield Logo" 
-                        className="w-5 h-5 mr-2" 
+                        alt="CookieShield Logo"
+                        width={20}
+                        height={20}
+                        className="w-5 h-5 mr-2"
                         style={{ 
-                          filter: "brightness(0.95) contrast(1.05)",
-                          maxWidth: "20px",
-                          height: "auto"
+                          filter: "brightness(0.95) contrast(1.05)"
                         }} 
                       />
                       <button
