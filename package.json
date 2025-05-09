@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && cp -r public/manifest.json public/favicon .next/",
     "start": "next start",
     "lint": "next lint"
   },
