@@ -24,6 +24,18 @@ export default function LoginForm({ onLogin, error }) {
       <div className="w-full max-w-md fade-in">
         <div className="bg-white p-8 rounded-lg shadow-md">
           <div className="text-center mb-8">
+            <div className="flex justify-center mb-4">
+              <img 
+                src="/round-logo.svg" 
+                alt="CookieShield Logo" 
+                className="w-16 h-16" 
+                style={{ 
+                  filter: "brightness(0.95) contrast(1.05)",
+                  maxWidth: "64px",
+                  height: "auto"
+                }} 
+              />
+            </div>
             <h1 className="text-2xl font-bold text-gray-800">Cookie Dashboard</h1>
             <p className="text-sm text-gray-500 mt-1">Manage your cookie consent settings</p>
           </div>

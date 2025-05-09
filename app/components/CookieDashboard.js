@@ -30,19 +30,86 @@ const defaultSettings = {
   bannerStyle: 'side', // 'side' or 'full'
   translations: {
     de: {
+      language: 'Deutsch',
       bannerMessage: 'Wir verwenden Cookies, um Ihre Erfahrung zu verbessern. Wenn Sie fortfahren, stimmen Sie der Verwendung von Cookies zu.',
       acceptAllLabel: 'Alle akzeptieren',
       denyAllLabel: 'Alle ablehnen',
       settingsLabel: 'Cookie-Einstellungen',
-      saveLabel: 'Einstellungen speichern'
+      saveLabel: 'Einstellungen speichern',
+      weUseCookies: 'Wir verwenden Cookies',
+      customize: 'Anpassen',
+      reject: 'Ablehnen',
+      acceptAll: 'Alle akzeptieren',
+      necessary: 'Notwendig',
+      performance: 'Performance',
+      functional: 'Funktional',
+      advertising: 'Werbung',
+      privacyTerms: 'Datenschutzbestimmungen | Impressum',
+      settings: 'Einstellungen',
+      cookies: 'Cookies',
+      cookiePolicy: 'Cookie-Richtlinie',
+      myData: 'Meine Daten',
+      cookieList: 'Cookie Liste',
+      cookieListDescription: 'Hier finden Sie eine detaillierte Liste aller Cookies, die wir auf unserer Website verwenden.',
+      necessaryCookies: 'Notwendige Cookies',
+      cookieDescription: 'Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie unsere Website besuchen.',
+      gdprRights: 'Nach der DSGVO haben Sie ein Recht auf Auskunft, Berichtigung und Löschung Ihrer Daten.',
+      requestData: 'Meine Daten anfordern'
     },
     fr: {
+      language: 'Français',
       bannerMessage: 'Nous utilisons des cookies pour améliorer votre expérience. En continuant, vous acceptez notre utilisation des cookies.',
       acceptAllLabel: 'Tout accepter',
       denyAllLabel: 'Tout refuser',
       settingsLabel: 'Paramètres des cookies',
-      saveLabel: 'Enregistrer les paramètres'
+      saveLabel: 'Enregistrer les paramètres',
+      weUseCookies: 'Nous utilisons des cookies',
+      customize: 'Personnaliser',
+      reject: 'Refuser',
+      acceptAll: 'Tout accepter',
+      necessary: 'Nécessaire',
+      performance: 'Performance',
+      functional: 'Fonctionnel',
+      advertising: 'Publicité',
+      privacyTerms: 'Politique de confidentialité | Mentions légales',
+      settings: 'Paramètres',
+      cookies: 'Cookies',
+      cookiePolicy: 'Politique de cookies',
+      myData: 'Mes données',
+      cookieList: 'Liste des cookies',
+      cookieListDescription: 'Voici une liste détaillée de tous les cookies que nous utilisons sur notre site web.',
+      necessaryCookies: 'Cookies nécessaires',
+      cookieDescription: 'Les cookies sont de petits fichiers texte qui sont stockés sur votre appareil lorsque vous visitez notre site web.',
+      gdprRights: 'Selon le RGPD, vous avez le droit d\'accéder, de rectifier et de supprimer vos données.',
+      requestData: 'Demander mes données'
     },
+    en: {
+      language: 'English',
+      bannerMessage: 'We use cookies to enhance your experience. By continuing, you agree to our use of cookies.',
+      acceptAllLabel: 'Accept All',
+      denyAllLabel: 'Deny All',
+      settingsLabel: 'Cookie Settings',
+      saveLabel: 'Save Settings',
+      weUseCookies: 'We use cookies',
+      customize: 'Customize',
+      reject: 'Reject',
+      acceptAll: 'Accept All',
+      necessary: 'Necessary',
+      performance: 'Performance',
+      functional: 'Functional',
+      advertising: 'Advertising',
+      privacyTerms: 'Privacy Policy | Imprint',
+      settings: 'Settings',
+      cookies: 'Cookies',
+      cookiePolicy: 'Cookie Policy',
+      myData: 'My Data',
+      cookieList: 'Cookie List',
+      cookieListDescription: 'Here you can find a detailed list of all cookies we use on our website.',
+      necessaryCookies: 'Necessary Cookies',
+      cookieDescription: 'Cookies are small text files that are stored on your device when you visit our website.',
+      gdprRights: 'According to GDPR, you have the right to access, rectify and delete your data.',
+      requestData: 'Request my data'
+    }
   },
   // Design extensions
   fontFamily: 'Inter, sans-serif',
@@ -354,7 +421,19 @@ export default function CookieDashboard() {
       <div className="container">
         <div className="card mb-6 relative backdrop-blur-sm">
           <div className="card-header">
-            <h1 className="dashboard-title">Cookie Banner Dashboard</h1>
+            <div className="flex items-center">
+              <img 
+                src="/round-logo.svg" 
+                alt="CookieShield Logo" 
+                className="w-8 h-8 mr-3" 
+                style={{ 
+                  filter: "brightness(0.95) contrast(1.05)",
+                  maxWidth: "32px",
+                  height: "auto"
+                }} 
+              />
+              <h1 className="dashboard-title">Cookie Banner Dashboard</h1>
+            </div>
             <div className="flex items-center space-x-3">
               <button 
                 type="button"
