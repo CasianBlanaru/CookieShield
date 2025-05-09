@@ -15,6 +15,64 @@ export default function BannerPreview({ settings }) {
     functional: false,
     advertising: false
   });
+  const [showLanguageDropdown, setShowLanguageDropdown] = useState(false);
+  const [currentLanguage, setCurrentLanguage] = useState('de'); // Default to German
+  const languageDropdownRef = useRef(null);
+
+  // Available languages with labels
+  const availableLanguages = {
+    en: 'English',
+    de: 'Deutsch',
+    fr: 'Français'
+  };
+
+  // Country flags for each language
+  const languageFlags = {
+    en: '🇬🇧',
+    de: '🇩🇪',
+    fr: '🇫🇷'
+  };
+
+  // Function to get the translated text based on current language
+  const getTranslatedText = (key, defaultText) => {
+    if (currentLanguage === 'en') {
+      return settings[key] || defaultText;
+    }
+    
+    if (settings.translations?.[currentLanguage]?.[key]) {
+      return settings.translations[currentLanguage][key];
+    }
+    
+    return defaultText;
+  };
+
+  // Function to handle language change
+  const handleLanguageChange = (lang) => {
+    setCurrentLanguage(lang);
+    setShowLanguageDropdown(false);
+  };
+
+  // Effect to close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (languageDropdownRef.current && !languageDropdownRef.current.contains(event.target)) {
+        setShowLanguageDropdown(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  // Effect to update the language based on the forced language setting
+  useEffect(() => {
+    // Check if forcedLang is set and is a valid language code
+    if (settings.forcedLang && availableLanguages[settings.forcedLang]) {
+      setCurrentLanguage(settings.forcedLang);
+    }
+  }, [settings.forcedLang]);
 
   // Function to apply selected animation to the banner
   const applyAnimation = useCallback((animationType) => {
@@ -348,14 +406,54 @@ export default function BannerPreview({ settings }) {
               >
                 {/* Header with language and privacy links */}
                 <div className="flex justify-between mb-4">
-                  <div className="flex items-center">
-                    <span className="text-[#e97040] mr-1 text-sm" style={linkStyle}>Deutsch</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4" style={linkStyle} aria-hidden="true">
-                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-                    </svg>
+                  <div className="flex items-center relative" ref={languageDropdownRef}>
+                    <div className="flex items-center">
+                      <img 
+                        src="/round-logo.svg" 
+                        alt="CookieShield Logo" 
+                        className="w-5 h-5 mr-2" 
+                        style={{ 
+                          filter: "brightness(0.95) contrast(1.05)",
+                          maxWidth: "20px",
+                          height: "auto"
+                        }} 
+                      />
+                      <button
+                        type="button"
+                        className="flex items-center focus:outline-none"
+                        onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+                        aria-haspopup="true"
+                        aria-expanded={showLanguageDropdown}
+                      >
+                        <span className="text-[#e97040] mr-1 text-sm" style={linkStyle}>
+                          <span className="mr-1">{languageFlags[currentLanguage]}</span>
+                          {availableLanguages[currentLanguage]}
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4" style={linkStyle} aria-hidden="true">
+                          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+                    
+                    {/* Language Dropdown */}
+                    {showLanguageDropdown && (
+                      <div className="absolute top-6 left-0 mt-1 w-32 bg-white rounded-md shadow-lg border border-gray-200 z-50 py-1">
+                        {Object.entries(availableLanguages).map(([code, name]) => (
+                          <button
+                            key={code}
+                            type="button"
+                            className={`w-full text-left px-3 py-1.5 text-sm hover:bg-gray-100 ${currentLanguage === code ? 'font-medium text-[#e97040]' : 'text-gray-700'}`}
+                            onClick={() => handleLanguageChange(code)}
+                          >
+                            <span className="mr-2">{languageFlags[code]}</span>
+                            {name}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs mr-2" style={linkStyle}>Datenschutzbestimmungen | Impressum</span>
+                    <span className="text-xs mr-2" style={linkStyle}>{getTranslatedText('privacyTerms', 'Datenschutzbestimmungen | Impressum')}</span>
                     <button type="button" className="text-gray-400">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4" aria-hidden="true">
                         <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
@@ -367,16 +465,17 @@ export default function BannerPreview({ settings }) {
                 {/* Main content */}
                 <div className="mb-4">
                   <h2 className="text-lg font-bold mb-2" style={{ color: settings.bannerTextColor || '#333333' }}>
-                    Wir verwenden Cookies
+                    {getTranslatedText('weUseCookies', 'Wir verwenden Cookies')}
                   </h2>
                   <p className="mb-3 text-sm leading-relaxed" style={{ color: settings.bannerTextColor || '#333333' }}>
-                    Wir können diese zur Analyse unserer Besucherdaten platzieren, um unsere Website zu verbessern, personalisierte Inhalte anzuzeigen und Ihnen ein großartiges Website-Erlebnis zu bieten. Für weitere Informationen zu den von uns verwendeten Cookies öffnen Sie die Einstellungen.
+                    {getTranslatedText('wePlaceCookies', 'Wir können diese zur Analyse unserer Besucherdaten platzieren, um unsere Website zu verbessern, personalisierte Inhalte anzuzeigen und Ihnen ein großartiges Website-Erlebnis zu bieten. Für weitere Informationen zu den von uns verwendeten Cookies öffnen Sie die Einstellungen.')}
                   </p>
                   <p className="mb-3 text-sm leading-relaxed" style={{ color: settings.bannerTextColor || '#333333' }}>
-                    Die Daten werden zum Zweck der Personalisierung von Werbung und zur Messung der Wirksamkeit von Werbekampagnen erhoben. Die Daten können mit Google LLC geteilt werden, weitere Informationen finden Sie <span style={linkStyle}>hier</span>.
+                    {getTranslatedText('dataCollected', 'Die Daten werden zum Zweck der Personalisierung von Werbung und zur Messung der Wirksamkeit von Werbekampagnen erhoben. Die Daten können mit Google LLC geteilt werden, weitere Informationen finden Sie')}
+                    <span style={linkStyle}>{getTranslatedText('here', 'hier')}</span>.
                   </p>
                   <p className="mb-4 text-sm leading-relaxed" style={{ color: settings.bannerTextColor || '#333333' }}>
-                    Ihre Einwilligung und die Cookie Richtlinie gelten für alle Websites von &bdquo;CookieShield&ldquo;, einschließlich: CookieShield Live, app.cookieshield.com/.
+                    {getTranslatedText('consent', 'Ihre Einwilligung und die Cookie Richtlinie gelten für alle Websites von &bdquo;CookieShield&ldquo;, einschließlich: CookieShield Live, app.cookieshield.com/.')}
                   </p>
                 </div>
                 
@@ -390,7 +489,7 @@ export default function BannerPreview({ settings }) {
                         style={{ left: 'calc(100% - 16px)' }}
                       />
                     </div>
-                    <span className="font-medium text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>Notwendig</span>
+                    <span className="font-medium text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('necessary', 'Notwendig')}</span>
                   </div>
                   
                   {/* Performance */}
@@ -401,7 +500,7 @@ export default function BannerPreview({ settings }) {
                       style={{ backgroundColor: cookieCategories.performance ? 'rgba(219, 234, 254, 1)' : 'rgba(229, 231, 235, 1)' }}
                       onClick={() => toggleCookieCategory('performance')}
                       aria-pressed={cookieCategories.performance}
-                      aria-label="Performance-Cookies aktivieren oder deaktivieren"
+                      aria-label={getTranslatedText('activatePerformanceCookies', 'Performance-Cookies aktivieren oder deaktivieren')}
                     >
                       <span 
                         className="absolute w-3.5 h-3.5 rounded-full shadow-sm transition-all duration-300"
@@ -411,7 +510,7 @@ export default function BannerPreview({ settings }) {
                         }}
                       />
                     </button>
-                    <span className="font-medium text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>Performance</span>
+                    <span className="font-medium text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('performance', 'Performance')}</span>
                   </div>
                   
                   {/* Functional */}
@@ -422,7 +521,7 @@ export default function BannerPreview({ settings }) {
                       style={{ backgroundColor: cookieCategories.functional ? 'rgba(219, 234, 254, 1)' : 'rgba(229, 231, 235, 1)' }}
                       onClick={() => toggleCookieCategory('functional')}
                       aria-pressed={cookieCategories.functional}
-                      aria-label="Funktionale Cookies aktivieren oder deaktivieren"
+                      aria-label={getTranslatedText('activateFunctionalCookies', 'Funktionale Cookies aktivieren oder deaktivieren')}
                     >
                       <span 
                         className="absolute w-3.5 h-3.5 rounded-full shadow-sm transition-all duration-300"
@@ -432,7 +531,7 @@ export default function BannerPreview({ settings }) {
                         }}
                       />
                     </button>
-                    <span className="font-medium text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>Funktional</span>
+                    <span className="font-medium text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('functional', 'Funktional')}</span>
                   </div>
                   
                   {/* Advertising */}
@@ -443,7 +542,7 @@ export default function BannerPreview({ settings }) {
                       style={{ backgroundColor: cookieCategories.advertising ? 'rgba(219, 234, 254, 1)' : 'rgba(229, 231, 235, 1)' }}
                       onClick={() => toggleCookieCategory('advertising')}
                       aria-pressed={cookieCategories.advertising}
-                      aria-label="Werbe-Cookies aktivieren oder deaktivieren"
+                      aria-label={getTranslatedText('activateAdvertisingCookies', 'Werbe-Cookies aktivieren oder deaktivieren')}
                     >
                       <span 
                         className="absolute w-3.5 h-3.5 rounded-full shadow-sm transition-all duration-300"
@@ -453,7 +552,7 @@ export default function BannerPreview({ settings }) {
                         }}
                       />
                     </button>
-                    <span className="font-medium text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>Werbung</span>
+                    <span className="font-medium text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('advertising', 'Werbung')}</span>
                   </div>
                 </div>
                 
@@ -471,7 +570,7 @@ export default function BannerPreview({ settings }) {
                       }}
                       onClick={toggleDetailedView}
                     >
-                      Anpassen
+                      {getTranslatedText('customize', 'Anpassen')}
                     </button>
                   </div>
                   <div className="col-span-6">
@@ -483,7 +582,7 @@ export default function BannerPreview({ settings }) {
                         borderRadius: `${settings.buttonBorderRadius || 4}px`
                       }}
                     >
-                      Ablehnen
+                      {getTranslatedText('reject', 'Ablehnen')}
                     </button>
                   </div>
                   <div className="col-span-6">
@@ -496,7 +595,7 @@ export default function BannerPreview({ settings }) {
                         borderRadius: `${settings.buttonBorderRadius || 4}px`
                       }}
                     >
-                      Alle akzeptieren
+                      {getTranslatedText('acceptAll', 'Alle akzeptieren')}
                     </button>
                   </div>
                 </div>
@@ -512,14 +611,54 @@ export default function BannerPreview({ settings }) {
               >
                 {/* Header with language and close button */}
                 <div className="flex justify-between mb-3">
-                  <div className="flex items-center">
-                    <span className="text-[#e97040] mr-1 text-sm" style={linkStyle}>Deutsch</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4" style={linkStyle} aria-hidden="true">
-                      <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
-                    </svg>
+                  <div className="flex items-center relative" ref={languageDropdownRef}>
+                    <div className="flex items-center">
+                      <img 
+                        src="/round-logo.svg" 
+                        alt="CookieShield Logo" 
+                        className="w-5 h-5 mr-2" 
+                        style={{ 
+                          filter: "brightness(0.95) contrast(1.05)",
+                          maxWidth: "20px",
+                          height: "auto"
+                        }} 
+                      />
+                      <button
+                        type="button"
+                        className="flex items-center focus:outline-none"
+                        onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
+                        aria-haspopup="true"
+                        aria-expanded={showLanguageDropdown}
+                      >
+                        <span className="text-[#e97040] mr-1 text-sm" style={linkStyle}>
+                          <span className="mr-1">{languageFlags[currentLanguage]}</span>
+                          {availableLanguages[currentLanguage]}
+                        </span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4" style={linkStyle} aria-hidden="true">
+                          <path fillRule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+                    
+                    {/* Language Dropdown */}
+                    {showLanguageDropdown && (
+                      <div className="absolute top-6 left-0 mt-1 w-32 bg-white rounded-md shadow-lg border border-gray-200 z-50 py-1">
+                        {Object.entries(availableLanguages).map(([code, name]) => (
+                          <button
+                            key={code}
+                            type="button"
+                            className={`w-full text-left px-3 py-1.5 text-sm hover:bg-gray-100 ${currentLanguage === code ? 'font-medium text-[#e97040]' : 'text-gray-700'}`}
+                            onClick={() => handleLanguageChange(code)}
+                          >
+                            <span className="mr-2">{languageFlags[code]}</span>
+                            {name}
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs mr-2" style={linkStyle}>Datenschutzbestimmungen | Impressum</span>
+                    <span className="text-xs mr-2" style={linkStyle}>{getTranslatedText('privacyTerms', 'Datenschutzbestimmungen | Impressum')}</span>
                     <button type="button" className="text-gray-400">
                       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4" aria-hidden="true">
                         <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
@@ -536,7 +675,7 @@ export default function BannerPreview({ settings }) {
                     style={activeTab === 'settings' ? activeStyle : {}}
                     onClick={() => handleTabChange('settings')}
                   >
-                    {settings.settingsTabLabel || 'Einstellungen'}
+                    {getTranslatedText('settings', 'Einstellungen')}
                   </button>
                   <button 
                     type="button" 
@@ -544,7 +683,7 @@ export default function BannerPreview({ settings }) {
                     style={activeTab === 'cookies' ? activeStyle : {}}
                     onClick={() => handleTabChange('cookies')}
                   >
-                    {settings.cookiesTabLabel || 'Cookies'}
+                    {getTranslatedText('cookies', 'Cookies')}
                   </button>
                   <button 
                     type="button" 
@@ -552,7 +691,7 @@ export default function BannerPreview({ settings }) {
                     style={activeTab === 'policy' ? activeStyle : {}}
                     onClick={() => handleTabChange('policy')}
                   >
-                    {settings.policyTabLabel || 'Cookie-Richtlinie'}
+                    {getTranslatedText('cookiePolicy', 'Cookie-Richtlinie')}
                   </button>
                   <button 
                     type="button" 
@@ -560,7 +699,7 @@ export default function BannerPreview({ settings }) {
                     style={activeTab === 'mydata' ? activeStyle : {}}
                     onClick={() => handleTabChange('mydata')}
                   >
-                    {settings.myDataTabLabel || 'Meine Daten'}
+                    {getTranslatedText('myData', 'Meine Daten')}
                   </button>
                 </div>
                 
@@ -569,16 +708,16 @@ export default function BannerPreview({ settings }) {
                   {activeTab === 'settings' && (
                     <>
                       <p className="mb-4" style={{ color: settings.bannerTextColor || '#333333' }}>
-                        {settings.bannerMessage || 'Wir würden Ihre Daten gerne zu folgenden Zwecken verwenden:'}
+                        {getTranslatedText('weUseData', 'Wir würden Ihre Daten gerne zu folgenden Zwecken verwenden:')}
                       </p>
                       
                       {/* Necessary */}
                       <div className="border border-gray-200 rounded-md mb-2 overflow-hidden">
                         <div className="flex justify-between items-center p-3">
                           <div>
-                            <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>Notwendig</h3>
+                            <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('necessary', 'Notwendig')}</h3>
                             <p className="text-xs mt-1" style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>
-                              Diese Cookies sind für eine gute Funktionalität unserer Webseite erforderlich und können in unserem System nicht ausgeschaltet werden.
+                              {getTranslatedText('necessaryDescription', 'Diese Cookies sind für eine gute Funktionalität unserer Webseite erforderlich und können in unserem System nicht ausgeschaltet werden.')}
                             </p>
                           </div>
                           <div className="w-11 h-5 bg-blue-100 rounded-full p-1 flex items-center">
@@ -595,9 +734,9 @@ export default function BannerPreview({ settings }) {
                           type="button"
                         >
                           <div>
-                            <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>Performance</h3>
+                            <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('performance', 'Performance')}</h3>
                             <p className="text-xs mt-1" style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>
-                              Wir verwenden diese Cookies, um statistische Informationen über unsere Webseite bereitzustellen.
+                              {getTranslatedText('performanceDescription', 'Wir verwenden diese Cookies, um statistische Informationen über unsere Webseite bereitzustellen.')}
                             </p>
                           </div>
                           <div className={`w-11 h-5 ${cookieCategories.performance ? 'bg-blue-100' : 'bg-gray-200'} rounded-full p-1 flex items-center`}>
@@ -616,9 +755,9 @@ export default function BannerPreview({ settings }) {
                           type="button"
                         >
                           <div>
-                            <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>Funktional</h3>
+                            <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('functional', 'Funktional')}</h3>
                             <p className="text-xs mt-1" style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>
-                              Wir verwenden diese Cookies, um die Funktionalität zu verbessern und die Personalisierung zu ermöglichen.
+                              {getTranslatedText('functionalDescription', 'Wir verwenden diese Cookies, um die Funktionalität zu verbessern und die Personalisierung zu ermöglichen.')}
                             </p>
                           </div>
                           <div className={`w-11 h-5 ${cookieCategories.functional ? 'bg-blue-100' : 'bg-gray-200'} rounded-full p-1 flex items-center`}>
@@ -637,9 +776,9 @@ export default function BannerPreview({ settings }) {
                           type="button"
                         >
                           <div>
-                            <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>Werbung</h3>
+                            <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('advertising', 'Werbung')}</h3>
                             <p className="text-xs mt-1" style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>
-                              Diese Cookies werden von unseren Werbepartnern auf unserer Website gesetzt.
+                              {getTranslatedText('advertisingDescription', 'Diese Cookies werden von unseren Werbepartnern auf unserer Website gesetzt.')}
                             </p>
                           </div>
                           <div className={`w-11 h-5 ${cookieCategories.advertising ? 'bg-blue-100' : 'bg-gray-200'} rounded-full p-1 flex items-center`}>
@@ -654,20 +793,20 @@ export default function BannerPreview({ settings }) {
 
                   {activeTab === 'cookies' && (
                     <div className="space-y-3">
-                      <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>Cookie Liste</h3>
+                      <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('cookieList', 'Cookie Liste')}</h3>
                       <p style={{ color: settings.bannerTextColor || '#333333' }}>
-                        Hier finden Sie eine detaillierte Liste aller Cookies, die wir auf unserer Website verwenden.
+                        {getTranslatedText('cookieListDescription', 'Hier finden Sie eine detaillierte Liste aller Cookies, die wir auf unserer Website verwenden.')}
                       </p>
                       <div className="border border-gray-200 rounded-md mb-2 overflow-hidden p-3">
-                        <h4 className="font-medium text-xs mb-2" style={{ color: settings.bannerTextColor || '#333333' }}>Notwendige Cookies</h4>
+                        <h4 className="font-medium text-xs mb-2" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('necessaryCookies', 'Notwendige Cookies')}</h4>
                         <div className="space-y-2 text-xs">
                           <div className="flex justify-between">
-                            <span style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>cookie_consent</span>
-                            <span style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>1 Jahr</span>
+                            <span style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>{getTranslatedText('cookieConsent', 'cookie_consent')}</span>
+                            <span style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>{getTranslatedText('cookieDuration', '1 Jahr')}</span>
                           </div>
                           <div className="flex justify-between">
-                            <span style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>session_id</span>
-                            <span style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>Session</span>
+                            <span style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>{getTranslatedText('sessionId', 'session_id')}</span>
+                            <span style={{ color: settings.bannerTextColor ? `${settings.bannerTextColor}99` : '#6b7280' }}>{getTranslatedText('session', 'Session')}</span>
                           </div>
                         </div>
                       </div>
@@ -676,23 +815,21 @@ export default function BannerPreview({ settings }) {
 
                   {activeTab === 'policy' && (
                     <div className="space-y-3">
-                      <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>Cookie-Richtlinie</h3>
+                      <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('cookiePolicy', 'Cookie-Richtlinie')}</h3>
                       <p style={{ color: settings.bannerTextColor || '#333333' }}>
-                        Diese Cookie-Richtlinie erläutert, wie wir Cookies und ähnliche Technologien auf unserer Website verwenden.
+                        {getTranslatedText('cookiePolicyDescription', 'Diese Cookie-Richtlinie erläutert, wie wir Cookies und ähnliche Technologien auf unserer Website verwenden.')}
                       </p>
                       <p style={{ color: settings.bannerTextColor || '#333333' }}>
-                        Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie unsere Website besuchen.
-                        Wir verwenden Cookies für eine Vielzahl von Zwecken, einschließlich der Verbesserung Ihrer Erfahrung,
-                        der Analyse der Websitenutzung und der Bereitstellung personalisierter Inhalte.
+                        {getTranslatedText('cookieDescription', 'Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie unsere Website besuchen. Wir verwenden Cookies für eine Vielzahl von Zwecken, einschließlich der Verbesserung Ihrer Erfahrung, der Analyse der Websitenutzung und der Bereitstellung personalisierter Inhalte.')}
                       </p>
                     </div>
                   )}
 
                   {activeTab === 'mydata' && (
                     <div className="space-y-3">
-                      <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>Meine Daten</h3>
+                      <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('myData', 'Meine Daten')}</h3>
                       <p style={{ color: settings.bannerTextColor || '#333333' }}>
-                        Nach der DSGVO haben Sie ein Recht auf Auskunft, Berichtigung und Löschung Ihrer Daten.
+                        {getTranslatedText('gdprRights', 'Nach der DSGVO haben Sie ein Recht auf Auskunft, Berichtigung und Löschung Ihrer Daten.')}
                       </p>
                       <button 
                         type="button" 
@@ -703,7 +840,7 @@ export default function BannerPreview({ settings }) {
                           borderRadius: `${settings.buttonBorderRadius || 4}px`
                         }}
                       >
-                        Meine Daten anfordern
+                        {getTranslatedText('requestData', 'Meine Daten anfordern')}
                       </button>
                     </div>
                   )}
@@ -722,7 +859,7 @@ export default function BannerPreview({ settings }) {
                       }}
                       onClick={toggleDetailedView}
                     >
-                      Ablehnen
+                      {getTranslatedText('reject', 'Ablehnen')}
                     </button>
                   </div>
                   <div className="space-x-2">
@@ -736,7 +873,7 @@ export default function BannerPreview({ settings }) {
                         backgroundColor: 'transparent'
                       }}
                     >
-                      {settings.saveLabel || 'Einstellungen speichern'}
+                      {getTranslatedText('saveSettings', 'Einstellungen speichern')}
                     </button>
                     <button 
                       type="button" 
@@ -747,7 +884,7 @@ export default function BannerPreview({ settings }) {
                         borderRadius: `${settings.buttonBorderRadius || 4}px`
                       }}
                     >
-                      {settings.acceptAllLabel || 'Alle akzeptieren'}
+                      {getTranslatedText('acceptAll', 'Alle akzeptieren')}
                     </button>
                   </div>
                 </div>
