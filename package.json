@@ -1,18 +1,35 @@
 {
-  "name": "cookie-consent",
-  "version": "1.0.0",
-  "description": "A modular cookie consent management system with Tailwind CSS",
-  "main": "src/index.js",
-  "type": "module",
+  "name": "cookie-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "author": "Casian Blanaru <casian@me.com>",
+  "company": "PixelCoda",
+  "description": "CookieShield Dashboard - A 100% GDPR/DSGVO and BITV compliant cookie consent solution with free customizable design",
+  "keywords": ["cookie", "consent", "gdpr", "dsgvo", "bitv", "free", "customizable"],
   "scripts": {
-    "start": "npx serve .",
-    "build": "npx tailwindcss -i ./src/input.css -o ./dist/output.css --minify"
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "keywords": ["cookie-consent", "gdpr", "javascript", "tailwind"],
-  "author": "xAI",
-  "license": "MIT",
+  "dependencies": {
+    "@headlessui/react": "^2.2.2",
+    "@heroicons/react": "^2.2.0",
+    "axios": "^1.9.0",
+    "next": "15.3.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-hook-form": "^7.56.3"
+  },
   "devDependencies": {
-    "tailwindcss": "^4.0.0-alpha.20",
-    "serve": "^14.2.1"
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.2",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
