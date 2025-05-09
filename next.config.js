@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-// Einfache Konfiguration ohne PWA für stabile Vercel-Builds
+// Konfiguration für Tailwind v4
 const nextConfig = {
   reactStrictMode: true,
   eslint: {
