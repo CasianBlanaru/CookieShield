@@ -29,6 +29,9 @@ const defaultSettings = {
   // New settings
   forcedLang: '',
   bannerStyle: 'side', // 'side' or 'full'
+  // Cookie Policy Text
+  cookiePolicyText: 'Diese Cookie-Richtlinie erläutert, wie wir Cookies und ähnliche Technologien auf unserer Website verwenden.',
+  cookieDescriptionText: 'Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie unsere Website besuchen. Wir verwenden Cookies für eine Vielzahl von Zwecken, einschließlich der Verbesserung Ihrer Erfahrung, der Analyse der Websitenutzung und der Bereitstellung personalisierter Inhalte.',
   translations: {
     de: {
       language: 'Deutsch',
@@ -55,7 +58,15 @@ const defaultSettings = {
       necessaryCookies: 'Notwendige Cookies',
       cookieDescription: 'Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie unsere Website besuchen.',
       gdprRights: 'Nach der DSGVO haben Sie ein Recht auf Auskunft, Berichtigung und Löschung Ihrer Daten.',
-      requestData: 'Meine Daten anfordern'
+      requestData: 'Meine Daten anfordern',
+      cookiePolicyDescription: 'Diese Cookie-Richtlinie erläutert, wie wir Cookies und ähnliche Technologien auf unserer Website verwenden.',
+      performanceDescription: 'Wir verwenden diese Cookies, um statistische Informationen über unsere Webseite bereitzustellen.',
+      functionalDescription: 'Wir verwenden diese Cookies, um die Funktionalität zu verbessern und die Personalisierung zu ermöglichen.',
+      advertisingDescription: 'Diese Cookies werden von unseren Werbepartnern auf unserer Website gesetzt.',
+      cookieConsent: 'cookie_consent',
+      cookieDuration: '1 Jahr',
+      sessionId: 'session_id',
+      session: 'Session'
     },
     fr: {
       language: 'Français',
@@ -82,7 +93,15 @@ const defaultSettings = {
       necessaryCookies: 'Cookies nécessaires',
       cookieDescription: 'Les cookies sont de petits fichiers texte qui sont stockés sur votre appareil lorsque vous visitez notre site web.',
       gdprRights: 'Selon le RGPD, vous avez le droit d\'accéder, de rectifier et de supprimer vos données.',
-      requestData: 'Demander mes données'
+      requestData: 'Demander mes données',
+      cookiePolicyDescription: 'Cette politique de cookies explique comment nous utilisons les cookies et les technologies similaires sur notre site web.',
+      performanceDescription: 'Nous utilisons ces cookies pour fournir des informations statistiques sur notre site web.',
+      functionalDescription: 'Nous utilisons ces cookies pour améliorer la fonctionnalité et permettre la personnalisation.',
+      advertisingDescription: 'Ces cookies sont définis par nos partenaires publicitaires sur notre site web.',
+      cookieConsent: 'cookie_consent',
+      cookieDuration: '1 an',
+      sessionId: 'session_id',
+      session: 'Session'
     },
     en: {
       language: 'English',
@@ -109,7 +128,15 @@ const defaultSettings = {
       necessaryCookies: 'Necessary Cookies',
       cookieDescription: 'Cookies are small text files that are stored on your device when you visit our website.',
       gdprRights: 'According to GDPR, you have the right to access, rectify and delete your data.',
-      requestData: 'Request my data'
+      requestData: 'Request my data',
+      cookiePolicyDescription: 'This Cookie Policy explains how we use cookies and similar technologies on our website.',
+      performanceDescription: 'We use these cookies to provide statistical information about our website.',
+      functionalDescription: 'We use these cookies to improve functionality and enable personalization.',
+      advertisingDescription: 'These cookies are set by our advertising partners on our website.',
+      cookieConsent: 'cookie_consent',
+      cookieDuration: '1 year',
+      sessionId: 'session_id',
+      session: 'Session'
     }
   },
   // Design extensions
@@ -521,8 +548,6 @@ export default function CookieDashboard() {
                               className="futuristic-input mt-1 block w-full"
                             />
                           </div>
-                        </div>
-                        <div className="space-y-6">
                           <div className="space-y-3">
                             <label htmlFor="denyAllLabel" className="block text-sm font-medium text-gray-700">Deny All Button</label>
                             <input
@@ -534,6 +559,33 @@ export default function CookieDashboard() {
                               className="futuristic-input mt-1 block w-full"
                             />
                           </div>
+                          
+                          {/* Cookie Policy Text Fields */}
+                          <div className="space-y-3 mt-6">
+                            <label htmlFor="cookiePolicyText" className="block text-sm font-medium text-gray-700">Cookie-Richtlinie Text</label>
+                            <textarea
+                              id="cookiePolicyText"
+                              name="cookiePolicyText"
+                              value={settings.cookiePolicyText}
+                              onChange={handleChange}
+                              className="futuristic-input mt-1 block w-full"
+                              rows="3"
+                            />
+                          </div>
+                          
+                          <div className="space-y-3">
+                            <label htmlFor="cookieDescriptionText" className="block text-sm font-medium text-gray-700">Cookie-Beschreibung</label>
+                            <textarea
+                              id="cookieDescriptionText"
+                              name="cookieDescriptionText"
+                              value={settings.cookieDescriptionText}
+                              onChange={handleChange}
+                              className="futuristic-input mt-1 block w-full"
+                              rows="4"
+                            />
+                          </div>
+                        </div>
+                        <div className="space-y-6">
                           <div className="space-y-3">
                             <label htmlFor="settingsLabel" className="block text-sm font-medium text-gray-700">Settings Button</label>
                             <input
@@ -691,6 +743,62 @@ export default function CookieDashboard() {
                                 />
                               </div>
                             </div>
+
+                            <h3 className="font-medium mb-4 text-sm border-b pb-1 text-indigo-600">Buttons</h3>
+                            <div className="grid grid-cols-2 gap-3 mb-6">
+                              {['acceptAllLabel', 'denyAllLabel', 'settingsLabel', 'saveLabel'].map(field => (
+                                <div key={field} className="space-y-1">
+                                  <label htmlFor={`de-${field}`} className="block text-xs font-medium text-gray-600">{field}</label>
+                                  <input
+                                    id={`de-${field}`}
+                                    type="text"
+                                    value={settings.translations?.de[field] || ''}
+                                    onChange={(e) => handleTranslationChange('de', field, e.target.value)}
+                                    className="futuristic-input text-sm w-full"
+                                  />
+                                </div>
+                              ))}
+                            </div>
+
+                            <h3 className="font-medium mb-4 text-sm border-b pb-1 text-indigo-600">Cookie-Richtlinie Texte</h3>
+                            <div className="space-y-4 mb-6">
+                              <div className="space-y-1">
+                                <label htmlFor="de-cookiePolicyDescription" className="block text-xs font-medium text-gray-600">Cookie Policy Description</label>
+                                <textarea
+                                  id="de-cookiePolicyDescription"
+                                  value={settings.translations?.de?.cookiePolicyDescription || ''}
+                                  onChange={(e) => handleTranslationChange('de', 'cookiePolicyDescription', e.target.value)}
+                                  className="futuristic-input text-sm w-full"
+                                  rows="3"
+                                />
+                              </div>
+                              <div className="space-y-1">
+                                <label htmlFor="de-cookieDescription" className="block text-xs font-medium text-gray-600">Cookie Description</label>
+                                <textarea
+                                  id="de-cookieDescription"
+                                  value={settings.translations?.de?.cookieDescription || ''}
+                                  onChange={(e) => handleTranslationChange('de', 'cookieDescription', e.target.value)}
+                                  className="futuristic-input text-sm w-full"
+                                  rows="3"
+                                />
+                              </div>
+                            </div>
+                            
+                            <h3 className="font-medium mb-4 text-sm border-b pb-1 text-indigo-600">Cookie-Kategorien</h3>
+                            <div className="grid grid-cols-2 gap-3 mb-6">
+                              {['performanceDescription', 'functionalDescription', 'advertisingDescription'].map(field => (
+                                <div key={field} className="space-y-1 col-span-2">
+                                  <label htmlFor={`de-${field}`} className="block text-xs font-medium text-gray-600">{field}</label>
+                                  <textarea
+                                    id={`de-${field}`}
+                                    value={settings.translations?.de[field] || ''}
+                                    onChange={(e) => handleTranslationChange('de', field, e.target.value)}
+                                    className="futuristic-input text-sm w-full"
+                                    rows="2"
+                                  />
+                                </div>
+                              ))}
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -754,9 +862,9 @@ export default function CookieDashboard() {
                       <h2 className="text-xl font-semibold mb-6 text-primary">Design Settings</h2>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div className="space-y-6">
-                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                          <div className="grid grid-cols-1 gap-5">
                             <div className="flex flex-col">
-                              <label htmlFor="bannerPosition" className="block text-sm font-medium text-gray-700 mb-3 h-6">Banner Position</label>
+                              <label htmlFor="bannerPosition" className="block text-sm font-medium text-gray-700 mb-5 h-6">Banner Position</label>
                               <select
                                 id="bannerPosition"
                                 name="bannerPosition"
@@ -765,11 +873,12 @@ export default function CookieDashboard() {
                                 className="futuristic-input block w-full"
                               >
                                 <option value="left">Left</option>
+                                <option value="center">Center</option>
                                 <option value="right">Right</option>
                               </select>
                             </div>
                             
-                            <div className="flex flex-col">
+                            {/* <div className="flex flex-col">
                               <label htmlFor="bannerStyle" className="block text-sm font-medium text-gray-700 mb-3 h-6">Banner Style</label>
                               <select
                                 id="bannerStyle"
@@ -781,7 +890,7 @@ export default function CookieDashboard() {
                                 <option value="side">Side Panel</option>
                                 <option value="full">Full Width</option>
                               </select>
-                            </div>
+                            </div> */}
                           </div>
                           
                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -1109,91 +1218,6 @@ export default function CookieDashboard() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-      
-      {/* Footer with additional scroll space */}
-      <div className="container mt-24 pb-40">
-        <div className="card">
-          <div className="card-body">
-            <h2 className="text-xl font-semibold mb-4 text-primary">CookieShield Documentation</h2>
-            <div className="space-y-6">
-              <div className="form-section">
-                <h3 className="text-lg font-semibold mb-3 text-primary">Introduction</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  CookieShield is a comprehensive solution for GDPR-compliant cookie banners on your website.
-                  Our system allows you to customize your cookie settings and provide transparent information
-                  about cookie usage to your visitors.
-                </p>
-              </div>
-              
-              <div className="form-section">
-                <h3 className="text-lg font-semibold mb-3 text-primary">Technical Overview</h3>
-                <p className="text-gray-700 leading-relaxed mb-4">
-                  CookieShield is based on a modern architecture with a React component for the frontend
-                  and a Laravel backend for managing settings and user authentication.
-                </p>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-primary mb-2">Frontend</h4>
-                    <ul className="text-sm space-y-1 text-gray-600">
-                      <li>• React.js for UI components</li>
-                      <li>• Tailwind CSS for styling</li>
-                      <li>• Local settings in the browser</li>
-                    </ul>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-primary mb-2">Backend</h4>
-                    <ul className="text-sm space-y-1 text-gray-600">
-                      <li>• Laravel framework</li>
-                      <li>• RESTful API endpoints</li>
-                      <li>• JSON Web Token (JWT) Auth</li>
-                    </ul>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg shadow-sm">
-                    <h4 className="font-medium text-primary mb-2">Storage</h4>
-                    <ul className="text-sm space-y-1 text-gray-600">
-                      <li>• Local browser storage</li>
-                      <li>• API synchronization</li>
-                      <li>• Encrypted transmission</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              <div className="form-section">
-                <h3 className="text-lg font-semibold mb-3 text-primary">Data Privacy Compliance</h3>
-                <p className="text-gray-700 leading-relaxed">
-                  CookieShield was developed to meet the requirements of GDPR and similar data privacy laws.
-                  Our banner offers a clear categorization of cookies and allows users to give or deny consent.
-                  All consents are securely stored and can be proven at any time.
-                </p>
-              </div>
-              
-              <div className="form-section">
-                <h3 className="text-lg font-semibold mb-3 text-primary">Support</h3>
-                <p className="text-gray-700 leading-relaxed mb-4">
-                  If you have any questions or problems, we are happy to help. Our support team is available
-                  from Monday to Friday from 9:00 to 17:00.
-                </p>
-                <button 
-                  type="button"
-                  className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-4 py-2 rounded-md font-medium hover:from-purple-700 hover:to-indigo-700 transition-all transform hover:-translate-y-1"
-                >
-                  Contact Us
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <div className="mt-16 text-center">
-          <p className="text-sm text-gray-500">© {new Date().getFullYear()} CookieShield. All rights reserved.</p>
-          <div className="flex justify-center space-x-4 mt-3">
-            <a href="/impressum" className="text-sm text-gray-500 hover:text-primary">Legal Notice</a>
-            <a href="/datenschutz" className="text-sm text-gray-500 hover:text-primary">Data Privacy</a>
-            <a href="/agb" className="text-sm text-gray-500 hover:text-primary">Terms of Service</a>
           </div>
         </div>
       </div>

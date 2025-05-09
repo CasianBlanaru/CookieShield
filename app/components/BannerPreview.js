@@ -124,16 +124,48 @@ export default function BannerPreview({ settings }) {
     hasAnimationApplied.current = true;
   }, []);
 
+  // Function to update banner position
+  const updateBannerPosition = useCallback(() => {
+    if (!bannerRef.current) return;
+    
+    // Position the banner based on bannerPosition setting
+    if (settings.bannerPosition === 'left') {
+      // Position left side (default)
+      bannerRef.current.style.left = '20%';
+      bannerRef.current.style.right = 'auto';
+      bannerRef.current.style.transform = 'translateY(-50%)';
+      console.log('Banner positioned left');
+    } else if (settings.bannerPosition === 'right') {
+      // Position right side
+      bannerRef.current.style.left = 'auto';
+      bannerRef.current.style.right = '20%';
+      bannerRef.current.style.transform = 'translateY(-50%)';
+      console.log('Banner positioned right');
+    } else if (settings.bannerPosition === 'center') {
+      // Position center
+      bannerRef.current.style.left = '50%';
+      bannerRef.current.style.right = 'auto';
+      bannerRef.current.style.transform = 'translate(-50%, -50%)';
+      console.log('Banner positioned center');
+    }
+  }, [settings.bannerPosition]);
+
   // Initial on mounting
   useEffect(() => {
     console.log('BannerPreview is initializing');
     // Timeout to ensure DOM is fully loaded
     const timer = setTimeout(() => {
-      if (bannerRef.current && settings.bannerAnimation) {
-        console.log('Applying initial animation:', settings.bannerAnimation);
-        applyAnimation(settings.bannerAnimation);
+      if (bannerRef.current) {
+        // Apply initial animation if available
+        if (settings.bannerAnimation) {
+          console.log('Applying initial animation:', settings.bannerAnimation);
+          applyAnimation(settings.bannerAnimation);
+        }
+        
+        // Apply initial position
+        updateBannerPosition();
       } else {
-        console.log('Initial animation not possible:', { 
+        console.log('Initial setup not possible:', { 
           ref: !!bannerRef.current, 
           animation: settings.bannerAnimation 
         });
@@ -141,18 +173,23 @@ export default function BannerPreview({ settings }) {
     }, 300);
     
     return () => clearTimeout(timer);
-  }, [settings.bannerAnimation, applyAnimation]);
+  }, [settings.bannerAnimation, applyAnimation, updateBannerPosition]);
 
   // When settings change
   useEffect(() => {
     console.log('Settings updated:', settings);
     
-    // Apply animation when settings change
-    if (bannerRef.current && settings.bannerAnimation) {
-      console.log('Applying animation from settings:', settings.bannerAnimation);
-      applyAnimation(settings.bannerAnimation);
+    if (bannerRef.current) {
+      // Apply animation when settings change
+      if (settings.bannerAnimation) {
+        console.log('Applying animation from settings:', settings.bannerAnimation);
+        applyAnimation(settings.bannerAnimation);
+      }
+      
+      // Update banner position
+      updateBannerPosition();
     }
-  }, [settings, applyAnimation]);
+  }, [settings, applyAnimation, updateBannerPosition]);
 
   // Event listener for global settings updates
   useEffect(() => {
@@ -179,10 +216,62 @@ export default function BannerPreview({ settings }) {
               mainContainer.style.color = updatedSettings.bannerTextColor;
               console.log('Setting banner text color:', updatedSettings.bannerTextColor);
               
-              // Also update text color for the Save button
-              const saveButton = mainContainer.querySelector('button:nth-of-type(2)');
+              // Apply text color to all paragraph elements
+              const paragraphs = mainContainer.querySelectorAll('p');
+              for (const p of paragraphs) {
+                p.style.color = updatedSettings.bannerTextColor;
+              }
+
+              // Apply text color to headings
+              const headings = mainContainer.querySelectorAll('h2, h3, h4');
+              for (const heading of headings) {
+                heading.style.color = updatedSettings.bannerTextColor;
+              }
+
+              // Apply text color to spans with font-medium class (cookie categories)
+              const cookieLabels = mainContainer.querySelectorAll('.font-medium');
+              for (const label of cookieLabels) {
+                if (!label.closest('button[style*="borderColor"]')) { // Exclude customize button
+                  label.style.color = updatedSettings.bannerTextColor;
+                }
+              }
+              
+              // Update text color for buttons that should inherit the text color
+              // (excluding primary buttons with their own color settings)
+              const secondaryButtons = mainContainer.querySelectorAll('button');
+              for (const button of secondaryButtons) {
+                // Nur Buttons mit transparentem Hintergrund oder Grau-Buttons aktualisieren
+                // Nicht die Hauptbuttons (die blau/benutzerdefiniert sind)
+                if (button.style.backgroundColor === 'transparent' || 
+                    button.style.backgroundColor === '' || 
+                    !button.style.backgroundColor ||
+                    button.classList.contains('!bg-transparent')) {
+                  
+                  // Aber keine Buttons, die eine spezifische Farbe haben sollen (wie "Anpassen")
+                  if (!button.style.color || button.style.color === 'rgb(51, 51, 51)') {
+                    button.style.color = updatedSettings.bannerTextColor;
+                  }
+                }
+              }
+
+              // Update text color for the Save button and other non-primary buttons with border
+              const saveButton = mainContainer.querySelector('button[style*="border"]');
               if (saveButton) {
                 saveButton.style.color = updatedSettings.bannerTextColor;
+              }
+
+              // Make sure the gray "Ablehnen" button text stays white
+              const rejectButtons = mainContainer.querySelectorAll('button[style*="background-color: rgb(17, 24, 39)"]');
+              for (const rejectButton of rejectButtons) {
+                rejectButton.style.color = 'white';
+              }
+
+              // Apply lighter version of text color to description texts
+              const descriptions = mainContainer.querySelectorAll('.text-xs:not(.mr-2)');
+              for (const desc of descriptions) {
+                if (!desc.style.color || !desc.style.color.includes('rgb(')) {
+                  desc.style.color = `${updatedSettings.bannerTextColor}99`; // 60% opacity
+                }
               }
             }
             
@@ -198,6 +287,14 @@ export default function BannerPreview({ settings }) {
             if (linksElement) {
               linksElement.style.color = updatedSettings.linkColor;
               console.log('Setting link color:', updatedSettings.linkColor);
+            }
+            
+            // Update all links and privacy terms text
+            const allLinks = mainContainer.querySelectorAll('span[style*="color"]');
+            for (const link of allLinks) {
+              if (link.style.color === linkStyle.color || link.classList.contains('mr-2')) {
+                link.style.color = updatedSettings.linkColor;
+              }
             }
             
             // Update all SVG icons that should have the link color
@@ -264,6 +361,16 @@ export default function BannerPreview({ settings }) {
             applyAnimation(updatedSettings.bannerAnimation);
           }
 
+          // Update banner position if provided
+          if (updatedSettings.bannerPosition !== undefined) {
+            console.log('Setting banner position from event:', updatedSettings.bannerPosition);
+            // Update settings object for the updateBannerPosition function
+            if (settings.bannerPosition !== updatedSettings.bannerPosition) {
+              settings.bannerPosition = updatedSettings.bannerPosition;
+              updateBannerPosition();
+            }
+          }
+
           // Update tab labels if they've changed
           if (updatedSettings.settingsTabLabel || updatedSettings.cookiesTabLabel || 
               updatedSettings.policyTabLabel || updatedSettings.myDataTabLabel) {
@@ -297,20 +404,7 @@ export default function BannerPreview({ settings }) {
     return () => {
       window.removeEventListener('settingsUpdated', handleSettingsUpdated);
     };
-  }, [applyAnimation]);
-
-  // One more attempt to apply animation after complete render
-  useEffect(() => {
-    // If after 500ms we still haven't applied animation and banner exists
-    const timer = setTimeout(() => {
-      if (bannerRef.current && settings.bannerAnimation && !hasAnimationApplied.current) {
-        console.log('Last chance to apply animation:', settings.bannerAnimation);
-        applyAnimation(settings.bannerAnimation);
-      }
-    }, 500);
-    
-    return () => clearTimeout(timer);
-  }, [settings.bannerAnimation, applyAnimation]);
+  }, [applyAnimation, updateBannerPosition, settings]);
 
   // Update cookie categories from settings
   useEffect(() => {
@@ -378,43 +472,47 @@ export default function BannerPreview({ settings }) {
             {/* Empty background without decorative elements */}
           </div>
           
-          {/* Cookie banner - centered fixed position */}
+          {/* Cookie banner - position based on settings */}
           <div 
             ref={bannerRef}
-            className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            className="absolute top-1/2"
             style={{
-              zIndex: 50
+              zIndex: 50,
+              left: settings.bannerPosition === 'center' ? '50%' : (settings.bannerPosition === 'left' ? '20%' : 'auto'),
+              right: settings.bannerPosition === 'right' ? '20%' : 'auto',
+              transform: settings.bannerPosition === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)',
+              transition: 'left 0.3s ease-in-out, right 0.3s ease-in-out, transform 0.3s ease-in-out'
             }}
           >
             {!showDetailedView ? (
               /* Compact Banner View */
               <div
-                className={`w-[450px] h-[450px] p-0 rounded-lg overflow-hidden ${animationClass}`}
+                className={`w-[450px] h-[600px] p-0 rounded-lg overflow-hidden ${animationClass}`}
                 style={{
                   ...bannerStyle,
                   boxShadow: '0 20px 35px -12px rgba(0, 0, 0, 0.25), 0 15px 20px -10px rgba(0, 0, 0, 0.15)'
                 }}
               >
                 {/* Browser-styled header */}
-                <div className="h-10 bg-gray-900 border-b border-gray-800 flex items-center px-4">
+                <div className="h-12 bg-gray-900 border-b border-gray-800 flex items-center px-4">
                   <div className="flex space-x-2">
                     <div className="w-3 h-3 rounded-full bg-red-400" />
                     <div className="w-3 h-3 rounded-full bg-yellow-400" />
                     <div className="w-3 h-3 rounded-full bg-green-400" />
                   </div>
-                  <div className="mx-auto bg-gradient-to-r from-purple-600 to-indigo-600 border border-indigo-700/50 rounded-full h-7 w-2/3 flex items-center justify-center text-xs font-medium text-white/90 shadow-sm">
+                  <div className="mx-auto bg-gradient-to-r from-purple-600 to-indigo-600 border border-indigo-700/50 rounded-full h-7 w-2/3 flex items-center justify-center text-sm font-bold text-white/90 shadow-sm">
                     <span className="truncate px-3">Banner Preview</span>
                   </div>
                 </div>
                 
-                <div className="p-4 h-[calc(450px-40px)] overflow-y-auto">
+                <div className="p-4 h-[calc(600px-40px)] overflow-y-auto">
                   {/* Header with language selector and privacy links */}
                   <div className="flex justify-between mb-4">
                     <div className="flex items-center relative" ref={languageDropdownRef}>
                       <div className="flex items-center">
                         <button
                           type="button"
-                          className="flex items-center focus:outline-none"
+                          className="flex items-center focus:outline-none px-2 py-0.5 !bg-transparent"
                           onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
                           aria-haspopup="true"
                           aria-expanded={showLanguageDropdown}
@@ -610,7 +708,7 @@ export default function BannerPreview({ settings }) {
             ) : (
               /* Detailed Settings View */
               <div
-                className={`w-[450px] h-[450px] p-0 rounded-lg overflow-hidden ${animationClass}`}
+                className={`w-[450px] h-[600px] p-0 rounded-lg overflow-hidden ${animationClass}`}
                 style={{
                   ...bannerStyle,
                   boxShadow: '0 20px 35px -12px rgba(0, 0, 0, 0.25), 0 15px 20px -10px rgba(0, 0, 0, 0.15)'
@@ -628,14 +726,14 @@ export default function BannerPreview({ settings }) {
                   </div>
                 </div>
                 
-                <div className="p-4 h-[calc(450px-40px)] flex flex-col">
+                <div className="p-4 h-[calc(600px-40px)] flex flex-col">
                   {/* Header with language and close button */}
                   <div className="flex justify-between mb-3">
                     <div className="flex items-center relative" ref={languageDropdownRef}>
                       <div className="flex items-center">
                         <button
                           type="button"
-                          className="flex items-center focus:outline-none"
+                          className="flex items-center focus:outline-none px-2 py-0.5 !bg-transparent"
                           onClick={() => setShowLanguageDropdown(!showLanguageDropdown)}
                           aria-haspopup="true"
                           aria-expanded={showLanguageDropdown}
@@ -854,10 +952,10 @@ export default function BannerPreview({ settings }) {
                       <div className="space-y-3">
                         <h3 className="font-semibold text-sm" style={{ color: settings.bannerTextColor || '#333333' }}>{getTranslatedText('cookiePolicy', 'Cookie-Richtlinie')}</h3>
                         <p style={{ color: settings.bannerTextColor || '#333333' }}>
-                          {getTranslatedText('cookiePolicyDescription', 'Diese Cookie-Richtlinie erläutert, wie wir Cookies und ähnliche Technologien auf unserer Website verwenden.')}
+                          {settings.cookiePolicyText || getTranslatedText('cookiePolicyDescription', 'Diese Cookie-Richtlinie erläutert, wie wir Cookies und ähnliche Technologien auf unserer Website verwenden.')}
                         </p>
                         <p style={{ color: settings.bannerTextColor || '#333333' }}>
-                          {getTranslatedText('cookieDescription', 'Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie unsere Website besuchen. Wir verwenden Cookies für eine Vielzahl von Zwecken, einschließlich der Verbesserung Ihrer Erfahrung, der Analyse der Websitenutzung und der Bereitstellung personalisierter Inhalte.')}
+                          {settings.cookieDescriptionText || getTranslatedText('cookieDescription', 'Cookies sind kleine Textdateien, die auf Ihrem Gerät gespeichert werden, wenn Sie unsere Website besuchen. Wir verwenden Cookies für eine Vielzahl von Zwecken, einschließlich der Verbesserung Ihrer Erfahrung, der Analyse der Websitenutzung und der Bereitstellung personalisierter Inhalte.')}
                         </p>
                       </div>
                     )}
