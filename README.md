@@ -1,70 +1,91 @@
-# Cookie Consent Plugin
+# CookieShield Dashboard
 
-A modular, GDPR-compliant cookie consent management system built with vanilla JavaScript and Tailwind CSS 4. Supports consent tracking, banner rendering, Google Consent Mode, Microsoft Clarity, and bulk consent.
+A modern, responsive administration interface for the CookieShield consent management system. Built with Next.js, this dashboard allows for easy configuration of cookie consent banners with live preview.
+
+## Motivation
+
+CookieShield was created with the mission to provide a 100% GDPR (DSGVO) and BITV compliant cookie consent solution that is both powerful and free to use. We believe that legal compliance shouldn't be a premium feature - everyone should have access to tools that help them follow privacy regulations while maintaining complete control over design and functionality.
 
 ## Features
-- Modular architecture with ES6 modules
-- Responsive cookie banner styled with Tailwind CSS
-- Consent management for categories and services
-- Integrations with Google Consent Mode, Microsoft Clarity, and bulk consent
-- Multi-language support
-- Event dispatching for consent changes
+
+- 100% GDPR (DSGVO) and BITV compliant cookie management
+- Free to use with all features included
+- Live preview of banner changes
+- Highly customizable design settings (colors, fonts, animations)
+- Multi-language support for international websites
+- Responsive interface works on all devices
+- Persistent settings with local storage
+- Integration with CookieShield Backend API
+
+## Requirements
+
+- Node.js 16.x or higher
+- npm or yarn
 
 ## Installation
 
-1. Clone or download the repository.
-2. Open `index.html` in a browser to see the cookie consent banner.
-3. For development, install dependencies:
+1. Clone the repository
+2. Install dependencies:
 
 ```bash
 npm install
+# or
+yarn install
 ```
 
-4. Run the development server:
+3. Create a `.env.local` file with the backend API URL:
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+```
+
+## Development
+
+Start the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+The dashboard will be accessible at `http://localhost:3000`.
+
+## Building for Production
+
+Build the production version:
+
+```bash
+npm run build
+# or
+yarn build
+```
+
+Start the production server:
 
 ```bash
 npm start
+# or
+yarn start
 ```
 
-## Configuration
+## Integration with CookieShield Backend
 
-Configure the plugin by setting `window.__COOKIE_BANNER_SETTINGS__` before loading the script:
+This dashboard is designed to work seamlessly with the CookieShield Backend API. Make sure the backend server is running and the `.env.local` file is configured with the correct API URL.
 
-```javascript
-window.__COOKIE_BANNER_SETTINGS__ = {
-  apiKey: 'your-api-key',
-  stealthMode: false,
-  debugMode: true,
-  forcedLang: 'en',
-  apiEndpoints: {
-    config: 'https://api.cookiefirst.com/prod',
-    consent: 'https://api.cookiefirst.com/prod/consent',
-    location: 'https://edge.cookiefirst.com/prod/location'
-  }
-};
-```
+## Customizing
 
-## Usage
+- Modify colors and styles in the `globals.css` file
+- Add new features by extending the components in the `components` directory
+- Add new languages by updating the translations in the settings
 
-The plugin exposes a public API via `window.CookieConsent`:
+## Developer
 
-```javascript
-// Accept all cookies
-window.CookieConsent.acceptAllCategories();
+Developed by Casian Blanaru at PixelCoda.
 
-// Deny all cookies
-window.CookieConsent.denyAllCategories();
-
-// Get current consent
-console.log(window.CookieConsent.consent());
-```
-
-## Customization
-
-- **Styling**: Modify Tailwind classes in `src/ui/banner.js` or extend the `tailwind.config.js`.
-- **Translations**: Update the `translations` object in the configuration fetched by `api/client.js`.
-- **Integrations**: Add new integrations in `src/integrations/`.
+- Email: casian@me.com
+- Company: PixelCoda
 
 ## License
 
-MIT
+This project is licensed under the MIT License. See the LICENSE file for details.
