@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "npm i typescript @types/react @types/react-dom @types/node --no-save && next build",
     "start": "next start",
     "lint": "next lint"
   },
