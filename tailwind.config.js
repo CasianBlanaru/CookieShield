@@ -1,5 +1,5 @@
 /** @type {import('tailwindcss').Config} */
-const config = {
+module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -26,8 +26,6 @@ const config = {
         'sm': 'var(--shadow-sm)',
         DEFAULT: 'var(--shadow)',
         'md': 'var(--shadow-md)',
-        'glow': '0 0 15px 2px rgba(99, 102, 241, 0.3)',
-        'glow-lg': '0 0 25px 5px rgba(99, 102, 241, 0.4)',
       },
       backgroundImage: {
         'gradient-purple': 'var(--gradient-purple)',
@@ -51,6 +49,4 @@ const config = {
     },
   },
   plugins: [],
-};
-
-module.exports = config; 
+}; 
