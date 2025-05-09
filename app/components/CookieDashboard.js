@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Image from 'next/image';
 import BannerPreview from './BannerPreview';
 import LoginForm from './LoginForm';
 import { fetchSettings, saveSettings, login } from '../lib/api';
@@ -422,15 +423,12 @@ export default function CookieDashboard() {
         <div className="card mb-6 relative backdrop-blur-sm">
           <div className="card-header">
             <div className="flex items-center">
-              <img 
-                src="/round-logo.svg" 
+              <Image 
+                src="/logo.svg" 
                 alt="CookieShield Logo" 
-                className="w-8 h-8 mr-3" 
-                style={{ 
-                  filter: "brightness(0.95) contrast(1.05)",
-                  maxWidth: "32px",
-                  height: "auto"
-                }} 
+                width={60}
+                height={60}
+                className="mr-3"
               />
               <h1 className="dashboard-title">Cookie Banner Dashboard</h1>
             </div>
@@ -770,78 +768,81 @@ export default function CookieDashboard() {
                 {/* Design-Einstellungen */}
                 {activeTab === 'design' && (
                   <section className="form-section">
-                    <h2 className="text-xl font-semibold mb-5 text-primary">Design Settings</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                      <div className="space-y-8">
-                        <div className="space-y-3">
-                          <label htmlFor="bannerPosition" className="block text-sm font-medium text-gray-700">Banner Position</label>
-                          <select
-                            id="bannerPosition"
-                            name="bannerPosition"
-                            value={settings.bannerPosition}
-                            onChange={handleChange}
-                            className="futuristic-input mt-1 block w-full"
-                          >
-                            <option value="bottom">Bottom</option>
-                            <option value="top">Top</option>
-                          </select>
+                    <h2 className="text-xl font-semibold mb-4 text-primary">Design Settings</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <label htmlFor="bannerPosition" className="block text-sm font-medium text-gray-700">Banner Position</label>
+                            <select
+                              id="bannerPosition"
+                              name="bannerPosition"
+                              value={settings.bannerPosition}
+                              onChange={handleChange}
+                              className="futuristic-input mt-1 block w-full"
+                            >
+                              <option value="bottom">Bottom</option>
+                              <option value="top">Top</option>
+                            </select>
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <label htmlFor="bannerStyle" className="block text-sm font-medium text-gray-700">Banner Style</label>
+                            <select
+                              id="bannerStyle"
+                              name="bannerStyle"
+                              value={settings.bannerStyle}
+                              onChange={handleChange}
+                              className="futuristic-input mt-1 block w-full"
+                            >
+                              <option value="side">Side Panel</option>
+                              <option value="full">Full Width</option>
+                            </select>
+                          </div>
                         </div>
                         
-                        <div className="space-y-3">
-                          <label htmlFor="bannerStyle" className="block text-sm font-medium text-gray-700">Banner Style</label>
-                          <select
-                            id="bannerStyle"
-                            name="bannerStyle"
-                            value={settings.bannerStyle}
-                            onChange={handleChange}
-                            className="futuristic-input mt-1 block w-full"
-                          >
-                            <option value="side">Side Panel</option>
-                            <option value="full">Full Width</option>
-                          </select>
+                        <div className="grid grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <label htmlFor="fontFamily" className="block text-sm font-medium text-gray-700">Font Family</label>
+                            <select
+                              id="fontFamily"
+                              name="fontFamily"
+                              value={settings.fontFamily}
+                              onChange={handleChange}
+                              className="futuristic-input mt-1 block w-full"
+                              style={{ fontFamily: settings.fontFamily }}
+                            >
+                              <option value="Inter, sans-serif" style={{ fontFamily: 'Inter, sans-serif' }}>Inter</option>
+                              <option value="Roboto, sans-serif" style={{ fontFamily: 'Roboto, sans-serif' }}>Roboto</option>
+                              <option value="Open Sans, sans-serif" style={{ fontFamily: 'Open Sans, sans-serif' }}>Open Sans</option>
+                              <option value="Arial, sans-serif" style={{ fontFamily: 'Arial, sans-serif' }}>Arial</option>
+                              <option value="Georgia, serif" style={{ fontFamily: 'Georgia, serif' }}>Georgia</option>
+                            </select>
+                          </div>
+                          
+                          <div className="space-y-2">
+                            <label htmlFor="bannerAnimation" className="block text-sm font-medium text-gray-700">Animation</label>
+                            <select
+                              id="bannerAnimation"
+                              name="bannerAnimation"
+                              value={settings.bannerAnimation}
+                              onChange={handleChange}
+                              className="futuristic-input mt-1 block w-full"
+                            >
+                              <option value="none">None</option>
+                              <option value="fade">Fade</option>
+                              <option value="slide">Slide</option>
+                              <option value="bounce">Bounce</option>
+                            </select>
+                          </div>
                         </div>
                         
-                        <div className="space-y-3">
-                          <label htmlFor="fontFamily" className="block text-sm font-medium text-gray-700">Font Family</label>
-                          <select
-                            id="fontFamily"
-                            name="fontFamily"
-                            value={settings.fontFamily}
-                            onChange={handleChange}
-                            className="futuristic-input mt-1 block w-full"
-                            style={{ fontFamily: settings.fontFamily }}
-                          >
-                            <option value="Inter, sans-serif" style={{ fontFamily: 'Inter, sans-serif' }}>Inter</option>
-                            <option value="Roboto, sans-serif" style={{ fontFamily: 'Roboto, sans-serif' }}>Roboto</option>
-                            <option value="Open Sans, sans-serif" style={{ fontFamily: 'Open Sans, sans-serif' }}>Open Sans</option>
-                            <option value="Arial, sans-serif" style={{ fontFamily: 'Arial, sans-serif' }}>Arial</option>
-                            <option value="Georgia, serif" style={{ fontFamily: 'Georgia, serif' }}>Georgia</option>
-                          </select>
-                        </div>
-                        
-                        <div className="space-y-3">
-                          <label htmlFor="bannerAnimation" className="block text-sm font-medium text-gray-700">Banner Animation</label>
-                          <select
-                            id="bannerAnimation"
-                            name="bannerAnimation"
-                            value={settings.bannerAnimation}
-                            onChange={handleChange}
-                            className="futuristic-input mt-1 block w-full"
-                          >
-                            <option value="none">None</option>
-                            <option value="fade">Fade</option>
-                            <option value="slide">Slide</option>
-                            <option value="bounce">Bounce</option>
-                          </select>
-                        </div>
-                      </div>
-                      
-                      <div className="space-y-8">
-                        <div className="space-y-4">
+                        {/* Border Radius und Color Picker */}
+                        <div className="space-y-3 mt-2">
                           <label htmlFor="buttonBorderRadius" className="block text-sm font-medium text-gray-700">
                             Button Border Radius ({settings.buttonBorderRadius}px)
                           </label>
-                          <div className="mt-2 mb-3">
+                          <div className="flex items-center gap-3">
                             <input
                               id="buttonBorderRadius"
                               type="range"
@@ -850,155 +851,157 @@ export default function CookieDashboard() {
                               max="20"
                               value={settings.buttonBorderRadius}
                               onChange={handleChange}
-                              className="w-full"
+                              className="w-3/4"
                             />
-                          </div>
-                          <div 
-                            className="radius-preview" 
-                            style={{ borderRadius: `${settings.buttonBorderRadius}px` }}
-                          >
-                            Preview {settings.buttonBorderRadius}px
+                            <div 
+                              className="radius-preview flex-shrink-0 w-20 h-8 flex items-center justify-center text-xs" 
+                              style={{ borderRadius: `${settings.buttonBorderRadius}px` }}
+                            >
+                              {settings.buttonBorderRadius}px
+                            </div>
                           </div>
                         </div>
+                      </div>
+                      
+                      <div className="space-y-4">
+                        {/* Kompakter Farb-Picker für Banner */}
+                        <fieldset>
+                          <legend className="block text-sm font-medium text-gray-700 mb-3">Banner Colors</legend>
+                          <div className="grid grid-cols-2 gap-3">
+                            <div className="space-y-2">
+                              <label htmlFor="bannerBgColor" className="block text-xs text-gray-600">Background</label>
+                              <div className="color-picker-wrapper">
+                                <input
+                                  id="bannerBgColor"
+                                  type="color"
+                                  name="bannerBgColor"
+                                  value={settings.bannerBgColor}
+                                  onChange={handleChange}
+                                />
+                                <input 
+                                  type="text"
+                                  value={settings.bannerBgColor}
+                                  onChange={(e) => handleChange({target: {name: 'bannerBgColor', value: e.target.value}})}
+                                  className="futuristic-input text-sm"
+                                />
+                              </div>
+                            </div>
+                            <div className="space-y-2">
+                              <label htmlFor="bannerTextColor" className="block text-xs text-gray-600">Text</label>
+                              <div className="color-picker-wrapper">
+                                <input
+                                  id="bannerTextColor"
+                                  type="color"
+                                  name="bannerTextColor"
+                                  value={settings.bannerTextColor}
+                                  onChange={handleChange}
+                                />
+                                <input 
+                                  type="text"
+                                  value={settings.bannerTextColor}
+                                  onChange={(e) => handleChange({target: {name: 'bannerTextColor', value: e.target.value}})}
+                                  className="futuristic-input text-sm"
+                                />
+                              </div>
+                            </div>
+                            <div className="space-y-2">
+                              <label htmlFor="linkColor" className="block text-xs text-gray-600">Link Color</label>
+                              <div className="color-picker-wrapper">
+                                <input
+                                  id="linkColor"
+                                  type="color"
+                                  name="linkColor"
+                                  value={settings.linkColor}
+                                  onChange={handleChange}
+                                />
+                                <input 
+                                  type="text"
+                                  value={settings.linkColor}
+                                  onChange={(e) => handleChange({target: {name: 'linkColor', value: e.target.value}})}
+                                  className="futuristic-input text-sm"
+                                />
+                              </div>
+                            </div>
+                            <div className="space-y-2">
+                              <label htmlFor="activeColor" className="block text-xs text-gray-600">Active Elements</label>
+                              <div className="color-picker-wrapper">
+                                <input
+                                  id="activeColor"
+                                  type="color"
+                                  name="activeColor"
+                                  value={settings.activeColor}
+                                  onChange={handleChange}
+                                />
+                                <input 
+                                  type="text"
+                                  value={settings.activeColor}
+                                  onChange={(e) => handleChange({target: {name: 'activeColor', value: e.target.value}})}
+                                  className="futuristic-input text-sm"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </fieldset>
                         
-                        <div className="grid grid-cols-1 gap-6">
-                          <fieldset className="space-y-4">
-                            <legend className="block text-sm font-medium text-gray-700 mb-3">Banner Colors</legend>
-                            <div className="space-y-4">
-                              <div>
-                                <label htmlFor="bannerBgColor" className="block text-sm text-gray-700 mb-2">Background</label>
-                                <div className="color-picker-wrapper">
-                                  <input
-                                    id="bannerBgColor"
-                                    type="color"
-                                    name="bannerBgColor"
-                                    value={settings.bannerBgColor}
-                                    onChange={handleChange}
-                                  />
-                                  <input 
-                                    type="text"
-                                    value={settings.bannerBgColor}
-                                    onChange={(e) => handleChange({target: {name: 'bannerBgColor', value: e.target.value}})}
-                                    className="futuristic-input"
-                                  />
-                                </div>
-                              </div>
-                              <div>
-                                <label htmlFor="bannerTextColor" className="block text-sm text-gray-700 mb-2">Text</label>
-                                <div className="color-picker-wrapper">
-                                  <input
-                                    id="bannerTextColor"
-                                    type="color"
-                                    name="bannerTextColor"
-                                    value={settings.bannerTextColor}
-                                    onChange={handleChange}
-                                  />
-                                  <input 
-                                    type="text"
-                                    value={settings.bannerTextColor}
-                                    onChange={(e) => handleChange({target: {name: 'bannerTextColor', value: e.target.value}})}
-                                    className="futuristic-input"
-                                  />
-                                </div>
-                              </div>
-                              <div>
-                                <label htmlFor="linkColor" className="block text-sm text-gray-700 mb-2">Link Color</label>
-                                <div className="color-picker-wrapper">
-                                  <input
-                                    id="linkColor"
-                                    type="color"
-                                    name="linkColor"
-                                    value={settings.linkColor}
-                                    onChange={handleChange}
-                                  />
-                                  <input 
-                                    type="text"
-                                    value={settings.linkColor}
-                                    onChange={(e) => handleChange({target: {name: 'linkColor', value: e.target.value}})}
-                                    className="futuristic-input"
-                                  />
-                                </div>
-                              </div>
-                              <div>
-                                <label htmlFor="activeColor" className="block text-sm text-gray-700 mb-2">Active Elements Color</label>
-                                <div className="color-picker-wrapper">
-                                  <input
-                                    id="activeColor"
-                                    type="color"
-                                    name="activeColor"
-                                    value={settings.activeColor}
-                                    onChange={handleChange}
-                                  />
-                                  <input 
-                                    type="text"
-                                    value={settings.activeColor}
-                                    onChange={(e) => handleChange({target: {name: 'activeColor', value: e.target.value}})}
-                                    className="futuristic-input"
-                                  />
-                                </div>
+                        {/* Kompakter Farb-Picker für Buttons */}
+                        <fieldset>
+                          <legend className="block text-sm font-medium text-gray-700 mb-3">Button Colors</legend>
+                          <div className="grid grid-cols-2 gap-3">
+                            <div className="space-y-2">
+                              <label htmlFor="buttonBgColor" className="block text-xs text-gray-600">Background</label>
+                              <div className="color-picker-wrapper">
+                                <input
+                                  id="buttonBgColor"
+                                  type="color"
+                                  name="buttonBgColor"
+                                  value={settings.buttonBgColor}
+                                  onChange={handleChange}
+                                />
+                                <input 
+                                  type="text"
+                                  value={settings.buttonBgColor}
+                                  onChange={(e) => handleChange({target: {name: 'buttonBgColor', value: e.target.value}})}
+                                  className="futuristic-input text-sm"
+                                />
                               </div>
                             </div>
-                          </fieldset>
-                          
-                          <fieldset className="space-y-4">
-                            <legend className="block text-sm font-medium text-gray-700 mb-3">Button Colors</legend>
-                            <div className="space-y-4">
-                              <div>
-                                <label htmlFor="buttonBgColor" className="block text-sm text-gray-700 mb-2">Background</label>
-                                <div className="color-picker-wrapper">
-                                  <input
-                                    id="buttonBgColor"
-                                    type="color"
-                                    name="buttonBgColor"
-                                    value={settings.buttonBgColor}
-                                    onChange={handleChange}
-                                  />
-                                  <input 
-                                    type="text"
-                                    value={settings.buttonBgColor}
-                                    onChange={(e) => handleChange({target: {name: 'buttonBgColor', value: e.target.value}})}
-                                    className="futuristic-input"
-                                  />
-                                </div>
-                              </div>
-                              <div>
-                                <label htmlFor="buttonTextColor" className="block text-sm text-gray-700 mb-2">Text</label>
-                                <div className="color-picker-wrapper">
-                                  <input
-                                    id="buttonTextColor"
-                                    type="color"
-                                    name="buttonTextColor"
-                                    value={settings.buttonTextColor}
-                                    onChange={handleChange}
-                                  />
-                                  <input 
-                                    type="text"
-                                    value={settings.buttonTextColor}
-                                    onChange={(e) => handleChange({target: {name: 'buttonTextColor', value: e.target.value}})}
-                                    className="futuristic-input"
-                                  />
-                                </div>
+                            <div className="space-y-2">
+                              <label htmlFor="buttonTextColor" className="block text-xs text-gray-600">Text</label>
+                              <div className="color-picker-wrapper">
+                                <input
+                                  id="buttonTextColor"
+                                  type="color"
+                                  name="buttonTextColor"
+                                  value={settings.buttonTextColor}
+                                  onChange={handleChange}
+                                />
+                                <input 
+                                  type="text"
+                                  value={settings.buttonTextColor}
+                                  onChange={(e) => handleChange({target: {name: 'buttonTextColor', value: e.target.value}})}
+                                  className="futuristic-input text-sm"
+                                />
                               </div>
                             </div>
-                          </fieldset>
-                        </div>
+                          </div>
+                        </fieldset>
                       </div>
                     </div>
                   </section>
                 )}
 
                 {/* Speichern-Button */}
-                <div className="flex justify-end mt-8">
+                <div className="flex justify-end mt-5">
                   <button
                     type="button"
                     onClick={handleSave}
                     disabled={saving}
-                    className="futuristic-button px-8 py-3 rounded-md text-white font-medium transition-all"
+                    className="futuristic-button px-6 py-2 rounded-md text-white font-medium text-sm transition-all"
                   >
                     {saving ? (
                       <span className="flex items-center justify-center">
                         <span className="loader loader-small mr-2" />
-                        Save Settings
+                        Save
                       </span>
                     ) : (
                       'Save Settings'
