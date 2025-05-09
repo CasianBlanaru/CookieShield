@@ -61,6 +61,7 @@ export default function CookieDashboard() {
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState('');
   const [toastType, setToastType] = useState('success');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   // Load settings
   useEffect(() => {
@@ -104,7 +105,25 @@ export default function CookieDashboard() {
     }
   }, []);
 
-  // Toast-Meldung anzeigen
+  // Add scroll event handler
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      if (scrollPosition > 50) { // Lower threshold for earlier activation
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    // Initial check on load
+    handleScroll();
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Display toast message
   const displayToast = (message, type = 'success') => {
     setToastMessage(message);
     setToastType(type);
@@ -112,7 +131,7 @@ export default function CookieDashboard() {
     setTimeout(() => setShowToast(false), 3000);
   };
 
-  // Login-Handler
+  // Login handler
   const handleLogin = async (email, password) => {
     try {
       const newToken = await login(email, password);
@@ -120,7 +139,7 @@ export default function CookieDashboard() {
       setToken(newToken);
       setIsAuthenticated(true);
       setError(null);
-      // Einstellungen nach Login laden
+      // Load settings after login
       const data = await fetchSettings(newToken);
       setSettings({ ...defaultSettings, ...data });
       displayToast('Login successful!');
@@ -130,7 +149,7 @@ export default function CookieDashboard() {
     }
   };
 
-  // Logout-Handler
+  // Logout handler
   const handleLogout = () => {
     localStorage.removeItem('auth_token');
     setToken(null);
@@ -910,17 +929,107 @@ export default function CookieDashboard() {
               </div>
             </div>
 
-            {/* Rechte Spalte: Vorschau */}
+            {/* Right column: Preview */}
             <div className="w-full md:w-1/2 md:pl-4 mt-8 md:mt-0">
-              <div className="sticky top-4">
+              <div className={`banner-preview-container transition-all duration-500 will-change-transform ${isScrolled ? 'sticky' : ''}`} 
+                   style={{
+                     position: 'sticky', 
+                     top: '2rem',
+                     zIndex: 10
+                   }}>
                 <h2 className="text-xl font-semibold mb-4 text-primary mt-4">Banner Preview</h2>
-                <div className="relative w-full h-[700px] rounded-xl futuristic-card overflow-hidden p-4 flex items-center justify-center">
+                <div className="relative w-full h-[700px] rounded-xl futuristic-card overflow-hidden p-4 flex items-center justify-center transform transition-all duration-500 hover:scale-[1.01] shadow-lg hover:shadow-xl">
                   <div className="w-full h-full">
                     <BannerPreview settings={settings} />
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      
+      {/* Footer with additional scroll space */}
+      <div className="container mt-16 pb-32">
+        <div className="card">
+          <div className="card-body">
+            <h2 className="text-xl font-semibold mb-4 text-primary">CookieShield Documentation</h2>
+            <div className="space-y-6">
+              <div className="form-section">
+                <h3 className="text-lg font-semibold mb-3 text-primary">Introduction</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  CookieShield is a comprehensive solution for GDPR-compliant cookie banners on your website.
+                  Our system allows you to customize your cookie settings and provide transparent information
+                  about cookie usage to your visitors.
+                </p>
+              </div>
+              
+              <div className="form-section">
+                <h3 className="text-lg font-semibold mb-3 text-primary">Technical Overview</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  CookieShield is based on a modern architecture with a React component for the frontend
+                  and a Laravel backend for managing settings and user authentication.
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                  <div className="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 className="font-medium text-primary mb-2">Frontend</h4>
+                    <ul className="text-sm space-y-1 text-gray-600">
+                      <li>• React.js for UI components</li>
+                      <li>• Tailwind CSS for styling</li>
+                      <li>• Local settings in the browser</li>
+                    </ul>
+                  </div>
+                  <div className="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 className="font-medium text-primary mb-2">Backend</h4>
+                    <ul className="text-sm space-y-1 text-gray-600">
+                      <li>• Laravel framework</li>
+                      <li>• RESTful API endpoints</li>
+                      <li>• JSON Web Token (JWT) Auth</li>
+                    </ul>
+                  </div>
+                  <div className="bg-white p-4 rounded-lg shadow-sm">
+                    <h4 className="font-medium text-primary mb-2">Storage</h4>
+                    <ul className="text-sm space-y-1 text-gray-600">
+                      <li>• Local browser storage</li>
+                      <li>• API synchronization</li>
+                      <li>• Encrypted transmission</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="form-section">
+                <h3 className="text-lg font-semibold mb-3 text-primary">Data Privacy Compliance</h3>
+                <p className="text-gray-700 leading-relaxed">
+                  CookieShield was developed to meet the requirements of GDPR and similar data privacy laws.
+                  Our banner offers a clear categorization of cookies and allows users to give or deny consent.
+                  All consents are securely stored and can be proven at any time.
+                </p>
+              </div>
+              
+              <div className="form-section">
+                <h3 className="text-lg font-semibold mb-3 text-primary">Support</h3>
+                <p className="text-gray-700 leading-relaxed mb-4">
+                  If you have any questions or problems, we are happy to help. Our support team is available
+                  from Monday to Friday from 9:00 to 17:00.
+                </p>
+                <button 
+                  type="button"
+                  className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white px-4 py-2 rounded-md font-medium hover:from-purple-700 hover:to-indigo-700 transition-all transform hover:-translate-y-1"
+                >
+                  Contact Us
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div className="mt-16 text-center">
+          <p className="text-sm text-gray-500">© 2023 CookieShield. All rights reserved.</p>
+          <div className="flex justify-center space-x-4 mt-3">
+            <a href="/impressum" className="text-sm text-gray-500 hover:text-primary">Impressum</a>
+            <a href="/datenschutz" className="text-sm text-gray-500 hover:text-primary">Data Privacy</a>
+            <a href="/agb" className="text-sm text-gray-500 hover:text-primary">Terms of Service</a>
           </div>
         </div>
       </div>
