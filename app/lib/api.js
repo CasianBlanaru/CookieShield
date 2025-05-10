@@ -1,7 +1,7 @@
 // API-Funktionen für die Kommunikation mit dem Backend
 
-// API Basis-URL anpassen
-const API_URL = 'https://cookieshield-backend-main-zdejjv.laravel.cloud';
+// API Basis-URL anpassen - nutze den lokalen Proxy
+const API_URL = '/api/proxy';
 
 /**
  * Allgemeine Fetch-Funktion mit Fehlerbehandlung
