@@ -1,9 +1,8 @@
 import './globals.css';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
-import type { Metadata, Viewport } from 'next';
+import { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/react';
-import { ThemeProvider } from 'next-themes';
 
 export const metadata: Metadata = {
   title: 'CookieShield - Advanced GDPR/DSGVO Cookie Consent Solution',
@@ -21,7 +20,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-};
+}
 
 export default function RootLayout({
   children,
@@ -29,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <head>
         {(process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "preview") && (
           // eslint-disable-next-line @next/next/no-sync-scripts
@@ -42,10 +41,8 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {children}
-          <Analytics />
-        </ThemeProvider>
+        {children}
+        <Analytics />
       </body>
     </html>
   );
