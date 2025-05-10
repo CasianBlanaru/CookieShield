@@ -1,7 +1,7 @@
 // API-Funktionen für die Kommunikation mit dem Backend
 
-// API Basis-URL anpassen - nutze den lokalen Proxy
-const API_URL = '/api/proxy';
+// API Basis-URL anpassen - nutze direkt die API-Endpunkte, da wir jetzt Rewrites haben
+const API_URL = '/api';
 
 /**
  * Allgemeine Fetch-Funktion mit Fehlerbehandlung

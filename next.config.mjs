@@ -150,6 +150,16 @@ const nextConfig = {
     optimizeCss: true,
   },
   
+  // API-Umleitungen zu unserem Backend
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: 'https://cookieshield-backend-main-zdejjv.laravel.cloud/api/:path*',
+      },
+    ];
+  },
+  
   // Öffentliche Ressourcen korrekt behandeln
   async headers() {
     return [
@@ -180,6 +190,18 @@ const nextConfig = {
           {
             key: 'X-Content-Type-Options',
             value: 'nosniff',
+          },
+          {
+            key: 'Access-Control-Allow-Origin',
+            value: '*',
+          },
+          {
+            key: 'Access-Control-Allow-Methods',
+            value: 'GET, POST, PUT, DELETE, OPTIONS',
+          },
+          {
+            key: 'Access-Control-Allow-Headers',
+            value: 'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization',
           },
         ],
       },
