@@ -1,26 +1,34 @@
 // API-Funktionen für die Kommunikation mit dem Backend
 
-// API Basis-URL anpassen - nutze direkt die API-Endpunkte, da wir jetzt Rewrites haben
-const API_URL = '/api';
+// Verwende die direkte Backend-URL, um die Rewrites zu umgehen und das Problem zu diagnostizieren
+const API_URL = 'https://cookieshield-backend-main-zdejjv.laravel.cloud/api';
 
 /**
  * Allgemeine Fetch-Funktion mit Fehlerbehandlung
  */
 async function fetchWithAuth(endpoint, options = {}) {
+  const url = `${API_URL}${endpoint}`;
+  console.log('Fetching URL:', url, 'with options:', options);
+  
   try {
-    const response = await fetch(`${API_URL}${endpoint}`, options);
+    const response = await fetch(url, options);
+    console.log('Response status:', response.status);
     
     if (!response.ok) {
       // Versuchen, Fehlermeldung aus der Antwort zu lesen
       try {
         const errorData = await response.json();
+        console.log('Error data:', errorData);
         throw new Error(errorData.message || `HTTP Error ${response.status}`);
-      } catch {
+      } catch (parseError) {
+        console.log('Error parsing error response:', parseError);
         throw new Error(`HTTP Error ${response.status}`);
       }
     }
     
-    return await response.json();
+    const data = await response.json();
+    console.log('Response data:', data);
+    return data;
   } catch (error) {
     console.error('API Error:', error);
     throw error;
