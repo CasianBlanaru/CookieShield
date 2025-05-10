@@ -55,6 +55,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#2B5797" />
         <meta name="msapplication-tap-highlight" content="no" />
         
+        <link rel="manifest" href="/manifest.json" />
         <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png" />
         <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
