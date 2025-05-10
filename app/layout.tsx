@@ -1,66 +1,37 @@
-import type { Metadata, Viewport } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-export const viewport: Viewport = {
-  themeColor: "#ffffff",
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 1
-};
+import './globals.css';
+import { GeistSans } from 'geist/font/sans';
+import { GeistMono } from 'geist/font/mono';
+import { Metadata, Viewport } from 'next';
 
 export const metadata: Metadata = {
-  title: "CookieShield - GDPR Cookie Consent Manager",
-  description: "A 100% GDPR/DSGVO and BITV compliant cookie consent solution with free customizable design",
-  manifest: "/manifest.json",
-  icons: {
-    apple: "/favicon/apple-touch-icon.png",
-    icon: [
-      { url: "/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
-    ],
-    shortcut: "/favicon/favicon.ico",
-  },
-  appleWebApp: {
-    capable: true,
-    statusBarStyle: "default",
-    title: "CookieShield",
-  },
-  robots: "index, follow"
+  title: 'CookieShield - Advanced GDPR/DSGVO Cookie Consent Solution',
+  description: 'CookieShield helps websites comply with GDPR/DSGVO regulations by providing an advanced and customizable cookie consent solution.',
+  manifest: '/manifest.json',
+  icons: [
+    { rel: 'icon', url: '/favicon/favicon.ico' },
+    { rel: 'apple-touch-icon', url: '/favicon/apple-touch-icon.png' },
+  ],
 };
+
+export const viewport: Viewport = {
+  themeColor: '#5364fc',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
       <head>
-        <meta name="application-name" content="CookieShield" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="CookieShield" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="msapplication-TileColor" content="#2B5797" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        
         <link rel="manifest" href="/manifest.json" />
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon/favicon-96x96.png" />
-        <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
-        <link rel="shortcut icon" href="/favicon/favicon.ico" />
       </head>
-      <body
-        className={`${inter.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
