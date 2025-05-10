@@ -1,7 +1,7 @@
 // API-Funktionen für die Kommunikation mit dem Backend
 
-// Verwende die direkte Backend-URL, um die Rewrites zu umgehen und das Problem zu diagnostizieren
-const API_URL = 'https://cookieshield-backend-main-zdejjv.laravel.cloud/api';
+// API Basis-URL - nutze lokale API-Routen
+const API_URL = '';
 
 /**
  * Allgemeine Fetch-Funktion mit Fehlerbehandlung
