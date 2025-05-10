@@ -1253,7 +1253,7 @@ export default function CookieDashboard() {
             {/* Right column: Preview */}
             <div className="w-full md:w-1/2 mt-8 md:mt-0 relative">
               <div className="banner-preview-container transition-all duration-500 will-change-transform" 
-                     style={{ zIndex: 10 }}>
+                     style={{ zIndex: 20 }}>
                 <div className="relative bg-gradient-to-br from-white/80 to-indigo-50/50 p-6 shadow-blue-100/40">
                   <div className="absolute -top-20 -right-20 w-60 h-60 bg-gradient-to-br from-indigo-200/20 to-purple-300/20 blur-3xl rounded-full pointer-events-none" />
                   <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-gradient-to-tr from-blue-200/20 to-indigo-200/20 blur-3xl rounded-full pointer-events-none" />

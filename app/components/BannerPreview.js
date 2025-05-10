@@ -473,7 +473,7 @@ export default function BannerPreview({ settings }) {
           {/* Background overlay when detailed view is shown */}
           {showDetailedView && (
             <div 
-              className="absolute inset-0 transition-opacity duration-300 ease-in-out z-40" 
+              className="absolute inset-0 transition-opacity duration-300 ease-in-out z-5" 
               style={{ 
                 backgroundColor: settings.overlayBgColor || 'rgba(0, 0, 0, 0.6)',
                 backdropFilter: settings.overlayBlur ? 'blur(2px)' : 'none'
@@ -486,7 +486,7 @@ export default function BannerPreview({ settings }) {
             ref={bannerRef}
             className="absolute top-1/2"
             style={{
-              zIndex: showDetailedView ? 50 : 40,
+              zIndex: 30,
               left: settings.bannerPosition === 'center' ? '50%' : (settings.bannerPosition === 'left' ? '20%' : 'auto'),
               right: settings.bannerPosition === 'right' ? '20%' : 'auto',
               transform: settings.bannerPosition === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)',
