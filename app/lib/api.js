@@ -4,11 +4,6 @@
 const API_URL = 'https://cookieshield-backend-main-zdejjv.laravel.cloud/api';
 
 /**
- * Verzögerung für Demo-Zwecke
- */
-const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-
-/**
  * Allgemeine Fetch-Funktion mit Fehlerbehandlung
  */
 async function fetchWithAuth(endpoint, options = {}) {
@@ -37,13 +32,6 @@ async function fetchWithAuth(endpoint, options = {}) {
  */
 export async function login(email, password) {
   try {
-    // Mockup-Antwort für Entwicklung (entfernen für Produktion)
-    if (email === 'admin@example.com' && password === 'password') {
-      // Kleine Verzögerung für bessere UX
-      await delay(800);
-      return 'mock-auth-token-12345';
-    }
-    
     const data = await fetchWithAuth('/login', {
       method: 'POST',
       headers: {
@@ -60,28 +48,35 @@ export async function login(email, password) {
 }
 
 /**
+ * Registrierungsfunktion
+ */
+export async function register(name, email, password, passwordConfirmation) {
+  try {
+    const data = await fetchWithAuth('/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ 
+        name, 
+        email, 
+        password, 
+        password_confirmation: passwordConfirmation 
+      }),
+    });
+    
+    return data;
+  } catch (error) {
+    console.error('Registration failed:', error);
+    throw error;
+  }
+}
+
+/**
  * Cookie-Einstellungen abrufen
  */
 export async function fetchSettings(token) {
   try {
-    // Mockup-Antwort für Entwicklung (entfernen für Produktion)
-    if (token === 'mock-auth-token-12345') {
-      await delay(600);
-      return {
-        bannerMessage: 'Wir verwenden Cookies, um Ihre Erfahrung zu verbessern.',
-        acceptAllLabel: 'Alle akzeptieren',
-        denyAllLabel: 'Alle ablehnen',
-        bannerPosition: 'bottom',
-        bannerBgColor: '#1a1a2e',
-        bannerTextColor: '#ffffff',
-        buttonBgColor: '#4361ee',
-        buttonTextColor: '#ffffff',
-        buttonBorderRadius: '8',
-        bannerAnimation: 'fade',
-        fontFamily: 'Inter, sans-serif',
-      };
-    }
-    
     return await fetchWithAuth('/cookie-settings', {
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -98,14 +93,6 @@ export async function fetchSettings(token) {
  */
 export async function saveSettings(settings, token) {
   try {
-    // Mockup-Antwort für Entwicklung
-    if (token === 'mock-auth-token-12345') {
-      // Längere Verzögerung beim Speichern für bessere UX
-      await delay(1500);
-      console.log('Saving settings (mock):', settings);
-      return { success: true };
-    }
-    
     return await fetchWithAuth('/cookie-settings', {
       method: 'POST',
       headers: {

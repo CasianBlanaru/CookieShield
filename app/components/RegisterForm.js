@@ -3,19 +3,32 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { register } from '../lib/api';
 
-export default function LoginForm({ onLogin, error }) {
+export default function RegisterForm({ onRegistrationSuccess }) {
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
+    setError('');
+
     try {
-      await onLogin(email, password);
-    } catch {
-      // Fehler wird bereits in onLogin behandelt
+      if (password !== passwordConfirmation) {
+        throw new Error('Die Passwörter stimmen nicht überein.');
+      }
+
+      await register(name, email, password, passwordConfirmation);
+      if (onRegistrationSuccess) {
+        onRegistrationSuccess();
+      }
+    } catch (error) {
+      setError(error.message || 'Registrierung fehlgeschlagen. Bitte versuche es erneut.');
     } finally {
       setIsLoading(false);
     }
@@ -35,8 +48,8 @@ export default function LoginForm({ onLogin, error }) {
                 className="w-24 h-24"
               />
             </div>
-            <h1 className="text-2xl font-bold text-gray-800">Cookie Dashboard</h1>
-            <p className="text-sm text-gray-500 mt-1">Manage your cookie consent settings</p>
+            <h1 className="text-2xl font-bold text-gray-800">Registrieren</h1>
+            <p className="text-sm text-gray-500 mt-1">Erstelle ein Konto für das Cookie Dashboard</p>
           </div>
           
           {error && (
@@ -52,6 +65,21 @@ export default function LoginForm({ onLogin, error }) {
           
           <form onSubmit={handleSubmit}>
             <div className="mb-4">
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+                Name
+              </label>
+              <input
+                id="name"
+                type="text"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full p-2.5 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                required
+                placeholder="Dein Name"
+              />
+            </div>
+
+            <div className="mb-4">
               <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
                 Email
               </label>
@@ -62,13 +90,13 @@ export default function LoginForm({ onLogin, error }) {
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full p-2.5 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 required
-                placeholder="admin@example.com"
+                placeholder="deine.email@beispiel.de"
               />
             </div>
             
-            <div className="mb-6">
+            <div className="mb-4">
               <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Password
+                Passwort
               </label>
               <input
                 id="password"
@@ -78,6 +106,23 @@ export default function LoginForm({ onLogin, error }) {
                 className="w-full p-2.5 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                 required
                 placeholder="••••••••"
+                minLength="8"
+              />
+            </div>
+
+            <div className="mb-6">
+              <label htmlFor="passwordConfirmation" className="block text-sm font-medium text-gray-700 mb-1">
+                Passwort bestätigen
+              </label>
+              <input
+                id="passwordConfirmation"
+                type="password"
+                value={passwordConfirmation}
+                onChange={(e) => setPasswordConfirmation(e.target.value)}
+                className="w-full p-2.5 text-gray-900 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                required
+                placeholder="••••••••"
+                minLength="8"
               />
             </div>
             
@@ -90,32 +135,25 @@ export default function LoginForm({ onLogin, error }) {
                 {isLoading ? (
                   <span className="flex items-center justify-center">
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                    Signing in...
+                    Registrierung läuft...
                   </span>
                 ) : (
-                  'Sign In'
+                  'Registrieren'
                 )}
               </button>
             </div>
             
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-                Noch kein Konto?{' '}
-                <Link href="/register" className="font-medium text-indigo-600 hover:text-indigo-500">
-                  Registrieren
+                Bereits registriert?{' '}
+                <Link href="/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+                  Zum Login
                 </Link>
               </p>
-            </div>
-            
-            <div className="mt-6 pt-6 border-t border-gray-200 text-center slide-up">
-              <h3 className="text-sm font-medium text-gray-500 mb-2">Demo Credentials</h3>
-              <div className="bg-gray-50 py-2 px-3 rounded-md inline-block text-sm font-mono text-gray-600">
-                admin@example.com / password
-              </div>
             </div>
           </form>
         </div>
       </div>
     </div>
   );
-}
+} 
