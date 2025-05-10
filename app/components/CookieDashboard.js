@@ -169,6 +169,8 @@ export default function CookieDashboard() {
       try {
         localSettings = JSON.parse(storedSettings);
         console.log('Local settings loaded:', localSettings);
+        // Stellen sicher, dass Banner-Position immer "center" ist
+        localSettings.bannerPosition = 'center';
       } catch (err) {
         console.error('Error parsing local settings:', err);
       }
@@ -180,7 +182,8 @@ export default function CookieDashboard() {
       fetchSettings(storedToken)
         .then(data => {
           // Combine API data with local settings with priority for local settings
-          const mergedSettings = { ...defaultSettings, ...data, ...localSettings };
+          // Stellen sicher, dass Banner-Position immer "center" ist
+          const mergedSettings = { ...defaultSettings, ...data, ...localSettings, bannerPosition: 'center' };
           setSettings(mergedSettings);
           console.log('Combined settings:', mergedSettings);
           setLoading(false);
@@ -188,13 +191,15 @@ export default function CookieDashboard() {
         .catch(err => {
           setError('Failed to load settings');
           // Still apply local settings
-          setSettings({ ...defaultSettings, ...localSettings });
+          // Stellen sicher, dass Banner-Position immer "center" ist
+          setSettings({ ...defaultSettings, ...localSettings, bannerPosition: 'center' });
           setLoading(false);
           console.error(err);
         });
     } else {
       // Also load local settings without token
-      setSettings({ ...defaultSettings, ...localSettings });
+      // Stellen sicher, dass Banner-Position immer "center" ist
+      setSettings({ ...defaultSettings, ...localSettings, bannerPosition: 'center' });
       setLoading(false);
     }
   }, []);
@@ -329,6 +334,7 @@ export default function CookieDashboard() {
       // Save all important settings, not just animation
       localStorage.setItem('banner_settings', JSON.stringify({
         bannerAnimation: settings.bannerAnimation,
+        bannerPosition: 'center',
         bannerBgColor: settings.bannerBgColor,
         bannerTextColor: settings.bannerTextColor,
         buttonBgColor: settings.buttonBgColor,
