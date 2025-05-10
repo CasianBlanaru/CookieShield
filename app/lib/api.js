@@ -1,4 +1,5 @@
 // API-Konfiguration für das Frontend
+// Integriert aus frontend-integration/api.js
 
 // Basis-URL des Backends - Direkt auf die Laravel-API verweisen statt auf einen Proxy
 // Keine doppelten /api-Pfade mehr
