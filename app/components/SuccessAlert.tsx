@@ -52,7 +52,7 @@ export default function SuccessAlert({
                 >
                   <div className="flex justify-center items-center bg-green-100 rounded-full w-10 h-10">
                     <svg className="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                      <title>Häkchen Symbol</title>
+                      <title>Check mark</title>
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
@@ -64,7 +64,7 @@ export default function SuccessAlert({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3 }}
                 >
-                  <h3 className="font-medium text-gray-900 dark:text-white text-lg">Erfolg!</h3>
+                  <h3 className="font-medium text-gray-900 dark:text-white text-lg">Success!</h3>
                 </motion.div>
                 <motion.div
                   initial={{ opacity: 0 }}

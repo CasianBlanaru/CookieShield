@@ -10,7 +10,7 @@ export default function RegisterPage() {
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const handleRegistrationSuccess = () => {
-    // Erfolgsmeldung anzeigen und später zur Login-Seite weiterleiten
+    // Display success message before redirecting to login page
     setShowSuccessAlert(true);
   };
 
@@ -25,7 +25,7 @@ export default function RegisterPage() {
       
       {showSuccessAlert && (
         <SuccessAlert 
-          message="Registrierung erfolgreich! Bitte melde dich jetzt an."
+          message="Registration successful! Please sign in now."
           onClose={handleCloseAlert}
           autoClose={true}
           autoCloseTime={3000}
