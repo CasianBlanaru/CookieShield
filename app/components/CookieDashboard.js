@@ -14,7 +14,7 @@ const defaultSettings = {
   saveLabel: 'Save Settings',
   consentLifetime: 31536000, // 1 year in seconds
   categories: ['necessary', 'performance', 'functional', 'advertising'],
-  bannerPosition: 'left',
+  bannerPosition: 'center',
   bannerBgColor: '#ffffff',
   bannerTextColor: '#333333',
   buttonBgColor: '#3b82f6',

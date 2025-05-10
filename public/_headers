@@ -1,0 +1,24 @@
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  X-XSS-Protection: 1; mode=block
+
+/manifest.json
+  Access-Control-Allow-Origin: *
+  Content-Type: application/json
+
+/*.json
+  Access-Control-Allow-Origin: *
+  Content-Type: application/json
+
+/*.svg
+  Content-Type: image/svg+xml
+
+/*.png
+  Content-Type: image/png
+
+/*.ico
+  Content-Type: image/x-icon
+
+/*.css
+  Content-Type: text/css 
