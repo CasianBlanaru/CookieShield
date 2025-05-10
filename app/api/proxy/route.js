@@ -32,7 +32,7 @@ async function proxyRequest(request, path) {
     // Bei POST/PUT/PATCH-Anfragen den Body hinzufügen
     if (['POST', 'PUT', 'PATCH'].includes(method)) {
       const contentType = requestHeaders.get('content-type');
-      if (contentType && contentType?.includes('application/json')) {
+      if (contentType?.includes('application/json')) {
         // JSON-Body
         const body = await request.json();
         requestOptions.body = JSON.stringify(body);
@@ -81,30 +81,50 @@ async function proxyRequest(request, path) {
 
 // GET-Anfragen-Handler
 export async function GET(request) {
-  const { pathname, search } = new URL(request.url);
-  const path = pathname.replace('/api/proxy', '') + search;
-  return proxyRequest(request, path);
+  const url = new URL(request.url);
+  // Extrahiere den Teil nach /api/proxy
+  const pathParts = url.pathname.split('/api/proxy');
+  // Wenn es Teile nach /api/proxy gibt, verwende sie, sonst leeren String
+  const path = pathParts.length > 1 ? pathParts[1] : '';
+  // Füge Suchparameter hinzu
+  const fullPath = path + url.search;
+  return proxyRequest(request, fullPath);
 }
 
 // POST-Anfragen-Handler
 export async function POST(request) {
-  const { pathname, search } = new URL(request.url);
-  const path = pathname.replace('/api/proxy', '') + search;
-  return proxyRequest(request, path);
+  const url = new URL(request.url);
+  // Extrahiere den Teil nach /api/proxy
+  const pathParts = url.pathname.split('/api/proxy');
+  // Wenn es Teile nach /api/proxy gibt, verwende sie, sonst leeren String
+  const path = pathParts.length > 1 ? pathParts[1] : '';
+  // Füge Suchparameter hinzu
+  const fullPath = path + url.search;
+  return proxyRequest(request, fullPath);
 }
 
 // PUT-Anfragen-Handler
 export async function PUT(request) {
-  const { pathname, search } = new URL(request.url);
-  const path = pathname.replace('/api/proxy', '') + search;
-  return proxyRequest(request, path);
+  const url = new URL(request.url);
+  // Extrahiere den Teil nach /api/proxy
+  const pathParts = url.pathname.split('/api/proxy');
+  // Wenn es Teile nach /api/proxy gibt, verwende sie, sonst leeren String
+  const path = pathParts.length > 1 ? pathParts[1] : '';
+  // Füge Suchparameter hinzu
+  const fullPath = path + url.search;
+  return proxyRequest(request, fullPath);
 }
 
 // DELETE-Anfragen-Handler
 export async function DELETE(request) {
-  const { pathname, search } = new URL(request.url);
-  const path = pathname.replace('/api/proxy', '') + search;
-  return proxyRequest(request, path);
+  const url = new URL(request.url);
+  // Extrahiere den Teil nach /api/proxy
+  const pathParts = url.pathname.split('/api/proxy');
+  // Wenn es Teile nach /api/proxy gibt, verwende sie, sonst leeren String
+  const path = pathParts.length > 1 ? pathParts[1] : '';
+  // Füge Suchparameter hinzu
+  const fullPath = path + url.search;
+  return proxyRequest(request, fullPath);
 }
 
 // OPTIONS-Anfragen-Handler (für CORS-Preflight-Anfragen)
