@@ -248,15 +248,18 @@ export default function CookieDashboard() {
       const storedSettings = localStorage.getItem('banner_settings') || '{}';
       try {
         const parsedSettings = JSON.parse(storedSettings);
+        // Wenn es sich um die bannerPosition handelt, immer "center" speichern
+        const valueToSave = name === 'bannerPosition' ? 'center' : newSettings[name];
         localStorage.setItem('banner_settings', JSON.stringify({
           ...parsedSettings,
-          [name]: newSettings[name]
+          [name]: valueToSave
         }));
-        console.log('Local setting saved:', name, newSettings[name]);
+        console.log('Local setting saved:', name, valueToSave);
       } catch (err) {
         console.error('Error saving local setting:', err);
+        const valueToSave = name === 'bannerPosition' ? 'center' : newSettings[name];
         localStorage.setItem('banner_settings', JSON.stringify({
-          [name]: newSettings[name]
+          [name]: valueToSave
         }));
       }
     };
