@@ -128,27 +128,14 @@ export default function BannerPreview({ settings }) {
   const updateBannerPosition = useCallback(() => {
     if (!bannerRef.current) return;
     
-    // Position the banner based on bannerPosition setting
-    if (settings.bannerPosition === 'left') {
-      // Position left side (default)
-      bannerRef.current.style.left = '20%';
-      bannerRef.current.style.right = 'auto';
-      bannerRef.current.style.transform = 'translateY(-50%)';
-      console.log('Banner positioned left');
-    } else if (settings.bannerPosition === 'right') {
-      // Position right side
-      bannerRef.current.style.left = 'auto';
-      bannerRef.current.style.right = '20%';
-      bannerRef.current.style.transform = 'translateY(-50%)';
-      console.log('Banner positioned right');
-    } else if (settings.bannerPosition === 'center') {
-      // Position center
-      bannerRef.current.style.left = '50%';
-      bannerRef.current.style.right = 'auto';
-      bannerRef.current.style.transform = 'translate(-50%, -50%)';
-      console.log('Banner positioned center');
-    }
-  }, [settings.bannerPosition]);
+    // Immer in der Mitte positionieren, unabhängig von der Einstellung
+    // Position center
+    bannerRef.current.style.left = '50%';
+    bannerRef.current.style.right = 'auto';
+    bannerRef.current.style.transform = 'translate(-50%, -50%)';
+    console.log('Banner positioned center (forced)');
+    
+  }, []);
 
   // Initial on mounting
   useEffect(() => {

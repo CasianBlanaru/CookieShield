@@ -187,20 +187,47 @@ export default function CookieDashboard() {
           setSettings(mergedSettings);
           console.log('Combined settings:', mergedSettings);
           setLoading(false);
+          
+          // Sofort ein Event auslösen, damit die Preview aktualisiert wird
+          setTimeout(() => {
+            const event = new CustomEvent('settingsUpdated', { 
+              detail: mergedSettings
+            });
+            window.dispatchEvent(event);
+          }, 100);
         })
         .catch(err => {
           setError('Failed to load settings');
           // Still apply local settings
           // Stellen sicher, dass Banner-Position immer "center" ist
-          setSettings({ ...defaultSettings, ...localSettings, bannerPosition: 'center' });
+          const defaultWithLocal = { ...defaultSettings, ...localSettings, bannerPosition: 'center' };
+          setSettings(defaultWithLocal);
           setLoading(false);
+          
+          // Sofort ein Event auslösen, damit die Preview aktualisiert wird
+          setTimeout(() => {
+            const event = new CustomEvent('settingsUpdated', { 
+              detail: defaultWithLocal
+            });
+            window.dispatchEvent(event);
+          }, 100);
+          
           console.error(err);
         });
     } else {
       // Also load local settings without token
       // Stellen sicher, dass Banner-Position immer "center" ist
-      setSettings({ ...defaultSettings, ...localSettings, bannerPosition: 'center' });
+      const defaultWithLocal = { ...defaultSettings, ...localSettings, bannerPosition: 'center' };
+      setSettings(defaultWithLocal);
       setLoading(false);
+      
+      // Sofort ein Event auslösen, damit die Preview aktualisiert wird
+      setTimeout(() => {
+        const event = new CustomEvent('settingsUpdated', { 
+          detail: defaultWithLocal
+        });
+        window.dispatchEvent(event);
+      }, 100);
     }
   }, []);
 
