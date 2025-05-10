@@ -21,6 +21,8 @@ const defaultSettings = {
   buttonTextColor: '#ffffff',
   linkColor: '#e97040', // Setting for link color
   activeColor: '#e97040', // Setting for active elements color
+  overlayBgColor: 'rgba(0, 0, 0, 0.6)', // Neue Einstellung für Overlay-Hintergrundfarbe
+  overlayBlur: true, // Neue Einstellung für Overlay-Blur-Effekt
   // Tab text settings
   settingsTabLabel: 'Einstellungen',
   cookiesTabLabel: 'Cookies',
@@ -377,6 +379,8 @@ export default function CookieDashboard() {
         fontFamily: settings.fontFamily,
         linkColor: settings.linkColor,
         activeColor: settings.activeColor,
+        overlayBgColor: settings.overlayBgColor,
+        overlayBlur: settings.overlayBlur,
         // Save tab labels too
         settingsTabLabel: settings.settingsTabLabel,
         cookiesTabLabel: settings.cookiesTabLabel,
@@ -1169,6 +1173,57 @@ export default function CookieDashboard() {
                             </fieldset>
                           </div>
                         </div>
+                        
+                        {/* Overlay Settings */}
+                        <div className="mt-8">
+                          <h3 className="text-base font-medium text-indigo-600 mb-4 inline-flex items-center">
+                            <span className="w-2 h-2 bg-indigo-400 rounded-full mr-2" />
+                            Overlay Einstellungen
+                          </h3>
+                          <fieldset className="p-5 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100 shadow-sm">
+                            <div className="grid grid-cols-1 gap-4">
+                              <div className="flex flex-col">
+                                <label htmlFor="overlayBgColor" className="block text-xs text-gray-600 mb-3">Overlay Hintergrundfarbe</label>
+                                <div className="color-preview-container relative">
+                                  <label htmlFor="overlayBgColor" className="w-14 h-14 rounded-full shadow-sm mb-3 border border-gray-200 overflow-hidden cursor-pointer hover:shadow-md transition-shadow block" 
+                                    style={{backgroundColor: settings.overlayBgColor}}>
+                                    <span className="sr-only">Choose color</span>
+                                  </label>
+                                  <input
+                                    id="overlayBgColor"
+                                    type="color"
+                                    name="overlayBgColor"
+                                    value={settings.overlayBgColor?.includes('rgba') ? '#000000' : settings.overlayBgColor}
+                                    onChange={(e) => {
+                                      const rgba = `rgba(${Number.parseInt(e.target.value.slice(1, 3), 16)}, ${Number.parseInt(e.target.value.slice(3, 5), 16)}, ${Number.parseInt(e.target.value.slice(5, 7), 16)}, 0.6)`;
+                                      handleChange({target: {name: 'overlayBgColor', value: rgba}});
+                                    }}
+                                    className="sr-only"
+                                  />
+                                  <input 
+                                    type="text"
+                                    value={settings.overlayBgColor}
+                                    onChange={(e) => handleChange({target: {name: 'overlayBgColor', value: e.target.value}})}
+                                    className="futuristic-input text-sm text-center w-32"
+                                  />
+                                </div>
+                              </div>
+                              
+                              <div className="flex items-center">
+                                <input
+                                  id="overlayBlur"
+                                  type="checkbox"
+                                  name="overlayBlur"
+                                  checked={settings.overlayBlur}
+                                  onChange={(e) => handleChange({target: {name: 'overlayBlur', value: e.target.checked}})}
+                                  className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500 mr-2"
+                                />
+                                <label htmlFor="overlayBlur" className="text-sm text-gray-700">Blur-Effekt aktivieren</label>
+                              </div>
+                            </div>
+                          </fieldset>
+                        </div>
+                        
                       </div>
                     </section>
                   )}

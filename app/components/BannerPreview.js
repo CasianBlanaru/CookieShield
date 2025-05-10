@@ -357,6 +357,17 @@ export default function BannerPreview({ settings }) {
               updateBannerPosition();
             }
           }
+          
+          // Update overlay settings if provided
+          if (updatedSettings.overlayBgColor !== undefined) {
+            settings.overlayBgColor = updatedSettings.overlayBgColor;
+            console.log('Setting overlay background color:', updatedSettings.overlayBgColor);
+          }
+          
+          if (updatedSettings.overlayBlur !== undefined) {
+            settings.overlayBlur = updatedSettings.overlayBlur;
+            console.log('Setting overlay blur effect:', updatedSettings.overlayBlur);
+          }
 
           // Update tab labels if they've changed
           if (updatedSettings.settingsTabLabel || updatedSettings.cookiesTabLabel || 
@@ -459,12 +470,23 @@ export default function BannerPreview({ settings }) {
             {/* Empty background without decorative elements */}
           </div>
           
+          {/* Background overlay when detailed view is shown */}
+          {showDetailedView && (
+            <div 
+              className="absolute inset-0 transition-opacity duration-300 ease-in-out z-40" 
+              style={{ 
+                backgroundColor: settings.overlayBgColor || 'rgba(0, 0, 0, 0.6)',
+                backdropFilter: settings.overlayBlur ? 'blur(2px)' : 'none'
+              }}
+            />
+          )}
+          
           {/* Cookie banner - position based on settings */}
           <div 
             ref={bannerRef}
             className="absolute top-1/2"
             style={{
-              zIndex: 50,
+              zIndex: showDetailedView ? 50 : 40,
               left: settings.bannerPosition === 'center' ? '50%' : (settings.bannerPosition === 'left' ? '20%' : 'auto'),
               right: settings.bannerPosition === 'right' ? '20%' : 'auto',
               transform: settings.bannerPosition === 'center' ? 'translate(-50%, -50%)' : 'translateY(-50%)',
