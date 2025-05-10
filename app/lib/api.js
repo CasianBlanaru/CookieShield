@@ -1,7 +1,7 @@
 // API-Funktionen für die Kommunikation mit dem Backend
 
 // API Basis-URL anpassen
-const API_URL = 'http://localhost:8000/api';
+const API_URL = 'https://cookieshield-backend-main-zdejjv.laravel.cloud/api';
 
 /**
  * Verzögerung für Demo-Zwecke
