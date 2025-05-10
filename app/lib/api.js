@@ -32,7 +32,7 @@ async function fetchWithAuth(endpoint, options = {}) {
  */
 export async function login(email, password) {
   try {
-    const data = await fetchWithAuth('/api/login', {
+    const data = await fetchWithAuth('/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export async function login(email, password) {
  */
 export async function register(name, email, password, passwordConfirmation) {
   try {
-    const data = await fetchWithAuth('/api/register', {
+    const data = await fetchWithAuth('/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export async function register(name, email, password, passwordConfirmation) {
  */
 export async function fetchSettings(token) {
   try {
-    return await fetchWithAuth('/api/cookie-settings', {
+    return await fetchWithAuth('/cookie-settings', {
       headers: {
         'Authorization': `Bearer ${token}`,
       },
@@ -93,7 +93,7 @@ export async function fetchSettings(token) {
  */
 export async function saveSettings(settings, token) {
   try {
-    return await fetchWithAuth('/api/cookie-settings', {
+    return await fetchWithAuth('/cookie-settings', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
