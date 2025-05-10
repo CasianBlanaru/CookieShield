@@ -1,78 +1,91 @@
 # CookieShield Dashboard
 
-CookieShield ist eine 100% DSGVO/GDPR-konforme Cookie-Consent-Lösung mit anpassbarem Design. Dieses Frontend-Dashboard ermöglicht es, Cookie-Einstellungen anzupassen und zu verwalten.
+A modern, responsive administration interface for the CookieShield consent management system. Built with Next.js, this dashboard allows for easy configuration of cookie consent banners with live preview.
+
+## Motivation
+
+CookieShield was created with the mission to provide a 100% GDPR (DSGVO) and BITV compliant cookie consent solution that is both powerful and free to use. We believe that legal compliance shouldn't be a premium feature - everyone should have access to tools that help them follow privacy regulations while maintaining complete control over design and functionality.
 
 ## Features
 
-- 🔒 **100% DSGVO/GDPR-konform**: Vollständige Einhaltung aller Datenschutzgesetze
-- 🎨 **Anpassbares Design**: Passe Farben, Eckenradius und mehr an
-- 🌐 **Mehrsprachig**: Unterstützung für Deutsch, Englisch und Französisch
-- 📱 **Responsives Design**: Optimale Anzeige auf allen Geräten
-- 🔄 **Einfache API-Integration**: Nahtlose Verbindung mit deinem Backend
-- 📊 **Kategorie-Management**: Konfiguriere verschiedene Cookie-Kategorien
+- 100% GDPR (DSGVO) and BITV compliant cookie management
+- Free to use with all features included
+- Live preview of banner changes
+- Highly customizable design settings (colors, fonts, animations)
+- Multi-language support for international websites
+- Responsive interface works on all devices
+- Persistent settings with local storage
+- Integration with CookieShield Backend API
 
-## Technologien
+## Requirements
 
-- **Next.js 15**: Modernes React-Framework für serverseitige Rendering
-- **Tailwind CSS**: Utility-first CSS-Framework
-- **PWA-Unterstützung**: Progressive Web App mit Offline-Funktionalität
+- Node.js 16.x or higher
+- npm or yarn
 
-## Schnellstart
+## Installation
 
-1. Klone das Repository
-2. Installiere die Abhängigkeiten
+1. Clone the repository
+2. Install dependencies:
 
 ```bash
+npm install
+# or
 yarn install
 ```
 
-3. Starte den Entwicklungsserver
+3. Create a `.env.local` file with the backend API URL:
+
+```
+NEXT_PUBLIC_API_URL=http://localhost:8000/api
+```
+
+## Development
+
+Start the development server:
 
 ```bash
+npm run dev
+# or
 yarn dev
 ```
 
-4. Öffne [http://localhost:3000](http://localhost:3000) im Browser
+The dashboard will be accessible at `http://localhost:3000`.
 
-## Konfiguration
+## Building for Production
 
-Die Anwendung verwendet einen API-Proxy, um CORS-Probleme zu vermeiden. Die Backend-API-URL kann in `/app/api/proxy/route.js` konfiguriert werden.
-
-## Deployment
-
-Diese Anwendung ist für das Deployment auf Vercel optimiert:
+Build the production version:
 
 ```bash
+npm run build
+# or
 yarn build
 ```
 
-## Backend-Integration
+Start the production server:
 
-Das Dashboard kommuniziert mit einem Laravel-Backend über die folgenden Endpunkte:
-
-- `/api/login`: Authentifizierung
-- `/api/register`: Benutzerregistrierung
-- `/api/cookie-settings`: Abrufen und Speichern von Cookie-Einstellungen
-
-## Demo-Zugangsdaten
-
-Für Testzwecke kannst du dich mit den folgenden Zugangsdaten anmelden:
-
-- **E-Mail**: admin@example.com
-- **Passwort**: password
-
-## Cookie-Banner-Integration
-
-Das von dieser Anwendung konfigurierte Cookie-Banner kann über ein JavaScript-Snippet auf deiner Website eingebunden werden:
-
-```html
-<script src="https://cookieshield.vercel.app/banner.js" defer></script>
+```bash
+npm start
+# or
+yarn start
 ```
 
-## Entwickelt von
+## Integration with CookieShield Backend
 
-Dieses Projekt wurde entwickelt von [PixelCoda](https://pixelcoda.com).
+This dashboard is designed to work seamlessly with the CookieShield Backend API. Make sure the backend server is running and the `.env.local` file is configured with the correct API URL.
 
-## Lizenz
+## Customizing
 
-MIT
+- Modify colors and styles in the `globals.css` file
+- Add new features by extending the components in the `components` directory
+- Add new languages by updating the translations in the settings
+
+## Developer
+
+Developed by Casian Blanaru at PixelCoda.
+
+- Email: casian@me.com
+- Company: PixelCoda
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
