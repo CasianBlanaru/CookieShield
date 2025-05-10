@@ -10,7 +10,7 @@ export default function RegisterPage() {
   const [showSuccess, setShowSuccess] = useState(false);
 
   const handleRegistrationSuccess = () => {
-    // Show animated success message
+    // Zeige animierte Erfolgsmeldung an
     setShowSuccess(true);
   };
   
@@ -25,7 +25,7 @@ export default function RegisterPage() {
       <AnimatePresence>
         {showSuccess && (
           <>
-            {/* Toast notification */}
+            {/* Toast-Benachrichtigung */}
             <motion.div 
               className="toast toast-success"
               initial={{ opacity: 0, x: 20 }}
@@ -40,7 +40,7 @@ export default function RegisterPage() {
               </div>
             </motion.div>
             
-            {/* Modal overlay with message */}
+            {/* Überlagerung mit Nachricht */}
             <motion.div 
               className="fixed inset-0 flex items-center justify-center z-40 bg-black bg-opacity-50 backdrop-blur-sm"
               initial={{ opacity: 0 }}
@@ -53,7 +53,7 @@ export default function RegisterPage() {
                 animate={{ scale: 1, y: 0, opacity: 1 }}
                 transition={{ type: "spring", damping: 15 }}
               >
-                {/* Background design element */}
+                {/* Hintergrund-Element für Design */}
                 <div className="absolute top-0 right-0 w-40 h-40 bg-gradient-to-br from-indigo-100/40 to-purple-100/40 blur-3xl -translate-y-20 translate-x-20 rounded-full" />
                 
                 <motion.div 
@@ -70,7 +70,7 @@ export default function RegisterPage() {
                     xmlns="http://www.w3.org/2000/svg"
                     aria-hidden="true"
                   >
-                    <title>Success icon</title>
+                    <title>Erfolgssymbol</title>
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                   </svg>
                 </motion.div>
