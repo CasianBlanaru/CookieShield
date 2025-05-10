@@ -876,8 +876,8 @@ export default function CookieDashboard() {
                                 onChange={handleChange}
                                 className="futuristic-input block w-full"
                               >
-                                <option value="left">Left</option>
                                 <option value="center">Center</option>
+                                <option value="left">Left</option>
                                 <option value="right">Right</option>
                               </select>
                             </div>
