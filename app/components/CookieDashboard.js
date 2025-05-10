@@ -283,10 +283,12 @@ export default function CookieDashboard() {
         
         return newSettings;
       });
-    } else if (name === 'bannerAnimation') {
-      // Special handling for animation
+    } else if (name === 'bannerAnimation' || name === 'bannerPosition') {
+      // Special handling for animation und Position
       setSettings(prev => {
-        const newSettings = { ...prev, [name]: value };
+        // Bei bannerPosition immer "center" setzen
+        const finalValue = name === 'bannerPosition' ? 'center' : value;
+        const newSettings = { ...prev, [name]: finalValue };
         
         // Local storage
         updateLocalStorage(newSettings);
@@ -294,7 +296,7 @@ export default function CookieDashboard() {
         // Immediate update of preview
         setTimeout(() => {
           const event = new CustomEvent('settingsUpdated', { 
-            detail: { ...prev, [name]: value } 
+            detail: { ...prev, [name]: finalValue } 
           });
           window.dispatchEvent(event);
         }, 0);
@@ -304,7 +306,9 @@ export default function CookieDashboard() {
     } else {
       // All other values (including colors)
       setSettings(prev => {
-        const newSettings = { ...prev, [name]: value };
+        // Bei bannerPosition immer "center" setzen
+        const finalValue = name === 'bannerPosition' ? 'center' : value;
+        const newSettings = { ...prev, [name]: finalValue };
         
         // Local storage
         updateLocalStorage(newSettings);
@@ -312,7 +316,7 @@ export default function CookieDashboard() {
         // Immediate update of preview
         setTimeout(() => {
           const event = new CustomEvent('settingsUpdated', { 
-            detail: { ...prev, [name]: value } 
+            detail: { ...prev, [name]: finalValue } 
           });
           window.dispatchEvent(event);
         }, 0);
